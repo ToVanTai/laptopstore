@@ -1,0 +1,258 @@
+@use "../abstracts/" as *;
+.products__container {
+    margin-top: $nav-height;
+    @include tablet {
+        margin-top: $nav-height-shrink;
+    }
+    @include mobile {
+        margin-top: $nav-height-shrink-moble;
+    }
+    padding: 10px;
+    background-color: $color-white;
+
+    &__header {
+        @include flex(space-between, center);
+        padding-bottom: 10px;
+        border-bottom: 1px solid $color-border;
+        @include smallDevice{
+            flex-direction: column;
+        }
+        &__title {
+            display: block;
+            flex-grow: 3;
+            font-weight: bold;
+            font-size: 2.1rem;
+            color: $color-black;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            @include smallDevice{
+                width: 100%;
+            }
+        }
+        &__body {
+            @include smallDevice{
+                width: 100%;
+            }
+            flex-grow: 5;
+            @include flex(space-between,center);
+        }
+        &__control{
+            @include flex(flex-start,center);
+            span{
+                font-size: 1.4rem;
+                margin-left: 10px;
+                text-transform: capitalize;
+            }
+        }
+        &__control__btn{
+            border: none;
+            outline: none;
+            cursor: pointer;
+            width: 35px;
+            margin: 5px;
+            transition: all 0.3s ease;
+            & > i{
+                font-size: 3.2rem;
+                color: $color-black;
+                line-height: 35px;
+            }
+        }
+        &__control__btn.active{
+            cursor: default;
+            background-color: $color-primary;
+            & > i{
+                color:$color-white;
+            }
+        }
+        &__options{
+            & > lable{
+                font-size: 1.4rem;
+                color: $color-black;
+                margin-right: 5px;
+                @include smallDevice{
+                    display: none;
+                }
+
+            }
+            & > select{
+                font-size: 1.4rem;
+                color: $color-black;
+                padding: 5px;
+            }
+        }
+    }
+    &__body{
+
+        &__item{
+            padding: 10px;
+            &-img{
+                display: block;
+                padding: 10px;
+                position: relative;
+                border: 1px solid $color-border;
+                overflow: hidden;
+                width: 100%;
+                padding-top: 100%;
+                background-color: $color-white;
+                & > img{
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    inset: 0px;
+                    object-fit: cover;
+                    transform:  scale(0.9);
+                    transition: transform 0.3s ease;
+                }
+            }
+            &-img:hover{
+                & > img{
+                    transform: scale(1);
+                }
+            } 
+            &-detail{
+                text-align: center;
+                padding: 10px;
+                &-name{
+                    display: block;
+                    width: 100%;
+                    overflow: hidden;
+                    text-decoration: none;
+                    font-size: 1.3rem;
+                    color:$color-text;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                }
+                &-vote{
+                    & > i{
+                        font-size: 1.3rem;
+                    color: $color-text;
+                    }
+                    & > i.active{
+                        color: $color-primary-second;
+                    }
+                }
+                &-description{
+                    display: none;
+                }
+                &-price{
+                    & > span{
+                        font-size: 1.4rem;
+                        color: $color-text;
+                        margin: 0px 3px;
+                        display: inline-block;
+                    }
+                    & > span.old-price{
+                        text-decoration: line-through;
+                    }
+                    & > span.current-price{
+                        font-weight: bold;
+                        color: $color-black;
+                    }
+                }
+
+                &-addtocart{
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    display: inline-block;
+                    text-align: center;
+                    text-decoration: none;
+                    outline: none;
+                    border: 1px solid $color-border;
+                    background-color: transparent;
+                    color: $color-text;
+                    line-height: 35px;
+                    width: 110px;
+                    font-size: 1.3rem;
+                    margin-top: 5px;
+                    text-transform: uppercase;
+                    font-weight: bold;
+                    &:hover{
+                        background-color: $color-primary-second;
+                        border-color: $color-primary-second;
+                    }
+                }
+            }
+        }
+        &__item.list{
+            border-bottom: 1px solid $color-border;
+            padding-left: 0px;
+            padding-right: 0px;
+            width: 100%;
+            @include flex(space-between,flex-start);
+        }
+        &__item.list > &__item-img{
+            width: 30%;padding-top: 30%;
+        }
+        &__item.list > &__item-detail{
+            width: 70%;text-align: left;
+            padding-right: 0px;
+        }
+        &__item.list  &__item-detail-name{
+            color: $color-black;
+            font-weight: bold;
+            font-size: 1.8rem;
+            overflow: unset;
+            white-space: normal !important;
+            line-height: 2.4rem;
+            padding-bottom: 10px;
+            border-bottom: 1px solid $color-border;
+        }
+        &__item.list  &__item-detail-vote{
+            border-bottom: 1px solid $color-border;
+            padding: 8px 0px;
+        }
+        &__item.list  &__item-detail-description{
+            display: block;
+            padding-top: 5px;
+            font-size: 1.5rem;
+            color: $color-text;
+        }
+        &__item.list  &__item-detail-price{
+            padding: 5px 0px;
+        }
+    }
+    &__navigation{
+        text-align: center;
+        padding: 3px 0px;
+        & li{
+            transition: all 0.3s ease;
+            list-style: none;
+            display: inline-block;
+            cursor: pointer;
+            font-size: 1.4rem;
+            color: $color-text;
+            line-height: 30px;
+            text-align: center;
+            width: 30px;
+            margin: 0px 3px;
+        }
+        & li.numb{
+            border-radius: 50%;
+        }
+        & li.active{
+            background-color: $color-primary !important;
+            color: $color-white !important;
+            cursor: default;
+        }
+        & li.button{
+            width: auto;
+            padding: 0px 10px;
+            text-transform: capitalize;
+            color: $color-white;
+            background-color: $color-primary;
+        }
+        & li.prev{
+            border-radius: 20px 0px 0px 20px;
+        }
+        & li.next{
+            border-radius: 0px 20px 20px 0px;
+        }
+        & li.button:hover{
+            opacity: 0.8;
+        }
+        & li.numb:hover{
+            background-color: $color-primary ;
+            color: $color-white ;
+        }
+    }
+}
