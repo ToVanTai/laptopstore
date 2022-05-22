@@ -35,6 +35,11 @@ switch($view){
         include "./views/category.php";
         include "./views/footer.php";
     break;
+    default:
+        include "./views/header.php";
+        include "./views/products.php";
+        include "./views/footer.php";
+    break;
 }
 
 ?>
