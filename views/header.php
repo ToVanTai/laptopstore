@@ -68,11 +68,22 @@
             <div class="navbar__item user">
 <?php
     if(!empty(Session::get("user"))){//logged
+        $id=Session::get("user")["id"];
+        $name=Session::get("user")["name"];
+        $avatar=Session::get("user")["avatar"];
+        if(!isset($name)){
+            $name="Tên người dùng";
+        };
+        if(!isset($avatar)){
+            $avatar="./access/imgs/user.png";
+        }else{
+            $avatar="./store/".$avatar;
+        }
         echo '
         <div class="navbar__item__user__logged">
-            <a href="about.php" class="navbar__item__user__logged-infor">
-                <img src="./access/imgs/user.png" alt="" />
-                <p>tovantai</p>
+            <a href="about.php?id='.$id.'" class="navbar__item__user__logged-infor">
+                <img src="'.$avatar.'" alt="" />
+                <p>'.$name.'</p>
             </a>
             <div class="navbar__item__user__logged-cart">
                 <div class="navbar__item__user__logged-cart-icon">
@@ -107,10 +118,10 @@
                     <footer><a href="index.php?view=carts">giỏ hàng</a></footer>
                 </div>
             </div>
-            <a href="#" class="navbar__item__user__logged-loggout"
+            <div class="navbar__item__user__logged-loggout"
                 ><p id="btn-logout">đăng xuất</p>
                 <i class="bx bx-log-out"></i
-            ></a>
+            ></div>
         </div>';
     }else{//not logged
         echo '

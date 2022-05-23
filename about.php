@@ -1,4 +1,12 @@
 <?php
+
+require_once "./utils/session.php";
+Session::init();
+if(empty(Session::get("user"))){
+    header("Location: index.php");
+    die();
+}
+
 $view = "";
 if(!empty($_GET["view"])){
     $view=$_GET["view"];

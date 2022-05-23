@@ -81,12 +81,15 @@ body {
   align-items: center;
 }
 .about__item__label {
-  width: 110px;
+  min-width: 110px;
   color: #000;
 }
 .about__item__content {
   flex-grow: 1;
   color: #666;
+}
+.about__item__content > img {
+  height: 50px;
 }
 .about__item:not(:first-child) {
   border-top: 1px solid #e5e5e5;

@@ -32,7 +32,7 @@
             </div>
         </div>
     </div>
-    <script type="module" src="./js/components/register.js"></script>
+    <script type="module" src="./js/pages/register.js"></script>
 </body>
 
 </html>

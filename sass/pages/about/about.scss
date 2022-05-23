@@ -64,12 +64,15 @@ body{
     line-height: 3rem;
     @include flex(flex-start,center);
     &__label{
-        width: 110px; 
+        min-width: 110px; 
         color: $color-black;
     }
     &__content{
         flex-grow: 1;
         color: $color-text;
+        & > img{
+            height: 50px;
+        }
     }
     &:not(:first-child){
         border-top: 1px solid $color-border;
