@@ -1,3 +1,7 @@
+<?php
+    require_once "./utils/session.php";
+    Session::init();
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -62,6 +66,61 @@
                 </form>
             </div>
             <div class="navbar__item user">
+<?php
+    if(!empty(Session::get("user"))){//logged
+        echo '
+        <div class="navbar__item__user__logged">
+            <a href="about.php" class="navbar__item__user__logged-infor">
+                <img src="./access/imgs/user.png" alt="" />
+                <p>tovantai</p>
+            </a>
+            <div class="navbar__item__user__logged-cart">
+                <div class="navbar__item__user__logged-cart-icon">
+                    <i class="bx bxs-cart"></i>
+                </div>
+                <div class="navbar__item__user__logged-cart-quantity">
+                    3
+                </div>
+
+                <div class="navbar__item__user__logged-cart-detail">
+                    <header>Thông tin giỏ hàng</header>
+                    <session>
+                        <div class="item">
+                            <div class="item__img">
+                                <img
+                                    src="./access/imgs/OIP.jpg"
+                                    alt=""
+                                />
+                            </div>
+                            <div class="item__detail">
+                                <p class="item__detail-title">
+                                    Simple Open Source icons carefully
+                                    crafted for designers & developers
+                                </p>
+                                <div class="item__detail-price">
+                                    <span> <sup>đ</sup>500.000 </span>
+                                    <span>x 50</span>
+                                </div>
+                            </div>
+                        </div>
+                    </session>
+                    <footer><a href="index.php?view=carts">giỏ hàng</a></footer>
+                </div>
+            </div>
+            <a href="#" class="navbar__item__user__logged-loggout"
+                ><p id="btn-logout">đăng xuất</p>
+                <i class="bx bx-log-out"></i
+            ></a>
+        </div>';
+    }else{//not logged
+        echo '
+        <div class="navbar__item__user__not__logged">
+            <a href="register.php" class="navbar__item__user__not__logged-registor">đăng ký</a>
+            <span></span>
+            <a href="login.php" class="navbar__item__user__not__logged-loggin">đăng nhập</a>
+        </div>';
+    }
+?>
                 <!-- start when logged -->
                 <!-- <div class="navbar__item__user__logged">
                     <a href="about.php" class="navbar__item__user__logged-infor">
@@ -110,11 +169,11 @@
                 <!-- end when logged -->
 
                 <!-- start when not logged -->
-                <div class="navbar__item__user__not__logged">
+                <!-- <div class="navbar__item__user__not__logged">
                     <a href="register.php" class="navbar__item__user__not__logged-registor">đăng ký</a>
                     <span></span>
                     <a href="login.php" class="navbar__item__user__not__logged-loggin">đăng nhập</a>
-                </div>
+                </div> -->
                 <!-- end when not logged -->
             </div>
         </div>

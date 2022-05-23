@@ -1,3 +1,10 @@
+<?php
+    require_once "./utils/session.php";
+    if(!empty(Session::get("user"))){
+        header("Location: index.php");
+    }
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,10 +26,11 @@
             <h3>Đăng nhập</h3>
             <form class="form__register" action="" method="POST">
                 <label for="account">Tên tài khoản</label>
-                <input type="text" placeholder="Nhập tên tài khoản" name="account" id="account" />
+                <input type="text" required placeholder="Nhập tên tài khoản" name="account" id="account" />
                 <label for="password">Mật khẩu</label>
-                <input type="password" placeholder="Nhập mật khẩu" name="password" id="password" />
-                <button type="submit">Đăng nhập</button>
+                <input type="password"required  placeholder="Nhập mật khẩu" name="password" id="password" />
+                <input type="hidden" name="crud_req" value="login">
+                <button type="submit" id="btn-submit">Đăng nhập</button>
             </form>
             <div class="login">
                 <span>Nếu bạn chưa có tài khoản?</span>
@@ -30,5 +38,6 @@
             </div>
         </div>
     </div>
+    <script type="module" src="./js/components/login.js"></script>
 </body>
 </html>

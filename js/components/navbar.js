@@ -5,7 +5,6 @@ let navbarContentMobile = $(".navbar__content__mobile")
 let btnCloseNavbarMobile = $(".navbar__content__mobile__close")
 let btnOpenNavbarMobile = $(".navbar__control-mobile")
 function openNavbarMobile(){
-    console.log("kkk")
     navbarOverlay.classList.add("open")
     navbarContentMobile.classList.add("open")
 }
@@ -17,3 +16,6 @@ btnCloseNavbarMobile.onclick = closeNavbarMobile;
 navbarOverlay.onclick = closeNavbarMobile;
 btnOpenNavbarMobile.onclick = openNavbarMobile;
 // end navbar for mobile
+
+let btnLogout=document.getElementById("btn-logout");
+console.log("btnLogout");
