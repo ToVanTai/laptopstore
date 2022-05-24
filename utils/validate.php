@@ -38,7 +38,7 @@
             $resTex=$resTex." Loại file không hợp lệ. ";
         }
         return $resTex;
-    }
+    };
     //http://localhost/BTL_N8/utils/validateStr.php
     // function validateName($input){
     //     return preg_match();

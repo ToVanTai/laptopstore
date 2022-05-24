@@ -12,9 +12,19 @@
         <div class="header__title">
             <a  href="index.php">ADMIN</a>
         </div>
+        <?php
+            $viewMode = isset($_GET["view"])?$_GET["view"]:"products";
+            if ($viewMode == "products"||$viewMode == "product" || $viewMode == "change-product" || $viewMode == "new-product") {
+                $viewMode = "product";
+            }elseif($viewMode == "categories"||$viewMode == "category" || $viewMode == "change-category" || $viewMode == "new-category"){
+                $viewMode = "category";
+            }else{
+                $viewMode = "cart";
+            }
+        ?>
         <div class="header__list__link">
-            <a href="index.php" class="header__link active">quản lý sản phẩm</a>
-            <a href="index.php?view=categories" class="header__link">quản lý danh mục</a>
-            <a href="index.php?view=carts" class="header__link">quản lý đơn hàng</a>
+            <a href="index.php" class="header__link <?= $viewMode=="product"?"active":"" ?>">quản lý sản phẩm</a>
+            <a href="index.php?view=categories" class="header__link <?= $viewMode=="category"?"active":"" ?>" >quản lý danh mục</a>
+            <a href="index.php?view=carts" class="header__link <?= $viewMode=="cart"?"active":"" ?>">quản lý đơn hàng</a>
         </div>
     </header>

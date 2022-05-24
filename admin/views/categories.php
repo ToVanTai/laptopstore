@@ -5,18 +5,14 @@
                 <tr>
                     <th>STT</th>
                     <th>Tên danh mục</th>
+                    <th>Hình ảnh</th>
                     <th>Thao tác</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td> laptop </td>
-                    <td>
-                        <a href="index.php?view=category&id=1" class="btn">Xem</a> <a href="index.php?view=change-category&id=1" class="btn">Sửa</a> <btn class="btn">Xóa</b>
-                    </td>
-                </tr>
+            <tbody id="category__list">
+                
             </tbody>
+            <script type="module" src="js/components/categories.js"></script>
         </table>
         
     </div>

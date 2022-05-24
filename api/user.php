@@ -4,7 +4,7 @@ include_once "../utils/dbhelper.php";
 include_once "../utils/session.php";
 include_once "../utils/validate.php";
 header("Access-Control-Allow-Origin: http://localhost");
-header("Access-Control-Allow-Methods: POST,PATCH,DELETE");
+header("Access-Control-Allow-Methods: GET,POST,PATCH,DELETE");
 header("Access-Control-Allow-Credentials: true");
 Session::init();
 //dữ liệu được gửi toàn bộ từ form\
@@ -149,10 +149,11 @@ function update1()
         $nameReg = "/^[0-9a-zA-Z\săâđêôơưÂĂĐÊÔƠƯ]{3,15}$/";
         $successMes="Cập nhật thông tin cá nhân thành công";
         $failMess="Cập nhật thất bại";
+        $updated_at= date("Y-m-d h:i:s");
         if (preg_match($nameReg, $name)) {
             if (empty($avatarFiles["name"])) {
                 $query = 'UPDATE users SET name="' . $name . '", phone_number="' . $phoneNumber . '",
-            address="' . $address . '", email="' . $email . '" WHERE id=' . $id . ';';
+            address="' . $address . '", email="' . $email . '", updated_at="'.$updated_at.'" WHERE id=' . $id . ';';
                 execute($query);
                 echo $successMes;
                 http_response_code(203);
@@ -165,7 +166,7 @@ function update1()
 
                 if (count(executeResult($query)) >= 1) {
                     $query = 'UPDATE users SET name="' . $name . '", phone_number="' . $phoneNumber . '",
-                                address="' . $address . '", email="' . $email . '",avatar="' . $avatarName . '" WHERE id='.$id.';';
+                                address="' . $address . '", email="' . $email . '",avatar="' . $avatarName . '", updated_at="'.$updated_at.'" WHERE id='.$id.';';
                     if($avartarOld==null){//không cần xóa file cũ
                         if(validateFile($_FILES["avatar"])!=""){
                             echo validateFile($_FILES["avatar"]);
