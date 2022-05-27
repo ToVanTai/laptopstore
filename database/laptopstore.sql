@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 22, 2022 lúc 12:01 PM
+-- Thời gian đã tạo: Th5 24, 2022 lúc 07:41 PM
 -- Phiên bản máy phục vụ: 10.4.21-MariaDB
 -- Phiên bản PHP: 7.4.25
 
@@ -26,12 +26,11 @@ SET time_zone = "+00:00";
 --
 -- Cấu trúc bảng cho bảng `categories`
 --
--- Tạo: Th5 22, 2022 lúc 04:39 AM
---
 
 CREATE TABLE `categories` (
   `id` int(11) NOT NULL,
   `name` varchar(255) COLLATE utf8_vietnamese_ci NOT NULL,
+  `image` text COLLATE utf8_vietnamese_ci NOT NULL,
   `created_by` int(11) NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL
@@ -41,8 +40,6 @@ CREATE TABLE `categories` (
 
 --
 -- Cấu trúc bảng cho bảng `orders`
---
--- Tạo: Th5 22, 2022 lúc 04:54 AM
 --
 
 CREATE TABLE `orders` (
@@ -58,8 +55,6 @@ CREATE TABLE `orders` (
 --
 -- Cấu trúc bảng cho bảng `order_details`
 --
--- Tạo: Th5 22, 2022 lúc 04:55 AM
---
 
 CREATE TABLE `order_details` (
   `id` int(11) NOT NULL,
@@ -74,8 +69,6 @@ CREATE TABLE `order_details` (
 --
 -- Cấu trúc bảng cho bảng `products`
 --
--- Tạo: Th5 22, 2022 lúc 04:53 AM
---
 
 CREATE TABLE `products` (
   `id` int(11) NOT NULL,
@@ -83,7 +76,7 @@ CREATE TABLE `products` (
   `name` text COLLATE utf8_vietnamese_ci NOT NULL,
   `price` float NOT NULL,
   `discount` int(11) DEFAULT NULL,
-  `image` varchar(255) COLLATE utf8_vietnamese_ci NOT NULL,
+  `image` text COLLATE utf8_vietnamese_ci NOT NULL,
   `quantity` int(11) DEFAULT NULL,
   `description` text COLLATE utf8_vietnamese_ci NOT NULL,
   `created_by` int(11) NOT NULL,
@@ -95,8 +88,6 @@ CREATE TABLE `products` (
 
 --
 -- Cấu trúc bảng cho bảng `role`
---
--- Tạo: Th5 21, 2022 lúc 02:11 PM
 --
 
 CREATE TABLE `role` (
@@ -117,8 +108,6 @@ INSERT INTO `role` (`id`, `name`) VALUES
 --
 -- Cấu trúc bảng cho bảng `users`
 --
--- Tạo: Th5 22, 2022 lúc 04:29 AM
---
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
@@ -126,10 +115,10 @@ CREATE TABLE `users` (
   `account` varchar(50) COLLATE utf8_vietnamese_ci NOT NULL,
   `password` varchar(255) COLLATE utf8_vietnamese_ci NOT NULL,
   `name` varchar(50) COLLATE utf8_vietnamese_ci DEFAULT NULL,
-  `phone_number` int(11) DEFAULT NULL,
-  `address` int(11) DEFAULT NULL,
-  `avatar` int(11) DEFAULT NULL,
-  `email` int(11) DEFAULT NULL,
+  `phone_number` int(20) DEFAULT NULL,
+  `address` text COLLATE utf8_vietnamese_ci DEFAULT NULL,
+  `avatar` text COLLATE utf8_vietnamese_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8_vietnamese_ci DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
@@ -189,7 +178,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT cho bảng `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT cho bảng `orders`
@@ -219,7 +208,7 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Các ràng buộc cho các bảng đã đổ

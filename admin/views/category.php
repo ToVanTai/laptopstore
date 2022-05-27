@@ -25,7 +25,7 @@ switch ($mode) {
     case "change-category":
         $id = getGET("id");
         if ($id != null) {
-            $query = 'select * from categories where id = ' . $id . '';
+            $query = 'select * from categories where id = ' . $id . ' limit 1';
             $resData = executeResult($query,true);
             $name = $resData["name"];
             $image = baseUrl."store/".$resData["image"];

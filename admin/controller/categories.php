@@ -70,7 +70,7 @@
     }
     function deleteCategories($id){
 
-        $query = 'select * from categories where id = '.$id.'';
+        $query = 'select * from categories where id = '.$id.' limit 1';
         $idInfor = executeResult($query,true);
         $image=$idInfor['image'];
         unlink("../../store/".$image);
@@ -82,7 +82,7 @@
         //có hình ảnh
         $name = $_POST["name"];
         if(!empty($_FILES["image"]["name"])){
-            $query = 'select * from categories where id = '.$id.'';
+            $query = 'select * from categories where id = '.$id.' limit 1';
             $idInfor = executeResult($query,true);
             $image=$idInfor['image'];
             unlink("../../store/".$image);

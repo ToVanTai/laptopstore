@@ -9,8 +9,8 @@ $_SESSION["user"]=["id"=>1,"role"=>1,"name"=>"to van tai","avatar"=>"name.jpg"];
 --controler add new category
 --controler show categories
 --controler delete categories = api
+--controler update categories 
 --
 --
 --
---
---
+--đó là tất cả những gì mình làm được.

@@ -42,7 +42,7 @@ function about()
     $responseData = [];
     if (!empty(Session::get("user"))) {
         if ($idUser != null || $idUser >= 0) {
-            $query = 'select * from users where id = ' . $idUser . ';';
+            $query = 'select * from users where id = ' . $idUser . ' limit 1;';
             $response = executeResult($query, true);
             $responseData = array(
                 "id" => $response["id"],
@@ -83,7 +83,7 @@ function register()
             $messageErr = $messageErr . "Mật khẩu: dài từ 3->15 ký tự, không được có khoảng trắng. ";
         }
     }
-    $query = 'select * from users where account="' . $account . '"';
+    $query = 'select * from users where account="' . $account . '" limit 1';
     $isUnit = count(executeResult($query)) >= 1 ? false : true;
     if ($isUnit == false) {
         $isErr = true;
@@ -100,8 +100,12 @@ function register()
     $updated_at = date("Y-m-d h:i:s");
     $query = 'insert into users(role_id, account, password, created_at, updated_at) values("' . $role_id . '", "' . $account . '", "' . $passwordMd5 . '", "' . $created_at . '", "' . $updated_at . '");';
     execute($query);
-    $query = 'select * from users where account="' . $account . '"';
-    if (count(executeResult($query)) >= 1 ? true : false) {
+    $query = 'select * from users where account="' . $account . '" limit 1';
+    $result = executeResult($query);
+    if (count($result) >= 1 ? true : false) {
+        $user_id = $result[0]["id"];
+        $query = "insert into orders(user_id ) values(".$user_id.")";
+        execute($query);
         http_response_code(201);
     } else {
         http_response_code(203);
@@ -120,7 +124,7 @@ function login()
         echo $messageErr;
         die();
     }
-    $query = 'select * from users where account = "' . $account . '" and password = "' . md5($password) . '"';
+    $query = 'select * from users where account = "' . $account . '" and password = "' . md5($password) . '" limit 1';
     $responseData = executeResult($query);
     $isSuccessfully = count($responseData) >= 1 ? true : false;
     if ($isSuccessfully == true) {
@@ -161,7 +165,7 @@ function update1()
                 $avatarName = time() . $avatarFiles["name"];
                 $formFile = $avatarFiles["tmp_name"];
                 $toFile = "../store/".$avatarName;
-                $query = "select * from users where id=" . $id . " ";
+                $query = "select * from users where id=" . $id . " limit 1";
                 $avartarOld = executeResult($query)[0]["avatar"];
 
                 if (count(executeResult($query)) >= 1) {
@@ -204,7 +208,7 @@ function update1()
                         }
 
                     }
-                    $query = 'select * from users where id='.$id.'';
+                    $query = 'select * from users where id='.$id.' limit 1';
                     $aboutUse=executeResult($query);
                     if(count($aboutUse)>=1){
                         $user = array("id" => $aboutUse[0]["id"], "role" => $aboutUse[0]["role_id"], "name" => $aboutUse[0]["name"], "avatar" => $aboutUse[0]["avatar"]);
@@ -237,7 +241,7 @@ function update1()
 
 
 //     // if ($new_password == $confirm_password) {
-//     //     $sql = "select password from users where name = '" . $name . "' and password = '" . $password . "' ;";
+//     //     $sql = "select password from users where name = '" . $name . "' and password = '" . $password . "' limit 1;";
 //     //     $dataRes = mysqli_query($conn, $sql);
 //     //     if (mysqli_num_rows($dataRes) > 0) {
 //     //         $sql = "update users set password = '" . $new_password . "' where name = '" . $name . "' ;";
