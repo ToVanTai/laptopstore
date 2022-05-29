@@ -1,5 +1,5 @@
 <div class="container">
-        <a href="index.php?view=new-category" class="btn">Thêm mới</a>
+        <a href="index.php?view=new-brand" class="btn">Thêm mới</a>
         <table border="1">
             <thead>
                 <tr>
@@ -9,10 +9,10 @@
                     <th>Thao tác</th>
                 </tr>
             </thead>
-            <tbody id="category__list">
+            <tbody id="brand__list">
                 
             </tbody>
-            <script type="module" src="js/components/categories.js"></script>
+            <script type="module" src="js/components/brands.js"></script>
         </table>
         
     </div>

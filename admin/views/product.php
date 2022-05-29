@@ -2,9 +2,9 @@
         <form action="">
             <label for="name">Tên sản phẩm</label>
             <input type="text" name="name" id="name" placeholder="Nhập tên sản phẩm">
-            <label for="category_id">Thể loại</label>
-            <select name="category_id" id="category_id">
-                <option value="">Thể loại .....</option>
+            <label for="product_id">Hãng sản xuất</label>
+            <select name="product_id" id="product_id">
+                <option value="">Hãng sản xuất .....</option>
             </select>
             <label for="price">Giá</label>
             <input type="number" name="price" id="price">

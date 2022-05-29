@@ -16,15 +16,15 @@
             $viewMode = isset($_GET["view"])?$_GET["view"]:"products";
             if ($viewMode == "products"||$viewMode == "product" || $viewMode == "change-product" || $viewMode == "new-product") {
                 $viewMode = "product";
-            }elseif($viewMode == "categories"||$viewMode == "category" || $viewMode == "change-category" || $viewMode == "new-category"){
-                $viewMode = "category";
+            }elseif($viewMode == "brands"||$viewMode == "brand" || $viewMode == "change-brand" || $viewMode == "new-brand"){
+                $viewMode = "brand";
             }else{
                 $viewMode = "cart";
             }
         ?>
         <div class="header__list__link">
             <a href="index.php" class="header__link <?= $viewMode=="product"?"active":"" ?>">quản lý sản phẩm</a>
-            <a href="index.php?view=categories" class="header__link <?= $viewMode=="category"?"active":"" ?>" >quản lý danh mục</a>
+            <a href="index.php?view=brands" class="header__link <?= $viewMode=="brand"?"active":"" ?>" >quản lý hãng sản xuất</a>
             <a href="index.php?view=carts" class="header__link <?= $viewMode=="cart"?"active":"" ?>">quản lý đơn hàng</a>
         </div>
     </header>

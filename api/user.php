@@ -66,7 +66,7 @@ function register()
 {
     $account = getPOST("account");
     $password = getPOST("password");
-    $accountReg = "/^[\S]{3,15}$/";
+    $accountReg = "/^[a-z0-9]{3,15}$/";
     $passwordReg = "/^\S{3,15}$/";
     $messageErr = "";
     $isErr = false;
@@ -76,7 +76,7 @@ function register()
     } else {
         if (!preg_match($accountReg, $account)) {
             $isErr = true;
-            $messageErr = $messageErr . "Tên tài khoản: dài từ 3->15 ký tự, không chứa khoảng trắng. ";
+            $messageErr = $messageErr . "Tên tài khoản: dài từ 3->15 ký tự, chỉ bao gồm chữ thường, số, không chứa khoảng trắng. ";
         }
         if (!preg_match($passwordReg, $password)) {
             $isErr = true;

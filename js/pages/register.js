@@ -7,11 +7,11 @@ btnSubmit.addEventListener("click", function (event) {
     let account = document.getElementById("account").value.trim();
     let password = document.getElementById("password").value;
     let confirmPassword = document.getElementById("confirm-password").value;
-    let accountRegular = /^[\S]{3,15}$/;
+    let accountRegular = /^[a-z0-9]{3,15}$/;
     let passwordRegular = /^\S{3,15}$/;
     if (!accountRegular.test(account)) {
         isValidate = false;
-        alert("tên tài khoản: dài từ 3->15 ký tự, không chứa khoảng trắng");
+        alert("tên tài khoản: dài từ 3->15 ký tự, bao gồm số hoặc chữ thường, không chứa ký tự đặc biệt");
     }
     if (password !== confirmPassword) {
         isValidate = false;

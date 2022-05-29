@@ -17,8 +17,8 @@ if (empty($user)) {
         if ($view == "product" || $view == "change-product" || $view == "new-product") {
             $view = "product";
         }
-        if ($view == "category" || $view == "change-category" || $view == "new-category") {
-            $view = "category";
+        if ($view == "brand" || $view == "change-brand" || $view == "new-brand") {
+            $view = "brand";
         }
         switch ($view) {
             case "products":
@@ -31,9 +31,9 @@ if (empty($user)) {
                 include "./views/carts.php";
                 include "./views/footer.php";
                 break;
-            case "categories":
+            case "brands":
                 include "./views/header.php";
-                include "./views/categories.php";
+                include "./views/brands.php";
                 include "./views/footer.php";
                 break;
             case "product":
@@ -41,9 +41,9 @@ if (empty($user)) {
                 include "./views/product.php";
                 include "./views/footer.php";
                 break;
-            case "category":
+            case "brand":
                 include "./views/header.php";
-                include "./views/category.php";
+                include "./views/brand.php";
                 include "./views/footer.php";
                 break;
             default:

@@ -21,10 +21,10 @@ fetch(`${baseUrl}api/user.php?id=${aboutId}`,{
             <label for="name" >Họ và tên</label>
                 <input type="text"  placeholder="Nhập họ tên" value="${name}"  required name="name"  id="name">
 
-                <label for="phone_number">Số điện thoại</label>
+                <label for="phone_number">Số điện thoại nhận hàng</label>
                 <input type="tel" placeholder="Nhập số điện thoại" value="${phoneNumber}"  required name="phone_number"  id="phone_number">
                 
-                <label for="address" >Địa chỉ</label>
+                <label for="address" >Địa chỉ nhận hàng</label>
                 <input type="text" placeholder="Nhập địa chỉ" value="${address}" required name="address"  id="address">
                 
                 <label for="avatar">Ảnh đại diện</label>

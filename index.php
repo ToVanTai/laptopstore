@@ -19,6 +19,11 @@ switch ($view) {
         include "./views/products.php";
         include "./views/footer.php";
         break;
+    case "purchased":
+        include "./views/header.php";
+        include "./views/purchased.php";
+        include "./views/footer.php";
+        break;
     default:
         include "./views/header.php";
         include "./views/products.php";
