@@ -77,7 +77,7 @@
     }
 }
 .product__about__select{
-    &-colors , &-capacities{
+    &-capacities{
         @include flex(flex-start, flex-start);
         color: $color-black;
         font-size: 1.6rem;

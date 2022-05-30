@@ -43,7 +43,7 @@
                     <div class="products__item__content__about">
                         <p class="model">Acer Aspire 3 A315 56 37DV</p>
                         <p class="screen">LCD 15"FHD</p>
-                        <p class="cpu">CPU i3-1005G1 - DDR4 4GB</p>
+                        <p class="cpu">CPU i3-1005G1</p>
                         <p class="vga">VGA Intel UHD Graphics</p>
                         <p class="win">WIN 10H SL</p>
                         <div class="products__item__content__about-view">

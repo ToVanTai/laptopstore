@@ -24,14 +24,6 @@
             </ul>
             <hr>
             <div class="product__about__select">
-                <div class="product__about__select-colors">
-                    <p>Màu: </p>
-                    <ul class="select">
-                        <li class="active">Red</li>
-                        <li>Green</li>
-                        <li>Blue</li>
-                    </ul>
-                </div>
                 <div class="product__about__select-capacities">
                     <p>Dung lượng: </p>
                     <ul class="select">

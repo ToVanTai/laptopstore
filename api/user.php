@@ -103,9 +103,6 @@ function register()
     $query = 'select * from users where account="' . $account . '" limit 1';
     $result = executeResult($query);
     if (count($result) >= 1 ? true : false) {
-        $user_id = $result[0]["id"];
-        $query = "insert into orders(user_id ) values(".$user_id.")";
-        execute($query);
         http_response_code(201);
     } else {
         http_response_code(203);

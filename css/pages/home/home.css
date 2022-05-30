@@ -838,7 +838,7 @@
   border-width: 1px;
 }
 
-.product__about__select-colors, .product__about__select-capacities {
+.product__about__select-capacities {
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;

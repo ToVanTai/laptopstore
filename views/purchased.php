@@ -27,7 +27,6 @@
                     </div>
                 </div>
                 <div class="purchased__list__item__detail__price">
-                    <span class="old-price">255.000<u>đ</u></span>
                     <span class="current-price">50.000<u>đ</u></span>
                 </div>
             </div>
@@ -69,7 +68,6 @@
                     </div>
                 </div>
                 <div class="purchased__list__item__detail__price">
-                    <span class="old-price">255.000<u>đ</u></span>
                     <span class="current-price">50.000<u>đ</u></span>
                 </div>
             </div>
@@ -91,7 +89,6 @@
                     </div>
                 </div>
                 <div class="purchased__list__item__detail__price">
-                    <span class="old-price">255.000<u>đ</u></span>
                     <span class="current-price">50.000<u>đ</u></span>
                 </div>
             </div>
@@ -113,7 +110,6 @@
                     </div>
                 </div>
                 <div class="purchased__list__item__detail__price">
-                    <span class="old-price">255.000<u>đ</u></span>
                     <span class="current-price">50.000<u>đ</u></span>
                 </div>
             </div>
