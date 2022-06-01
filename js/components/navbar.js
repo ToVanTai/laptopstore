@@ -18,7 +18,7 @@ navbarOverlay.onclick = closeNavbarMobile;
 btnOpenNavbarMobile.onclick = openNavbarMobile;
 // end navbar for mobile
 
-let btnLogout = document.getElementById("btn-logout");
+let btnLogout = $(".navbar__item__user__logged-loggout");
 if (btnLogout!=null) {
     btnLogout.addEventListener("click", function () {
         fetch(`${baseUrl}api/user.php`, {
@@ -33,6 +33,20 @@ if (btnLogout!=null) {
         })
     })
 }
-//change avatar and username when logged
-
-//
+//when search
+let btnSearh = $(".navbar__item__search-submit");
+btnSearh.addEventListener("click",function(event){
+    event.preventDefault();
+    let name = $(".navbar__item__search-input").value.trim();
+    if(name.length > 0){
+        window.location.href=`${baseUrl}index.php?view=search&type=products&name=${name}`;
+    }
+})
+let btnSearchMobile = $(".navbar__content__mobile__search button");
+btnSearchMobile.addEventListener("click",function(event){
+    event.preventDefault();
+    let name = $(".navbar__content__mobile__search input").value.trim();
+    if(name.length > 0){
+        window.location.href=`${baseUrl}index.php?view=search&type=products&name=${name}`;
+    }
+})

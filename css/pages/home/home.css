@@ -513,7 +513,8 @@
 }
 .products__container .products__swiper .swiper-slide > img {
   width: 100%;
-  object-fit: cover;
+  height: 100%;
+  object-fit: initial;
 }
 .products__container__navigation {
   text-align: center;

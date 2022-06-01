@@ -41,10 +41,11 @@ Session::init();
         </div>
         <div class="navbar__item search">
             <form action="" method="GET" class="navbar__item__search">
-                <input type="text" name="search" placeholder="Tìm kiểm sản phẩm" class="navbar__item__search-input" id="" />
+                <input type="text" name="name" placeholder="Tìm kiểm sản phẩm" class="navbar__item__search-input" id="" />
                 <button type="submit" class="navbar__item__search-submit">
                     <i class="bx bx-search"></i>
                 </button>
+                <!-- index.php?view=search&type=name&name=DELL -->
             </form>
         </div>
         <div class="navbar__item user">

@@ -1,21 +1,40 @@
+<?php
+    $isSearch = false;
+    if(!empty($_GET["view"])){
+        if($_GET["view"]=="search"){
+            $isSearch=true;
+        }
+    }
+?>
 <!-- start products__container -->
 <div class="products__container">
     <!-- start slider -->
-    <div class="products__swiper">
+    <?php
+        if($isSearch==false){
+            echo '
+                <div class="products__swiper">
+                <div class="swiper products-swiper">
+                    <div class="swiper-wrapper">
+                    </div>
+                    <div class="swiper-pagination"></div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+                </div>
+            </div>';
+        }
+    ?>
+    <!-- <div class="products__swiper">
         <div class="swiper products-swiper">
             <div class="swiper-wrapper">
                 <a href="javascript:void(0)" class="swiper-slide">
                     <img src="https://www.asus.com/media/Odin/Websites/vn/SiteSetting/20211103114059.jpg?webp" alt="">
-                </a>
-                <a href="javascript:void(0)" class="swiper-slide">
-                    <img src="https://th.bing.com/th/id/R.61c8823a9ebdfc63ed3b4a2098817b02?rik=baY0sCMD%2fIIMtA&pid=ImgRaw&r=0" alt="">
                 </a>
             </div>
             <div class="swiper-pagination"></div>
             <div class="swiper-button-prev"></div>
             <div class="swiper-button-next"></div>
         </div>
-    </div>
+    </div> -->
     <!-- end slider -->
 
     <!-- start products heading-->
@@ -116,6 +135,14 @@
     </div>
     <!-- end navigation -->
 </div>
-<script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+<?php
+    if($isSearch==false){
+        echo '
+        <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+        <script type="module" src="./js/components/productsSwiper.js"></script>
+        ';
+    }
+?>
+
 <script type="module" src="./js/components/productsContainer.js"></script>
 <!-- end products__container -->

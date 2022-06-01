@@ -1,24 +1,5 @@
 import { $, $$ } from "../configs/constants.js";
-
-//start swiper slide
-const swiper = new Swiper(".products-swiper", {
-    loop: true,
-    pagination: {//cái hình tròn nhỏ
-        el: '.swiper-pagination',
-        clickable: true
-    },
-    navigation: {//mũi tên next
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-    },
-    autoplay: {
-        delay: 3500,
-        disableOnInteraction: false,
-    }
-})
-//end swiper slide
-
-
+import { baseUrl } from "../configs/configs.js";
 // start navigation
 let productNavigation = $(".products__container__navigation ul");
 function renderNavigation (total, current) {

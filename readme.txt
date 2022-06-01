@@ -1,16 +1,19 @@
-//session
-//register//login//logout
-//include_once
-------authentication admin page-----
-$_SESSION["user"]=["id"=>1,"role"=>1,"name"=>"to van tai","avatar"=>"name.jpg"];//1=user//2=admin
-->
------- categories --------
---header active
---controler add new category
---controler show categories
---controler delete categories = api
---controler update categories 
---
---
---
---đó là tất cả những gì mình làm được.
+create read update delete
+categories:
+api/categories.php->readAll GET
+products:
+api/products.php->readAll GET
+api/products.php?name="kk"->readAll() GET
+api/products.php?category="kk"->readAll() GET
+api/products.php?id=1->readItem() GET
+
+api/products.php->createItem() cru_request="create" POST form admin
+api/products.php->updateItem() cru_request="update" POST form admin
+
+not method delete
+
+xem toàn bộ thông tin sản phẩm
+thêm: ....
+
+
+

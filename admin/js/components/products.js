@@ -1,12 +1,12 @@
 import {$,$$} from "../configs/constants.js";
 import {baseURL} from "../configs/configs.js";
-let brandList = document.getElementById("brand__list");
-fetch(`${baseURL}admin/controller/brands.php`,{
+let productList = document.getElementById("product__list");
+fetch(`${baseURL}admin/controller/products.php`,{
     method:"GET",
     credentials:"include"
 }).then(res=>{
     return res.text().then(resData=>{
-        brandList.innerHTML=resData;
+        productList.innerHTML=resData;
         // let btnDetetes=$$(".btn-delete");
         // btnDetetes.forEach(element=>{
         //     element.addEventListener('click',function (event){
