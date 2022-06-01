@@ -14,7 +14,7 @@ if (empty($user)) {
         if (!empty($_GET["view"])) {
             $view = $_GET["view"];
         };
-        if ($view == "product" || $view == "change-product" || $view == "new-product") {
+        if ($view == "product" || $view == "change-product" || $view == "new-product" || $view == "change-capacity-product" || $view == "add-capacity-product") {
             $view = "product";
         }
         if ($view == "brand" || $view == "change-brand" || $view == "new-brand") {

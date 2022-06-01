@@ -14,7 +14,7 @@
         </div>
         <?php
             $viewMode = isset($_GET["view"])?$_GET["view"]:"products";
-            if ($viewMode == "products"||$viewMode == "product" || $viewMode == "change-product" || $viewMode == "new-product") {
+            if ($viewMode == "products"||$viewMode == "product" || $viewMode == "change-product" || $viewMode == "new-product" || $viewMode == "change-capacity-product"|| $viewMode == "add-capacity-product") {
                 $viewMode = "product";
             }elseif($viewMode == "brands"||$viewMode == "brand" || $viewMode == "change-brand" || $viewMode == "new-brand"){
                 $viewMode = "brand";

@@ -124,7 +124,7 @@ td > img{
 }
 form{
     height: fit-content;
-    width: 380px;
+    width: 870px;
     padding: 10px;
     box-shadow: 0px 1px 2px rgba(0,0,0,0.2);
 }
@@ -141,3 +141,24 @@ form select,form textarea{
     outline: none;
     border: 1px solid var(--color-text);
 } 
+.product__detail__infor{
+    list-style: none;
+}
+.product__detail__infor li{
+    margin-top: 8px;
+    font-size: 16px;
+    color: #000;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+.product__detail__infor > li > span:first-child{
+    font-weight: bold;
+    min-width: 130px;
+}
+.product__detail__infor li img{
+    width: 139px;
+}
+.product__detail__capacity{
+    margin-top: 10px;
+}
