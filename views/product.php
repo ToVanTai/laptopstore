@@ -5,11 +5,11 @@
     </div>
     <div class="row product__about">
         <div class="product__about__picture col col-xs-12 col-sm-6 col-md-6 col-lg-6">
-            <img src="./access/imgs/product11-300x300.jpg" alt="">
+            <!-- <img src="./access/imgs/product11-300x300.jpg" alt=""> -->
         </div>
         <div class="product__about__detail col col-xs-12 col-sm-6 col-md-6 col-lg-6">
             <ul>
-                <li>Bảo hành chính hãng 12 tháng. </li>
+                <li id="warranty">Bảo hành chính hãng 12 tháng. </li>
                 <li>Hỗ trợ đổi mới trong 7 ngày. </li>
                 <li>Windows bản quyền tích hợp. </li>
             </ul>
@@ -18,9 +18,9 @@
                 Quà tặng:
             </p>
             <ul class="gifs">
-                <li class="gif">Balo Acer Office.</li>
+                <!-- <li class="gif">Balo Acer Office.</li>
                 <li class="gif">Túi chống sốc Gearvn.</li>
-                <li class="gif">Chuật không dây LM115G Wireless.</li>
+                <li class="gif">Chuật không dây LM115G Wireless.</li> -->
             </ul>
             <hr>
             <div class="product__about__select">
@@ -66,7 +66,7 @@
         </div>
         <div class="product__details__item">
             <table border="1">
-                <tr>
+                <!-- <tr>
                     <td>Thương hiệu</td>
                     <td></td>
                 </tr>
@@ -145,7 +145,7 @@
                 <tr>
                     <td>Hệ điều hành</td>
                     <td></td>
-                </tr>
+                </tr> -->
             </table>
         </div>
     </div>

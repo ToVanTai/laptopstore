@@ -1,4 +1,4 @@
-import { $, $$, httpGetAsync, numberWithComas } from "../configs/constants.js";
+import { $, $$, httpGetAsync, numberWithComas, validateString } from "../configs/constants.js";
 import { baseUrl } from "../configs/configs.js";
 //get params:
 let urlSearchParams = new URLSearchParams(window.location.search);
@@ -74,18 +74,18 @@ function renderProductList(data){
                         </div>
                     </div>
                         <div class="products__item__content__about">
-                            <p class="model">${item.model}</p>
-                            <p class="screen">${item.screen}</p>
-                            <p class="cpu">${item.CPU}</p>
-                            <p class="vga">${item.VGA}</p>
-                            <p class="win">${item.OS}</p>
+                            <p class="model">${validateString(item.model)}</p>
+                            <p class="screen">${validateString(item.screen)}</p>
+                            <p class="cpu">${validateString(item.CPU)}</p>
+                            <p class="vga">${validateString(item.VGA)}</p>
+                            <p class="win">${validateString(item.OS)}</p>
                             <div class="products__item__content__about-view">
                                 <span>Click để xem chi tiết</span><br> 
                                 <div><span>Đặt hàng</span></div>
                             </div>
                         </div>
                     <div class="products__item__content__name">
-                    ${item.model}
+                    ${validateString(item.model)}
                     </div>
                     <div class="products__item__content__price">
                         <del>${numberWithComas(item.price)}<u>đ</u></del>
@@ -109,18 +109,18 @@ function renderProductList(data){
                         </div>
                     </div>
                         <div class="products__item__content__about">
-                            <p class="model">${item.model}</p>
-                            <p class="screen">${item.screen}</p>
-                            <p class="cpu">${item.CPU}</p>
-                            <p class="vga">${item.VGA}</p>
-                            <p class="win">${item.OS}</p>
+                            <p class="model">${validateString(item.model)}</p>
+                            <p class="screen">${validateString(item.screen)}</p>
+                            <p class="cpu">${validateString(item.CPU)}</p>
+                            <p class="vga">${validateString(item.VGA)}</p>
+                            <p class="win">${validateString(item.OS)}</p>
                             <div class="products__item__content__about-view">
                                 <span>Click để xem chi tiết</span><br> 
                                 <div><span>Đặt hàng</span></div>
                             </div>
                         </div>
                     <div class="products__item__content__name">
-                        ${item.model}
+                        ${validateString(item.model)}
                     </div>
                     <div class="products__item__content__price">
                         <del>14,990,000<u>đ</u></del>

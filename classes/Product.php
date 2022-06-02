@@ -2,17 +2,18 @@
     class Product{
         public static function readItem($id){
             $idQuery = $id;
-            $queryProduct = "select id, brand_id, model, screen, RAM, hardware, OS, CPU, VGA, background, warranty, discount, color, created_at, updated_at from products where id = ".$idQuery." limit 1 ;";
+            $queryProduct = "select products.id as 'id', brands.name as 'brand', VGA, model, screen, RAM, hardware, OS, CPU, VGA, background, warranty, discount, color, products.created_at, products.updated_at from products inner join brands on products.brand_id = brands.id where products.id = ".$idQuery." limit 1 ;";
             $queryResultProduct = executeResult($queryProduct,true);
             if(!empty($queryResultProduct)){
                 $queryCapacities = "select * from product_capacities where product_id = ".$idQuery." ;";
                 $queryResultCapacities = executeResult($queryCapacities);
                 $dataRes = array(
                 "id"=>$queryResultProduct["id"],
-                "brand_id"=>$queryResultProduct["brand_id"],
+                "brand"=>$queryResultProduct["brand"],
                 "model"=>$queryResultProduct["model"],
                 "screen"=>$queryResultProduct["screen"],
                 "RAM"=>$queryResultProduct["RAM"],
+                "VGA"=>$queryResultProduct["VGA"],
                 "hardware"=>$queryResultProduct["hardware"],
                 "OS"=>$queryResultProduct["OS"],
                 "CPU"=>$queryResultProduct["CPU"],

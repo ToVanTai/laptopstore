@@ -23,3 +23,6 @@ export let httpGetAsync = function(url, method, data=null, resolve, reject, wait
 export let numberWithComas = function(num){
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
+export let validateString = function(data){
+    return data.trim();
+}
