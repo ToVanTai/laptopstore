@@ -12,6 +12,7 @@ not method delete
 
 xem toàn bộ thông tin sản phẩm
 thêm: ....
+*xem chi tiết 1 sản phẩm:
 
 
 
