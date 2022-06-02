@@ -23,18 +23,6 @@
             </div>';
         }
     ?>
-    <!-- <div class="products__swiper">
-        <div class="swiper products-swiper">
-            <div class="swiper-wrapper">
-                <a href="javascript:void(0)" class="swiper-slide">
-                    <img src="https://www.asus.com/media/Odin/Websites/vn/SiteSetting/20211103114059.jpg?webp" alt="">
-                </a>
-            </div>
-            <div class="swiper-pagination"></div>
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-button-next"></div>
-        </div>
-    </div> -->
     <!-- end slider -->
 
     <!-- start products heading-->
@@ -52,7 +40,7 @@
 
     <!-- start products list -->
     <div class="products__list row">
-        <div class="discount products__item col col-xs-6 col-sm-6 col-md-3 col-lg-3">
+        <!-- <div class="discount products__item col col-xs-6 col-sm-6 col-md-3 col-lg-3">
             <a href="index.php?view=product&id=1" class="products__item__content">
                 <div class="products__item__content-img">
                     <div>
@@ -115,7 +103,7 @@
                     <p>30%</p>
                 </div>
             </a>
-        </div>
+        </div> -->
     </div>
     <!-- start products list -->
 

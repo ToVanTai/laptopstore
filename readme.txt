@@ -8,11 +8,8 @@ api/products.php?category="kk"->readAll()
 api/products.php?id=1->readItem()
 
 
-not method delete
-
-xem toàn bộ thông tin sản phẩm
-thêm: ....
-*xem chi tiết 1 sản phẩm:
-
+view=search &type=brand&name=DELL page= limit=
+view=search &type=products&name=tovantai page= limit =
+view=product&id=1
 
 
