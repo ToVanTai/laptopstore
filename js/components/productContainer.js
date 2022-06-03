@@ -10,6 +10,7 @@ let idProduct;
 let idCapacityActive;
 let discount;
 let quantityRemain;
+let quantityAdd=1;
 fetch(`${urlApi}?id=${params.id}`,{
     credentials:"include",
     method:"GET"
@@ -183,5 +184,6 @@ function onOrders(){
     }else{
         console.log("idCapacityActive "+idCapacityActive);
         console.log("idProduct "+idProduct);
+        console.log("quantityAdd "+quantityAdd);
     }
 }
