@@ -33,11 +33,18 @@ async function test(){
     }
 }
 test();
-function renderCartList(data){
-    let result ="";
-    let totalPrice=0;
+function getTotalPrice(data){
+    let result =0;
     data.forEach(element=>{
-        totalPrice+=element.quantity*element["detail"]["newPrice"];
+        result+=element.quantity*element["detail"]["newPrice"];
+    });
+    return result;
+}
+function renderCartList(data){
+    // start render carts
+    let result ="";
+    let totalPrice=getTotalPrice(data);
+    data.forEach(element=>{
         let urlBackground=`${baseUrl}store/${element["detail"]["background"]}`;
         let model = validateString(`${element["detail"]["model"]}`);
         let linkProduct=`${baseUrl}index.php?view=product&id=${element["productId"]}`;
@@ -80,4 +87,49 @@ function renderCartList(data){
     $(".carts__total-total").innerHTML=`
         ${numberWithComas(totalPrice)}<u>đ</u>
     `;
+    // end render carts
+    // start addEvent for input quantity 
+    $$(".cart__item__quantity").forEach(element=>{
+        element.addEventListener('change',function onChangeQuantity(){
+            let quantityOld = this.value;
+            let productIdChange = this.dataset.product;
+            let capacityIdChange = this.dataset.capacity;
+            if(quantityOld<=0){
+                this.value=1;
+                quantityOld=1;
+            }else{
+                for(let i=0;i<dataCarts.length;i++){
+                    if(dataCarts[i]["productId"]==productIdChange&&dataCarts[i]["capacityId"]==capacityIdChange){
+                        dataCarts[i].quantity=quantityOld;
+                        $(".carts__total-total").innerHTML=`
+                            ${numberWithComas(getTotalPrice(dataCarts))}<u>đ</u>
+                        `;
+                        break;
+                    }
+                }
+            }
+            
+        })
+    })
+    // end addEvent for input quantity 
+
+    //start addEvent for btn del cartItem
+    $$(".cart__del").forEach(element=>{
+        element.addEventListener('click',function onDeleteCart(){
+            let productIdChange = this.dataset.product;
+            let capacityIdChange = this.dataset.capacity;
+            let indexDel = dataCarts.findIndex(element=>element["productId"]==productIdChange&&element["capacityId"]==capacityIdChange);
+            if(confirm("Bạn có muấn xóa sản phẩm này khỏi giỏ hàng?")){
+                dataCarts.splice(indexDel,1);
+                renderCartList(dataCarts);
+            }
+        })
+    })
+    //start addEvent for btn del cartItem
 }
+//on update carts
+$(".carts__btn-update").addEventListener('click',function onUpdateCarts(){
+    if(confirm("Bạn có muấn cập nhật giỏ hàng lên máy chủ?")){
+        console.log(dataCarts);
+    }
+})
