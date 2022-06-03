@@ -15,6 +15,7 @@ let oldPrice;
 let newPrice;
 let background;
 let model;
+let capacityName;
 fetch(`${urlApi}?id=${params.id}`,{
     credentials:"include",
     method:"GET"
@@ -27,6 +28,7 @@ fetch(`${urlApi}?id=${params.id}`,{
                 discount=dataRes.discount;
                 idCapacityActive=dataRes.capacities[0]["id"];
                 quantityRemain=dataRes.capacities[0]["quantity"];
+                capacityName=dataRes.capacities[0]["capacity_name"];
                 background= dataRes["background"];
                 model=dataRes["model"];
                 renderProduct();
@@ -150,6 +152,7 @@ function renderCapacities(){
                 dataCapacities.forEach(element=>{
                     if(element.id==idCapacityActive){
                         quantityRemain=element.quantity;
+                        capacityName=element["capacity_name"];
                     }
                 })
                 renderCapacities();
@@ -194,7 +197,7 @@ function onOrders(){
         // console.log("oldPrice "+oldPrice);
         // console.log("newPrice "+newPrice);
         let dataBody=JSON.stringify({
-            discount,background,oldPrice,newPrice,model
+            discount,background,oldPrice,newPrice,model,capacityName
         });
         let urlCartApi=`${baseUrl}api/carts.php`;
         fetch(`${urlCartApi}?product_id=${idProduct}&capacity_id=${idCapacityActive}&quantity=${quantityAdd}`,{

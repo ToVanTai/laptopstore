@@ -4,7 +4,7 @@
         Giỏ hàng
     </div>
     <table class="carts__table" border="1">
-        <tr>
+        <!-- <tr>
             <th>Hình ảnh</th>
             <th>Tên sản phẩm</th>
             <th>Phân loại</th>
@@ -12,7 +12,7 @@
             <th>Giá tiền</th>
             <th>Xóa</th>
         </tr>
-        <tr>
+        <tr class="cart__item">
             <td>
                 <a href="">
                     <img src="./access/imgs/product1.png" alt="">
@@ -25,15 +25,15 @@
             </td>
             <td>Red, 8GB/SSD 225GB/HDD 1TB</td>
             <td>
-                <input type="number" name="" id="">
+                <input type="number" value="1" class="cart__item__quantity" name="quantity" id="">
             </td>
             <td>
                 10,999,000<u>đ</u>
             </td>
             <td>
-                <span><i class='bx bx-trash' ></i></span>
+                <span data-product="1" data-capacity="2" class="cart__del"><i class='bx bx-trash' ></i></span>
             </td>
-        </tr>
+        </tr> -->
     </table>
     <div class="carts__total">
         <span class="carts__total-title">Tổng tiền:</span>

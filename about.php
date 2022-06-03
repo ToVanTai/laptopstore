@@ -1,10 +1,13 @@
 <?php
 
 require_once "./utils/session.php";
+require_once "./db/config.php";
 Session::init();
 if(empty(Session::get("user"))){
-    header("Location: index.php");
-    die();
+    echo '<script>
+        alert("Vui lòng đăng nhập để sử dụng chức năng này.");
+        window.location.href="'.baseUrl.'";
+    </script>';
 }
 
 $view = "";
