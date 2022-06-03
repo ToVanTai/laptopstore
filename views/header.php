@@ -63,49 +63,50 @@ Session::init();
                     $avatar = "./store/" . $avatar;
                 }
                 echo '
-        <div class="navbar__item__user__logged">
-            <a href="about.php?id=' . $id . '" class="navbar__item__user__logged-infor">
-                <img src="' . $avatar . '" alt="" />
-                <p>' . $name . '</p>
-            </a>
-            <div class="navbar__item__user__logged-cart">
-                <div class="navbar__item__user__logged-cart-icon">
-                    <i class="bx bxs-cart"></i>
-                </div>
-                <div class="navbar__item__user__logged-cart-quantity">
-                    3
-                </div>
-
-                <div class="navbar__item__user__logged-cart-detail">
-                    <header>Thông tin giỏ hàng</header>
-                    <session>
-                        <div class="item">
-                            <div class="item__img">
-                                <img
-                                    src="./access/imgs/OIP.jpg"
-                                    alt=""
-                                />
-                            </div>
-                            <div class="item__detail">
-                                <p class="item__detail-title">
-                                    Simple Open Source icons carefully
-                                    crafted for designers & developers
-                                </p>
-                                <div class="item__detail-price">
-                                    <span> <sup>đ</sup>500.000 </span>
-                                    <span>x 50</span>
-                                </div>
-                            </div>
+                <div class="navbar__item__user__logged">
+                    <a href="about.php?id=' . $id . '" class="navbar__item__user__logged-infor">
+                        <img src="' . $avatar . '" alt="" />
+                        <p>' . $name . '</p>
+                    </a>
+                    <div class="navbar__item__user__logged-cart">
+                        <div class="navbar__item__user__logged-cart-icon">
+                            <i class="bx bxs-cart"></i>
                         </div>
-                    </session>
-                    <footer><a href="index.php?view=carts">giỏ hàng</a></footer>
-                </div>
-            </div>
-            <div class="navbar__item__user__logged-loggout"
-                ><p id="btn-logout">đăng xuất</p>
-                <i class="bx bx-log-out"></i
-            ></div>
-        </div>';
+                        <div class="navbar__item__user__logged-cart-quantity">
+                            3
+                        </div>
+
+                        <div class="navbar__item__user__logged-cart-detail">
+                            <header>Thông tin giỏ hàng</header>
+                            <session>
+                                <div class="item">
+                                    <div class="item__img">
+                                        <img
+                                            src="./access/imgs/OIP.jpg"
+                                            alt=""
+                                        />
+                                    </div>
+                                    <div class="item__detail">
+                                        <p class="item__detail-title">
+                                            Simple Open Source icons carefully
+                                            crafted for designers & developers
+                                        </p>
+                                        <div class="item__detail-price">
+                                            <span> <sup>đ</sup>500.000 </span>
+                                            <span>x 50</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </session>
+                            <footer><a href="index.php?view=carts">giỏ hàng</a></footer>
+                        </div>
+                    </div>
+                    <div class="navbar__item__user__logged-loggout"
+                        ><p id="btn-logout">đăng xuất</p>
+                        <i class="bx bx-log-out"></i
+                    ></div>
+                </div>';
+                echo '<script type="module" src="./js/components/cartHeader.js"></script>';
             } else { //not logged
                 echo '
         <div class="navbar__item__user__not__logged">

@@ -1,4 +1,4 @@
-import { $, $$, httpGetAsync, numberWithComas, validateString } from "../configs/constants.js";
+import { $, $$, httpGetAsync, numberWithComas, validateString,renderCartHeader } from "../configs/constants.js";
 import { baseUrl } from "../configs/configs.js";
 //get params:
 let urlSearchParams = new URLSearchParams(window.location.search);
@@ -11,6 +11,10 @@ let idCapacityActive;
 let discount;
 let quantityRemain;
 let quantityAdd=1;
+let oldPrice;
+let newPrice;
+let background;
+let model;
 fetch(`${urlApi}?id=${params.id}`,{
     credentials:"include",
     method:"GET"
@@ -23,6 +27,8 @@ fetch(`${urlApi}?id=${params.id}`,{
                 discount=dataRes.discount;
                 idCapacityActive=dataRes.capacities[0]["id"];
                 quantityRemain=dataRes.capacities[0]["quantity"];
+                background= dataRes["background"];
+                model=dataRes["model"];
                 renderProduct();
                 renderCapacities();
                 
@@ -31,7 +37,7 @@ fetch(`${urlApi}?id=${params.id}`,{
     }
 }).catch(err=>{});
 function renderProduct(){
-    $(".product__about__picture").innerHTML=`<img src="${baseUrl}store/${dataRes["background"]}" alt="">`;
+    $(".product__about__picture").innerHTML=`<img src="${baseUrl}store/${background}" alt="">`;
     document.getElementById("warranty").innerHTML=validateString(dataRes.warranty);
     let gifsElm = `
     <li class="gif">Balo ${validateString(dataRes.brand)} Office.</li>
@@ -126,8 +132,6 @@ function renderProduct(){
 function renderCapacities(){
     let selectList ='';
     let aboutPriceElm=$(".product__about__price");
-    let oldPrice;
-    let newPrice;
     dataCapacities.forEach(element=>{
         if(element.id==idCapacityActive){
             quantityRemain=element.quantity;
@@ -182,8 +186,33 @@ function onOrders(){
     if(quantityRemain<=1){
         alert("khong du so luong");
     }else{
-        console.log("idCapacityActive "+idCapacityActive);
-        console.log("idProduct "+idProduct);
-        console.log("quantityAdd "+quantityAdd);
+        // console.log("idCapacityActive "+idCapacityActive);
+        // console.log("idProduct "+idProduct);
+        // console.log("quantityAdd "+quantityAdd);
+        // console.log("discount "+discount);
+        // console.log("background "+background);
+        // console.log("oldPrice "+oldPrice);
+        // console.log("newPrice "+newPrice);
+        let dataBody=JSON.stringify({
+            discount,background,oldPrice,newPrice,model
+        });
+        let urlCartApi=`${baseUrl}api/carts.php`;
+        fetch(`${urlCartApi}?product_id=${idProduct}&capacity_id=${idCapacityActive}&quantity=${quantityAdd}`,{
+            method:"POST",
+            credentials:"include",
+            body:dataBody
+        }).then(res=>{
+            if(res.status==203){
+                res.text().then(res=>{
+                    alert(res);
+                })
+            }else{
+                res.text().then(res=>{
+                    alert("Thêm thành công.");
+                    let cartsRes = JSON.parse(res);
+                    renderCartHeader(cartsRes);
+                })
+            }
+        })
     }
 }

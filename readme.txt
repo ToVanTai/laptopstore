@@ -12,4 +12,21 @@ view=search &type=brand&name=DELL page= limit=
 view=search &type=products&name=tovantai page= limit =
 view=product&id=1
 
+api/carts.php   getAll
+api/carts.php?product_id=&capacity_id=&quantity=   post addToCart //them moi/ tang so luong
+api/carts.php?product_id=&capacity_id=&quantity=   patch change quantity
+api/carts.php?product_id=&capacity_id   delete deleteCart
+[
+    {
+        "productId":...
+        "capacityId":...
+        "quantity":....
+    },{
+        "productId":...
+        "capacityId":...
+        "quantity":....
+    }
+]
+
+
 

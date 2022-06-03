@@ -128,6 +128,9 @@ function login()
         http_response_code(200);
         $user = array("id" => $responseData[0]["id"], "role" => $responseData[0]["role_id"], "name" => $responseData[0]["name"], "avatar" => $responseData[0]["avatar"]);
         Session::set("user", $user);
+        if(empty(Session::get("carts"))){
+            Session::set("carts",array());
+        }
     } else {
         http_response_code(203);
         echo "Tên tài khoản hoặc mật khẩu không chính xác";
