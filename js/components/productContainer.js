@@ -197,7 +197,7 @@ function onOrders(){
         // console.log("oldPrice "+oldPrice);
         // console.log("newPrice "+newPrice);
         let dataBody=JSON.stringify({
-            discount,background,oldPrice,newPrice,model,capacityName
+            discount,background,oldPrice,newPrice,model,capacityName,quantityRemain
         });
         let urlCartApi=`${baseUrl}api/carts.php`;
         fetch(`${urlCartApi}?product_id=${idProduct}&capacity_id=${idCapacityActive}&quantity=${quantityAdd}`,{

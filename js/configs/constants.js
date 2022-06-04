@@ -45,7 +45,7 @@ export let renderCartHeader = function(data){
                 ${element.detail.model}
             </p>
             <div class="item__detail-price">
-                <span> <sup>đ</sup>${element.detail.newPrice} </span>
+                <span> <sup>đ</sup>${numberWithComas(element.detail.newPrice)} </span>
                 <span>x ${element.quantity}</span>
             </div>
         </div>

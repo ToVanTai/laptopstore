@@ -24,8 +24,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
     die();
 }
 if ($_SERVER["REQUEST_METHOD"] == "PATCH" ) {
-    //thay doi so luong
-    changeToCart();
+    //cap nhat carts
+    updateCarts();
     die();
 }
 if ($_SERVER["REQUEST_METHOD"] == "DELETE" ) {
@@ -96,8 +96,11 @@ function addToCart(){
     }
     
 };
-function changeToCart(){
-    echo "thay doi so luong";
+function updateCarts(){
+    $dataBody = json_decode(file_get_contents("php://input"),true);
+    Session::set("carts",$dataBody);
+    http_response_code(201);
+    echo json_encode( Session::get("carts"));
 };
 function deleteCart(){
     echo "xoa cart";

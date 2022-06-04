@@ -1,4 +1,4 @@
-import { $, $$, httpGetAsync, numberWithComas, validateString } from "../configs/constants.js";
+import { $, $$, httpGetAsync, numberWithComas, validateString,renderCartHeader } from "../configs/constants.js";
 import { baseUrl } from "../configs/configs.js";
 let urlApiCarts = `${baseUrl}api/carts.php`;
 let dataCarts;
@@ -65,7 +65,7 @@ function renderCartList(data){
                     <input type="number" class="cart__item__quantity" name="quantity" data-product="${element["productId"]}" data-capacity="${element["capacityId"]}" value="${element["quantity"]}">
                 </td>
                 <td>
-                    ${element["detail"]["newPrice"]}<u>đ</u>
+                    ${numberWithComas(element["detail"]["newPrice"])}<u>đ</u>
                 </td>
                 <td>
                     <span class="cart__del" data-product="${element["productId"]}" data-capacity="${element["capacityId"]}"><i class='bx bx-trash' ></i></span>
@@ -94,7 +94,11 @@ function renderCartList(data){
             let quantityOld = this.value;
             let productIdChange = this.dataset.product;
             let capacityIdChange = this.dataset.capacity;
-            if(quantityOld<=0){
+            let quantityRemain=dataCarts.find((elm)=>elm.productId==productIdChange&&elm.capacityId==capacityIdChange)["detail"]["quantityRemain"];
+            if(quantityOld>=quantityRemain){
+                this.value=quantityRemain-1;
+                quantityOld=quantityRemain-1;
+            }else if(quantityOld<=0){
                 this.value=1;
                 quantityOld=1;
             }else{
@@ -130,6 +134,29 @@ function renderCartList(data){
 //on update carts
 $(".carts__btn-update").addEventListener('click',function onUpdateCarts(){
     if(confirm("Bạn có muấn cập nhật giỏ hàng lên máy chủ?")){
-        console.log(dataCarts);
+        let dataBody = JSON.stringify(dataCarts);
+        fetch(`${baseUrl}api/carts.php`,{
+            method:"PATCH",
+            credentials:"include",
+            body:dataBody
+        }).then(res=>{
+            if(res.status==200||res.status==201){
+                res.text().then(res=>{
+                    alert("Cập nhật giỏ hàng thành công.");
+                    dataCarts=JSON.parse(res);
+                    renderCartHeader(dataCarts);
+                })
+            }else{
+                console.log("Cập nhật thất bại.");
+            }
+        })
+    }
+})
+//on pay carts
+$(".carts__btn-pay").addEventListener('click',function onPayCarts(){
+    if(!dataCarts||dataCarts.length==0){
+        alert("Giỏ hàng đang trống");
+    }else{
+        alert("Sẵn sàng thanh toán");
     }
 })
