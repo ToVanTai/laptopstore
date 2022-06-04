@@ -12,11 +12,11 @@ fetch(`${baseUrl}api/user.php`,{
         if(res){
             let formContent='';
             let dataRes=JSON.parse(res);
-            let name=dataRes.name==null?"Người dùng":dataRes.name;
-            let phoneNumber=dataRes.phone_number==null?"Chưa có":dataRes.phone_number;
-            let address=dataRes.address==null?"Chưa có":dataRes.address;
+            let name=dataRes.name==null?"":dataRes.name;
+            let phoneNumber=dataRes.phone_number==null?"":dataRes.phone_number;
+            let address=dataRes.address==null?"":dataRes.address;
             let avatar=dataRes.avatar==null?"./access/imgs/user.png":dataRes.avatar;
-            let email=dataRes.email==null?"Chưa có":dataRes.email;
+            let email=dataRes.email==null?"":dataRes.email;
             formContent=`
             <label for="name" >Họ và tên</label>
                 <input type="text"  placeholder="Nhập họ tên" value="${name}"  required name="name"  id="name">
@@ -28,7 +28,7 @@ fetch(`${baseUrl}api/user.php`,{
                 <input type="text" placeholder="Nhập địa chỉ" value="${address}" required name="address"  id="address">
                 
                 <label for="avatar">Ảnh đại diện</label>
-                <input type="file" name="avatar" value="${name}"  id="avatar">
+                <input type="file" name="avatar"  id="avatar">
 
                 <label for="email">Email</label>
                 <input type="email" placeholder="Nhập email" value="${email}" required name="email"  id="email">

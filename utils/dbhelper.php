@@ -1,8 +1,12 @@
 <?php
-    function execute($sql){
+    function execute($sql,$multi=false){
         $conn = empty($conn) ? mysqli_connect(host,user,password,database) : $conn;
         mysqli_set_charset($conn,'utf8');
-        mysqli_query($conn,$sql);
+        if($multi){
+            mysqli_multi_query($conn, $sql);
+        }else{
+            mysqli_query($conn,$sql);
+        }
         mysqli_close($conn);
     }
     function executeResult($sql,$resultOne=false){

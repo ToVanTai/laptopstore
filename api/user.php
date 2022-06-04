@@ -142,7 +142,7 @@ function logout()
 function update1()
 {
     if (!empty(Session::get("user"))) {
-        $id = Session::get("user")["id"];;
+        $id = Session::get("user")["id"];
         $name = getPOST("name");
         $phoneNumber = getPOST("phone_number");
         $address = getPOST("address");

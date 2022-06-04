@@ -164,7 +164,21 @@ $(".carts__btn-pay").addEventListener('click',function onPayCarts(){
         if(!dataCarts||dataCarts.length==0){
             alert("Giỏ hàng đang trống");
         }else{
-            alert("Sẵn sàng thanh toán");
+            fetch(`${baseUrl}api/orders.php`,{
+                method:"POST",
+                credentials:"include"
+            }).then(res=>{
+                if(res.status==203){
+                    res.text().then(res=>{
+                        alert(res);
+                    })
+                }else if(res.status==201||res.status==200){
+                    res.text().then(res=>{
+                        alert(res);
+                        window.location.href=`${baseUrl}index.php?view=purchased`;
+                    })
+                }
+            })
         }
     }
 })
