@@ -12,7 +12,7 @@
                 <div class="action">
                     <button type="submit" id="btn-submit">Lưu thay đổi</button>
                     <p>hoặc</p>
-                    <a href="about.php?id=<?=$id?>">Trở lại</a>
+                    <a href="about.php">Trở lại</a>
                 </div>
             </form>
         </div>

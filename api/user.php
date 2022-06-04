@@ -38,28 +38,26 @@ if ($_SERVER["REQUEST_METHOD"] == "DELETE") {
 }
 function about()
 {
-    $idUser = getGET("id");
+    // $idUser = getGET("id");
+    
     $responseData = [];
     if (!empty(Session::get("user"))) {
-        if ($idUser != null || $idUser >= 0) {
-            $query = 'select * from users where id = ' . $idUser . ' limit 1;';
-            $response = executeResult($query, true);
-            $responseData = array(
-                "id" => $response["id"],
-                "account" => $response["account"],
-                "name" => $response["name"],
-                "phone_number" => $response["phone_number"],
-                "address" => $response["address"],
-                "avatar" => $response["avatar"],
-                "email" => $response["email"]
-            );
-            echo json_encode($responseData);
-            http_response_code(200);
-            die();
-        }
-    }
-    http_response_code(200);
-    echo json_encode($responseData);
+        $idUser=Session::get("user")["id"];
+        $query = 'select * from users where id = ' . $idUser . ' limit 1;';
+        $response = executeResult($query, true);
+        $responseData = array(
+            "id" => $response["id"],
+            "account" => $response["account"],
+            "name" => $response["name"],
+            "phone_number" => $response["phone_number"],
+            "address" => $response["address"],
+            "avatar" => $response["avatar"],
+            "email" => $response["email"]
+        );
+        echo json_encode($responseData);
+        http_response_code(200);
+        die();   
+    };
 }
 
 function register()
@@ -144,7 +142,7 @@ function logout()
 function update1()
 {
     if (!empty(Session::get("user"))) {
-        $id = getGET("id");
+        $id = Session::get("user")["id"];;
         $name = getPOST("name");
         $phoneNumber = getPOST("phone_number");
         $address = getPOST("address");

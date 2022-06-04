@@ -64,7 +64,7 @@ Session::init();
                 }
                 echo '
                 <div class="navbar__item__user__logged">
-                    <a href="about.php?id=' . $id . '" class="navbar__item__user__logged-infor">
+                    <a href="about.php" class="navbar__item__user__logged-infor">
                         <img src="' . $avatar . '" alt="" />
                         <p>' . $name . '</p>
                     </a>

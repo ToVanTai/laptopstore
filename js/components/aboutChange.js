@@ -1,9 +1,9 @@
 import { $, $$ } from "../configs/constants.js";
 import { baseUrl } from "../configs/configs.js";
 let formAbout = $(".form__about");
-let params = new URLSearchParams(window.location.search);
-let aboutId=params.get("id");
-fetch(`${baseUrl}api/user.php?id=${aboutId}`,{
+// let params = new URLSearchParams(window.location.search);
+// let aboutId=params.get("id");
+fetch(`${baseUrl}api/user.php`,{
     credentials:"include",
     method:"GET"
 })
@@ -39,7 +39,7 @@ fetch(`${baseUrl}api/user.php?id=${aboutId}`,{
             btnSubmit.addEventListener('click',function(event){
                 event.preventDefault();
                 let form = new FormData($(".form__about"));
-                fetch(`${baseUrl}api/user.php?id=${aboutId}`,{
+                fetch(`${baseUrl}api/user.php`,{
                     credentials:"include",
                     method:"POST",
                     body:form

@@ -1,9 +1,7 @@
 import { $, $$ } from "../configs/constants.js";
 import { baseUrl } from "../configs/configs.js";
 let aboutList = $(".about__list");
-let params = new URLSearchParams(window.location.search);
-let aboutId=params.get("id");
-fetch(`${baseUrl}api/user.php?id=${aboutId}`,{
+fetch(`${baseUrl}api/user.php`,{
     credentials:"include",
     method:"GET"
 }).then(res=>{
