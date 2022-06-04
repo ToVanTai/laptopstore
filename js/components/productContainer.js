@@ -39,6 +39,7 @@ fetch(`${urlApi}?id=${params.id}`,{
     }
 }).catch(err=>{});
 function renderProduct(){
+    $(".product__heading").innerHTML=validateString(dataRes.model);
     $(".product__about__picture").innerHTML=`<img src="${baseUrl}store/${background}" alt="">`;
     document.getElementById("warranty").innerHTML=validateString(dataRes.warranty);
     let gifsElm = `
