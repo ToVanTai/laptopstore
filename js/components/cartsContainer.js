@@ -2,6 +2,7 @@ import { $, $$, httpGetAsync, numberWithComas, validateString,renderCartHeader }
 import { baseUrl } from "../configs/configs.js";
 let urlApiCarts = `${baseUrl}api/carts.php`;
 let dataCarts;
+let isReadyBuyCarts = true;
 async function getCartsData(url){
     await new Promise((resolve,reject)=>{
         fetch(url,{
@@ -108,6 +109,7 @@ function renderCartList(data){
                         $(".carts__total-total").innerHTML=`
                             ${numberWithComas(getTotalPrice(dataCarts))}<u>đ</u>
                         `;
+                        isReadyBuyCarts=false;
                         break;
                     }
                 }
@@ -125,6 +127,7 @@ function renderCartList(data){
             let indexDel = dataCarts.findIndex(element=>element["productId"]==productIdChange&&element["capacityId"]==capacityIdChange);
             if(confirm("Bạn có muấn xóa sản phẩm này khỏi giỏ hàng?")){
                 dataCarts.splice(indexDel,1);
+                isReadyBuyCarts=false;
                 renderCartList(dataCarts);
             }
         })
@@ -145,6 +148,7 @@ $(".carts__btn-update").addEventListener('click',function onUpdateCarts(){
                     alert("Cập nhật giỏ hàng thành công.");
                     dataCarts=JSON.parse(res);
                     renderCartHeader(dataCarts);
+                    isReadyBuyCarts=true;
                 })
             }else{
                 console.log("Cập nhật thất bại.");
@@ -154,9 +158,13 @@ $(".carts__btn-update").addEventListener('click',function onUpdateCarts(){
 })
 //on pay carts
 $(".carts__btn-pay").addEventListener('click',function onPayCarts(){
-    if(!dataCarts||dataCarts.length==0){
-        alert("Giỏ hàng đang trống");
+    if(isReadyBuyCarts==false){
+        alert("Vui lòng click 'cập nhật' giỏ hàng!");
     }else{
-        alert("Sẵn sàng thanh toán");
+        if(!dataCarts||dataCarts.length==0){
+            alert("Giỏ hàng đang trống");
+        }else{
+            alert("Sẵn sàng thanh toán");
+        }
     }
 })
