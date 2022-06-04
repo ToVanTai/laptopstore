@@ -1,10 +1,3 @@
-<?php
-    require_once "./utils/session.php";
-    Session::init();
-    if(!empty(Session::get("user"))){
-        $id=Session::get("user")["id"];
-    }
-?>
 <div class="container">
             <h3>Thông tin người dùng</h3>
             <div class="about__list">

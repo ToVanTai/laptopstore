@@ -8,6 +8,7 @@ if(empty(Session::get("user"))){
         alert("Vui lòng đăng nhập để sử dụng chức năng này.");
         window.location.href="'.baseUrl.'";
     </script>';
+    die();
 }
 
 $view = "";
