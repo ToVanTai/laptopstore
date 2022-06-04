@@ -175,6 +175,7 @@ $(".carts__btn-pay").addEventListener('click',function onPayCarts(){
                 }else if(res.status==201||res.status==200){
                     res.text().then(res=>{
                         alert(res);
+                        // console.log(res);
                         window.location.href=`${baseUrl}index.php?view=purchased`;
                     })
                 }
