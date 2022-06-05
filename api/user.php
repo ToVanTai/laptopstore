@@ -28,6 +28,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['crud_req'] == "update") {
     update1();
     die();
 }
+if ($_SERVER["REQUEST_METHOD"] == "PATCH" && empty($_POST['crud_req'])) {
+    updatev2();
+    die();
+}
 // if ($_SERVER["REQUEST_METHOD"] == "PATCH") {
 //     update();
 //     die();
@@ -39,10 +43,10 @@ if ($_SERVER["REQUEST_METHOD"] == "DELETE") {
 function about()
 {
     // $idUser = getGET("id");
-    
+
     $responseData = [];
     if (!empty(Session::get("user"))) {
-        $idUser=Session::get("user")["id"];
+        $idUser = Session::get("user")["id"];
         $query = 'select * from users where id = ' . $idUser . ' limit 1;';
         $response = executeResult($query, true);
         $responseData = array(
@@ -56,7 +60,7 @@ function about()
         );
         echo json_encode($responseData);
         http_response_code(200);
-        die();   
+        die();
     };
 }
 
@@ -126,8 +130,8 @@ function login()
         http_response_code(200);
         $user = array("id" => $responseData[0]["id"], "role" => $responseData[0]["role_id"], "name" => $responseData[0]["name"], "avatar" => $responseData[0]["avatar"]);
         Session::set("user", $user);
-        if(empty(Session::get("carts"))){
-            Session::set("carts",array());
+        if (empty(Session::get("carts"))) {
+            Session::set("carts", array());
         }
     } else {
         http_response_code(203);
@@ -149,66 +153,64 @@ function update1()
         $email = getPOST("email");
         $avatarFiles = $_FILES["avatar"];
         $nameReg = "/^[0-9a-zA-Z\săâđêôơưÂĂĐÊÔƠƯ]{3,15}$/";
-        $successMes="Cập nhật thông tin cá nhân thành công";
-        $failMess="Cập nhật thất bại";
-        $updated_at= date("Y-m-d h:i:s");
+        $successMes = "Cập nhật thông tin cá nhân thành công";
+        $failMess = "Cập nhật thất bại";
+        $updated_at = date("Y-m-d h:i:s");
         if (preg_match($nameReg, $name)) {
             if (empty($avatarFiles["name"])) {
                 $query = 'UPDATE users SET name="' . $name . '", phone_number="' . $phoneNumber . '",
-            address="' . $address . '", email="' . $email . '", updated_at="'.$updated_at.'" WHERE id=' . $id . ';';
+            address="' . $address . '", email="' . $email . '", updated_at="' . $updated_at . '" WHERE id=' . $id . ';';
                 execute($query);
                 echo $successMes;
                 http_response_code(203);
             } else {
                 $avatarName = time() . $avatarFiles["name"];
                 $formFile = $avatarFiles["tmp_name"];
-                $toFile = "../store/".$avatarName;
+                $toFile = "../store/" . $avatarName;
                 $query = "select * from users where id=" . $id . " limit 1";
                 $avartarOld = executeResult($query)[0]["avatar"];
 
                 if (count(executeResult($query)) >= 1) {
                     $query = 'UPDATE users SET name="' . $name . '", phone_number="' . $phoneNumber . '",
-                                address="' . $address . '", email="' . $email . '",avatar="' . $avatarName . '", updated_at="'.$updated_at.'" WHERE id='.$id.';';
-                    if($avartarOld==null){//không cần xóa file cũ
-                        if(validateFile($_FILES["avatar"])!=""){
+                                address="' . $address . '", email="' . $email . '",avatar="' . $avatarName . '", updated_at="' . $updated_at . '" WHERE id=' . $id . ';';
+                    if ($avartarOld == null) { //không cần xóa file cũ
+                        if (validateFile($_FILES["avatar"]) != "") {
                             echo validateFile($_FILES["avatar"]);
                             http_response_code(200);
-                        }else{
-                            if(move_uploaded_file($formFile,$toFile)){
+                        } else {
+                            if (move_uploaded_file($formFile, $toFile)) {
                                 execute($query);
                                 echo $successMes;
-                            }else{
+                            } else {
                                 echo $failMess;
                             }
                         }
-                    }else{//phải xóa file cũ
-                        if(validateFile($_FILES["avatar"])!=""){
+                    } else { //phải xóa file cũ
+                        if (validateFile($_FILES["avatar"]) != "") {
                             echo validateFile($_FILES["avatar"]);
                             http_response_code(200);
-                        }else{
-                            if(file_exists("../store/".$avartarOld)){
-                                unlink("../store/".$avartarOld);
-                                if(move_uploaded_file($formFile,$toFile)){
+                        } else {
+                            if (file_exists("../store/" . $avartarOld)) {
+                                unlink("../store/" . $avartarOld);
+                                if (move_uploaded_file($formFile, $toFile)) {
                                     execute($query);
                                     echo $successMes;
-                                }else{
+                                } else {
                                     echo $failMess;
                                 }
-                            }else{
-                                if(move_uploaded_file($formFile,$toFile)){
+                            } else {
+                                if (move_uploaded_file($formFile, $toFile)) {
                                     execute($query);
                                     echo $successMes;
-                                }else{
+                                } else {
                                     echo $failMess;
                                 }
                             }
-            
                         }
-
                     }
-                    $query = 'select * from users where id='.$id.' limit 1';
-                    $aboutUse=executeResult($query);
-                    if(count($aboutUse)>=1){
+                    $query = 'select * from users where id=' . $id . ' limit 1';
+                    $aboutUse = executeResult($query);
+                    if (count($aboutUse) >= 1) {
                         $user = array("id" => $aboutUse[0]["id"], "role" => $aboutUse[0]["role_id"], "name" => $aboutUse[0]["name"], "avatar" => $aboutUse[0]["avatar"]);
                         Session::set("user", $user);
                     }
@@ -218,6 +220,49 @@ function update1()
             http_response_code(203);
             echo "tên người dùng: dài từ 3->15 ký tự, chỉ bao gồm số và chữ, khoảng trắng. ";
         }
+    }
+}
+function updatev2()
+{
+    $errMessage = "";
+    if (empty(Session::get("user"))) {
+        $errMessage = $errMessage . "Bạn chưa đăng nhập!\n";
+        echo $errMessage;
+        http_response_code(203);
+        die();
+    };
+    $dataBody = json_decode(file_get_contents("php://input"), true);
+    $idUser = Session::get("user")["id"];
+    $account = $dataBody["account"];
+    $password = $dataBody["password"];
+    $newPassword = $dataBody["newPassword"];
+    $crudReq = $dataBody["crud_req"];
+    if ($crudReq != "changePassword") {
+        $errMessage = $errMessage . "Yêu cầu không được thực hiện!\n";
+        echo $errMessage;
+        http_response_code(203);
+        die();
+    }
+
+    $query = "select account from users where id = '" . $idUser . "'  and  account = '" . $account . "'  and  password = '" . md5($password) . "' ;";
+    $resOld = executeResult($query);
+    if (count($resOld) >=1 ) {
+        if ($newPassword == $password) {
+            $errMessage = $errMessage . "Mật khẩu cũ với mật khẩu mới không được khớp!\n";
+            echo $errMessage;
+            http_response_code(203);
+            die();
+        }else{
+            $query = 'update users set password = "'.md5($newPassword).'" where id = "'.$idUser.'" and account= "'.$account.'" and password = "'.md5($password).'" ;';
+            execute($query);
+            http_response_code(201);
+            echo "Cập nhật thành công!\nVui lòng đăng nhập lại.";
+            Session::destroy();
+        }
+    }else{
+        echo "Mật khẩu không đúng!\n";
+        http_response_code(203);
+        die();
     }
 }
 // function update()
