@@ -11,8 +11,10 @@ let dataProducts=[];
 if(params.view=="search"){    
     if(params.type=="brand"){
         endPoint["category-name"]=params.name;
+        document.title="Hãng " + params.name;
     }else if(params.type=="products"){
         endPoint["search"]=params.name;
+        document.title="Tìm kiếm " + params.name;
     }
     endPoint.page= params.page?params.page:1;
 }else{

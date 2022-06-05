@@ -3,6 +3,7 @@ import {baseURL} from "../configs/configs.js";
 let params = new URLSearchParams(window.location.search);
 let idOrder = params.get("id");
 let cartData ;
+document.title = "Trang quản lý đơn hàng";
 async function getCartData(url){
     await new Promise((resolve, reject)=>{
         fetch(url,{

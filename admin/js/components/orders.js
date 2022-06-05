@@ -3,7 +3,7 @@ import {baseURL} from "../configs/configs.js";
 let ordersIdList;
 let orderIdActive;//history
 let ordersList;
-
+document.title = "Trang quản lý đơn hàng";
 async function getOrdersIdList(url){
     await new Promise((resolve,reject)=>{
         fetch(url,{

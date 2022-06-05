@@ -2,6 +2,7 @@ import { $, $$, numberWithComas, validateString } from "../configs/constants.js"
 import { baseUrl } from "../configs/configs.js";
 let urlApi = `${baseUrl}/api/orders.php`;
 let listDataOrders;
+document.title = "Trang sản phẩm đã mua";
 async function getListDataOrders (urlApi) {
     await new Promise((resolve, reject) => {
         fetch(`${urlApi}`, {

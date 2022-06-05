@@ -33,7 +33,7 @@ fetch(`${urlApi}?id=${params.id}`,{
                 model=dataRes["model"];
                 renderProduct();
                 renderCapacities();
-                
+                document.title="Trang chi tiết sản phẩm - " + validateString(model);
             }
         )
     }

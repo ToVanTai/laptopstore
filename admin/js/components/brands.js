@@ -1,6 +1,7 @@
 import {$,$$} from "../configs/constants.js";
 import {baseURL} from "../configs/configs.js";
 let brandList = document.getElementById("brand__list");
+document.title="Trang quản lý hãng";
 fetch(`${baseURL}admin/controller/brands.php`,{
     method:"GET",
     credentials:"include"

@@ -3,6 +3,7 @@ import { baseUrl } from "../configs/configs.js";
 let urlApiCarts = `${baseUrl}api/carts.php`;
 let dataCarts;
 let isReadyBuyCarts = true;
+document.title="Trang giỏ hàng";
 async function getCartsData(url){
     await new Promise((resolve,reject)=>{
         fetch(url,{
