@@ -23,6 +23,18 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     viewOrders();
     die();
 }
+if($_SERVER["REQUEST_METHOD"] == "PATCH"){
+    $idUser = Session::get("user")["id"];
+    $dataBody = json_decode(file_get_contents("php://input"),true);
+    if(empty($dataBody["statusChange"])||empty($dataBody["orderId"])){
+        echo "Cập nhật thất bại!";
+        http_response_code(203);
+        die();
+    }
+    $query='update orders set status_id = "'.$dataBody["statusChange"].'" where id = "'.$dataBody["orderId"].'" and user_id = "'.$idUser.'";';
+    execute($query);
+    http_response_code(201);
+}
 function addToOrders()
 {
     $carts = Session::get("carts");
@@ -67,7 +79,9 @@ function addToOrders()
 }
 function viewOrders(){
     $idUser = Session::get("user")["id"];
-    $query = "select orders.id as orderId,status.id as statusId, status.name as statusName, orders.created_at, orders.updated_at from orders inner join status on orders.status_id = status.id inner join users on users.id = orders.user_id where orders.user_id= ".$idUser ." ;";
+    $query = "select orders.id as orderId,status.id as statusId, status.name as statusName, 
+    orders.created_at, orders.updated_at from orders inner join status on orders.status_id = status.id 
+    inner join users on users.id = orders.user_id where orders.user_id= ".$idUser ." ORDER BY orders.created_at DESC ;";
     $listDataMain = executeResult($query);
     if(count($listDataMain)<=0){
         echo json_encode(array());
