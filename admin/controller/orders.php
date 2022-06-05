@@ -12,4 +12,11 @@ if (empty(Session::get("user")["role"])||Session::get("user")["role"]!=2) {
     die();
 }
 $method = $_SERVER["REQUEST_METHOD"];
+if($method == "GET"){
+    $statusId = getGET("status-id");
+    $query = "select orders.id as orderId, status.name as statusName, orders.created_at as createAt, orders.updated_at as updatedAt from orders inner join status on orders.status_id = status.id  where status.id = '".$statusId."'";
+    $dataMain = executeResult($query);
+    echo json_encode($dataMain);
+    http_response_code(200);
+}
 ?>

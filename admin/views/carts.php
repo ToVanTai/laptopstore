@@ -1,29 +1,32 @@
 <div class="container">
-        <a href="#" class="btn">Chưa xử lý</a>
-        <a href="#" class="btn">Đã xử lý</a>
+        <select name="action" id="actions" style="padding: 5px 10px;margin-bottom: 10px;">
+        </select>
         <table border="1">
             <thead>
                 <tr>
-                    <th>STT</th>
                     <th>Mã đơn hàng</th>
                     <th>Ngày đặt</th>
-                    <th>Ngày giao</th>
                     <th>Tình trạng</th>
                     <th>Thao tác</th>
+                    <th>Xem</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>1</td>
                     <td>40</td>
                     <td>2022-05-23</td>
-                    <td>dự kiến sau 3 ngày đơn hàng sẽ được xử lý</td>
                     <td>processing</td>
                     <td>
-                        <a href="#" class="btn">xử lý</a>
+                        <select name="status">
+                            <option value=""></option>
+                        </select>
+                    </td>
+                    <td>
+                        <a href="">Xem</a>
                     </td>
                 </tr>
             </tbody>
         </table>
         
     </div>
+    <script src="./js/components/orders.js" type="module"></script>
