@@ -1,23 +1,47 @@
 <div class="container">
+        <h3 style="text-align:center">Thông tin chung</h3>
         <table border="1">
             <thead>
                 <tr>
-                    <th>STT</th>
-                    <th>Tên sản phẩm</th>
-                    <th>Hình ảnh</th>
-                    <th>Giá</th>
+                    <th>Mã đơn hàng</th>
+                    <th>Trạng thái đơn hàng</th>
+                    <th>Ngày tạo</th>
+                    <th>Tổng tiền</th>
                     <th>Số lượng</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="cartMain">
                 <tr>
-                    <td>1</td>
-                    <td> laptop 01 xd laptop 01 laptop 01 xd laptop 01 laptop 01 xd laptop 01 xd </td>
-                    <td><img src="../access/imgs/product11-300x300.jpg" alt=""></td>
-                    <td>20.999.000 VND</td>
-                    <td>5</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
             </tbody>
         </table>
-        <a href="#" class="btn">Chi tiết</a>
+        <h3 style="text-align:center; margin: 5px 0px">Thông tin chi tiết sản phẩm</h3>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Tên sản phẩm</th>
+                    <th>Ảnh</th>
+                    <th>Dung lượng</th>
+                    <th>Giá</th>
+                    <th>Số lượng</th>
+                    <th>Xem</th>
+                </tr>
+            </thead>
+            <tbody class="cartDetail">
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
+<script src="./js/components/orderDetail.js" type="module"></script>

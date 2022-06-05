@@ -18,7 +18,7 @@
                 $viewMode = "product";
             }elseif($viewMode == "brands"||$viewMode == "brand" || $viewMode == "change-brand" || $viewMode == "new-brand"){
                 $viewMode = "brand";
-            }else{
+            }elseif($viewMode=="carts"||$viewMode=="cart"){
                 $viewMode = "cart";
             }
         ?>

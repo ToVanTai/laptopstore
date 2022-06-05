@@ -31,6 +31,11 @@ if (empty($user)) {
                 include "./views/carts.php";
                 include "./views/footer.php";
                 break;
+            case "cart":
+                include "./views/header.php";
+                include "./views/cart.php";
+                include "./views/footer.php";
+                break;
             case "brands":
                 include "./views/header.php";
                 include "./views/brands.php";
