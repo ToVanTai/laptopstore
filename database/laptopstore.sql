@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th6 04, 2022 lúc 11:21 AM
+-- Thời gian đã tạo: Th6 06, 2022 lúc 11:04 AM
 -- Phiên bản máy phục vụ: 10.4.21-MariaDB
 -- Phiên bản PHP: 7.4.25
 
@@ -102,15 +102,6 @@ CREATE TABLE `products` (
   `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
 
---
--- Đang đổ dữ liệu cho bảng `products`
---
-
-INSERT INTO `products` (`id`, `brand_id`, `model`, `screen`, `RAM`, `hardware`, `OS`, `CPU`, `VGA`, `background`, `warranty`, `discount`, `color`, `created_by`, `created_at`, `updated_at`) VALUES
-(11, 10, 'Laptop gaming ASUS ROG Zephyrus Duo 16 GX650RW LO999W', '                                                                                                                                 16\" WQXGA (2560 x 1600) 16:10, 165Hz, 3ms, anti-glare display, DCI-P3:100%, Pantone Validated, FreeSync Premium Pro, Support Dolby Vision HDR, Mini LED, 1100 Nits, ROG Nebula HDR Display. \r\n                \r\n                \r\n                \r\n                \r\n                \r\n                \r\n                \r\n                ', '32GB (16x2) DDR5 4800MHz (2x SO-DIMM socket, up to 64GB SDRAM)', '1TB M.2 NVMe™ PCIe® 4.0 Performance SSD (2 slots)', 'Windows 11 Home', 'AMD Ryzen 9 6900HX 3.3GHz up to 4.9GHz 16MB', '                                                                                                                                 NVIDIA® GeForce RTX™ 3070Ti 8GB GDDR6 With ROG Boost: 1460MHz* at 150W (1410MHz Boost Clock+50MHz OC, 125W + 25W Dynamic Boost) \r\n                \r\n                \r\n                \r\n                \r\n                \r\n                \r\n                \r\n                ', '1654074008test3.webp', 'Bảo hành chính hãng 12 tháng. ', 0, 'Black', 21, '2022-06-01 09:58:04', '2022-06-01 04:05:53'),
-(12, 10, 'Laptop gaming ASUS ROG Zephyrus Duo 16 GX650RX LO156W', '                16\" WQXGA (2560 x 1600) 16:10, 165Hz, 3ms, anti-glare display, DCI-P3:100%, Pantone Validated, FreeSync Premium Pro, Support Dolby Vision HDR, Mini LED, 1100 Nits, ROG Nebula HDR Display.\r\n                ', '32GB (16x2) DDR5 4800MHz  (2x SO-DIMM socket, up to 64GB SDRAM)', '2TB M.2 NVMe™ PCIe® 4.0 Performance SSD (2 slots)', 'Windows 11 Home', 'AMD Ryzen 9 6900HX 3.3GHz up to 4.9GHz 16MB', '                NVIDIA® GeForce RTX™ 3080Ti 16GB GDDR6 With ROG Boost: 1445 MHz* at 165W (1395MHz Boost Clock+50MHz OC, 140W + 10W Dynamic Boost, 140W+25W Manual)\r\n                ', '1654074049test1.webp', 'Bảo hành chính hãng 24 tháng. ', 0, 'Black', 21, '2022-06-01 10:50:49', '2022-06-01 04:00:49'),
-(13, 12, 'Laptop Lenovo IdeaPad Gaming 3 15ACH6 82K201BCVN', '15.6\" FHD (1920x1080) IPS 250nits Anti-glare, 120Hz, 45% NTSC, DC dimmer', '8GB (8x1) DDR4 3200MHz (2x SO-DIMM socket, up to 16GB SDRAM)', '256GB SSD M.2 2242 PCIe 3.0x4 NVMe', 'Windows 11 Home', 'AMD Ryzen 5 5600H 3.3GHz up to 4.2GHz 16MB', 'NVIDIA GeForce GTX 1650 4GB GDDR6                ', '1654074319test4.webp', 'Bảo hành chính hãng 24 tháng. ', 13, 'Shadow Black', 21, '2022-06-01 04:05:19', '2022-06-01 04:05:19');
-
 -- --------------------------------------------------------
 
 --
@@ -124,17 +115,6 @@ CREATE TABLE `product_capacities` (
   `price` int(11) NOT NULL,
   `quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
-
---
--- Đang đổ dữ liệu cho bảng `product_capacities`
---
-
-INSERT INTO `product_capacities` (`id`, `product_id`, `capacity_name`, `price`, `quantity`) VALUES
-(3, 11, '32GB/SSD 1TB', 24500000, 1),
-(4, 12, '32GB/2T SSD', 25000000, 4),
-(5, 11, '16GB/SSD 500GB', 20000000, 5),
-(6, 13, '8GB/ 256GB SSD', 16490000, 3),
-(7, 13, '16GB/ 256GB SSD', 18000000, 7);
 
 -- --------------------------------------------------------
 
@@ -171,16 +151,18 @@ CREATE TABLE `status` (
 --
 
 INSERT INTO `status` (`id`, `name`) VALUES
-(1, 'Chờ xác nhận'),
-(2, 'Chờ shop xác nhận'),
-(3, 'Shop đã xác nhận'),
-(4, 'Shop đang chuẩn bị hàng'),
-(5, 'Đơn vị đang vận chuyển'),
-(6, 'Đang giao hàng'),
-(7, 'Giao hàng thành công'),
-(8, 'Trả hàng'),
-(9, 'Shop xác nhận trả hàng'),
-(10, 'Trả hàng thành công');
+(1, 'Chờ shop xác nhận'),
+(2, 'Shop đã xác nhận'),
+(3, 'Shop đang chuẩn bị hàng'),
+(4, 'Đơn vị đang vận chuyển'),
+(5, 'Shiper đang giao hàng'),
+(6, 'Giao hàng thành công'),
+(7, 'Yêu cầu trả hàng'),
+(8, 'Shop xác nhận trả hàng'),
+(9, 'Trả hàng thành công'),
+(10, 'Đơn hàng bị hủy.'),
+(11, 'Trả hàng thất bại'),
+(12, 'Khách không nhận.');
 
 -- --------------------------------------------------------
 
@@ -207,9 +189,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `role_id`, `account`, `password`, `name`, `phone_number`, `address`, `avatar`, `email`, `created_at`, `updated_at`) VALUES
-(21, 2, 'admin', '25d55ad283aa400af464c76d713c07ad', 'tô văn tài', 973867269, 'Xóm 4, thôn Gia Lễ, xã Đông Mỹ, thành phố Thái Bình, tỉnh Thái Bình', '1653793675sexygirl.jpg', 'tovantaidz2001@gmail.com', '2022-05-29 10:06:46', '2022-06-04 11:14:33'),
-(22, 1, 'account1', '827ccb0eea8a706c4c34a16891f84e7b', 'userTest', 9234723, 'xóm 4, thôn Gia lễ, xã Đông Mỹ, thành phố Thái Bình', '1653794119cuteness.jpg', 'tovantaidz2001@gmail.com', '2022-05-29 10:13:06', '2022-05-29 10:15:59'),
-(23, 1, 'account2', '827ccb0eea8a706c4c34a16891f84e7b', 'account2', 28470234, '', '1653837972hotgirl.jpg', 'tovantaidz2001@gmail.com', '2022-05-29 10:25:32', '2022-05-29 10:26:12');
+(21, 2, 'admin', '25d55ad283aa400af464c76d713c07ad', 'tô văn tài', 973867269, 'Xóm 4, thôn Gia Lễ, xã Đông Mỹ, thành phố Thái Bình, tỉnh Thái Bình', '1653793675sexygirl.jpg', 'tovantaidz2001@gmail.com', '2022-05-29 10:06:46', '2022-06-04 02:58:01');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -287,13 +267,13 @@ ALTER TABLE `brands`
 -- AUTO_INCREMENT cho bảng `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT cho bảng `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT cho bảng `products`
@@ -317,13 +297,13 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT cho bảng `status`
 --
 ALTER TABLE `status`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
