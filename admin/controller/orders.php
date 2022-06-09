@@ -1,11 +1,12 @@
 <?php
-header("Access-Control-Allow-Origin: http://localhost");
-header("Access-Control-Allow-Methods: GET,POST,PUT,PATCH,DELETE");
-header("Access-Control-Allow-Credentials: true");
 include_once "../../db/config.php";
 include_once "../../utils/dbhelper.php";
 include_once "../../utils/session.php";
 include_once "../../utils/validate.php";
+header("Access-Control-Allow-Origin: ".origin);
+header("Access-Control-Allow-Methods: GET,POST,PUT,PATCH,DELETE");
+header("Access-Control-Allow-Credentials: true");
+
 if (empty(Session::get("user")["role"])||Session::get("user")["role"]!=2) {
     http_response_code(203);
     echo "Bạn không là người quản trị.";

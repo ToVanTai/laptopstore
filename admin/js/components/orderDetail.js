@@ -46,7 +46,6 @@ function renderOrder(data){
         <td>${data.created_at}</td>
         <td>${numberWithComas(totalMany)}<sup>đ</sup></td>
         <td>${totalQuantity}</td>
-        <td></td>
     </tr>
     `;
     $(".cartMain").innerHTML = cartMainHtml;

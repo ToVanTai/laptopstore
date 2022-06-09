@@ -4,7 +4,7 @@ include_once "../utils/dbhelper.php";
 include_once "../utils/session.php";
 include_once "../utils/validate.php";
 include_once "../classes/Product.php";
-header("Access-Control-Allow-Origin: http://localhost");
+header("Access-Control-Allow-Origin: ".origin);
 header("Access-Control-Allow-Methods: GET");
 header("Access-Control-Allow-Credentials: true");
 $page = getGET("page")==null?1:getGET("page");//trang hiển thị
