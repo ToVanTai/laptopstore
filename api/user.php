@@ -152,7 +152,7 @@ function update1()
         $address = getPOST("address");
         $email = getPOST("email");
         $avatarFiles = $_FILES["avatar"];
-        $nameReg = "/^[0-9a-zA-Z\săâđêôơưÂĂĐÊÔƠƯ]{3,15}$/";
+        $nameReg = "/^[a-zA-Z\s]{3,15}$/";
         $successMes = "Cập nhật thông tin cá nhân thành công";
         $failMess = "Cập nhật thất bại";
         $updated_at = date("Y-m-d h:i:s");
@@ -218,7 +218,7 @@ function update1()
             }
         } else {
             http_response_code(203);
-            echo "tên người dùng: dài từ 3->15 ký tự, chỉ bao gồm số và chữ, khoảng trắng. ";
+            echo "tên người dùng: dài từ 3->15 ký tự, chỉ bao gồm chữ không dấu, khoảng trắng. ";
         }
     }
 }

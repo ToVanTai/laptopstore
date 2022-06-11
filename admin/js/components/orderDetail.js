@@ -44,6 +44,10 @@ function renderOrder(data){
         <td>${data.orderId}</td>
         <td>${data.statusName}</td>
         <td>${data.created_at}</td>
+        <td>${data.userName}</td>
+        <td>${data.userPhoneNumber}</td>
+        <td>${data.userAddress}</td>
+        <td>${data.userEmail}</td>
         <td>${numberWithComas(totalMany)}<sup>đ</sup></td>
         <td>${totalQuantity}</td>
     </tr>

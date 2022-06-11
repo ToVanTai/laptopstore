@@ -6,12 +6,20 @@
                     <th>Mã đơn hàng</th>
                     <th>Trạng thái đơn hàng</th>
                     <th>Ngày tạo</th>
+                    <th>Tạo bởi</th>
+                    <th>Số điện thoại</th>
+                    <th>Địa chỉ</th>
+                    <th>Email</th>
                     <th>Tổng tiền</th>
                     <th>Số lượng</th>
                 </tr>
             </thead>
             <tbody class="cartMain">
                 <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                     <td></td>
                     <td></td>
                     <td></td>

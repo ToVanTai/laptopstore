@@ -15,8 +15,8 @@ if (empty(Session::get("user")["role"])||Session::get("user")["role"]!=2) {
 $method = $_SERVER["REQUEST_METHOD"];
 if($method == "GET" && !empty(getGET("id"))){
     $idOrder = getGET("id");
-    $query = "select orders.id as orderId,status.id as statusId, status.name as statusName, 
-    orders.created_at, orders.updated_at from orders inner join status on orders.status_id = status.id 
+    $query = "select users.name as userName, users.phone_number as userPhoneNumber, users.address as userAddress, users.email as userEmail, orders.id as orderId,status.id as statusId, status.name as statusName, 
+    orders.created_at, orders.updated_at from orders inner join status on orders.status_id = status.id inner join users on users.id = orders.user_id 
     where orders.id= ".$idOrder ." ;";
     $listDataMain = executeResult($query,true);
     if(empty($listDataMain["orderId"])){
