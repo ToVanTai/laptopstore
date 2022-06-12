@@ -68,23 +68,8 @@ function register()
 {
     $account = getPOST("account");
     $password = getPOST("password");
-    $accountReg = "/^[a-z0-9]{3,15}$/";
-    $passwordReg = "/^\S{3,15}$/";
     $messageErr = "";
     $isErr = false;
-    if ($account == null || $password == null) {
-        $isErr = true;
-        $messageErr = "Vui lòng điền đầy đủ thông tin.";
-    } else {
-        if (!preg_match($accountReg, $account)) {
-            $isErr = true;
-            $messageErr = $messageErr . "Tên tài khoản: dài từ 3->15 ký tự, chỉ bao gồm chữ thường, số, không chứa khoảng trắng. ";
-        }
-        if (!preg_match($passwordReg, $password)) {
-            $isErr = true;
-            $messageErr = $messageErr . "Mật khẩu: dài từ 3->15 ký tự, không được có khoảng trắng. ";
-        }
-    }
     $query = 'select * from users where account="' . $account . '" limit 1';
     $isUnit = count(executeResult($query)) >= 1 ? false : true;
     if ($isUnit == false) {
@@ -111,7 +96,6 @@ function register()
         echo "Đăng ký tài khoản thất bại";
     }
 }
-//ă â đ ê ô ơ ư Â Ă Đ Ê Ô Ơ Ư
 function login()
 {
     $account = getPOST("account");
