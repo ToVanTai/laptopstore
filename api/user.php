@@ -148,77 +148,90 @@ function update1()
     if (!empty(Session::get("user"))) {
         $id = Session::get("user")["id"];
         $name = getPOST("name");
-        $phoneNumber = getPOST("phone_number");
+        $phoneNumber = getPOST("phone_number")==null?"":getPOST("phone_number");
         $address = getPOST("address");
         $email = getPOST("email");
         $avatarFiles = $_FILES["avatar"];
-        $nameReg = "/^[a-zA-Z\s]{3,15}$/";
         $successMes = "Cập nhật thông tin cá nhân thành công";
         $failMess = "Cập nhật thất bại";
         $updated_at = date("Y-m-d h:i:s");
-        if (preg_match($nameReg, $name)) {
-            if (empty($avatarFiles["name"])) {
-                $query = 'UPDATE users SET name="' . $name . '", phone_number="' . $phoneNumber . '",
+        if (empty($avatarFiles["name"])) {
+            $query = 'UPDATE users SET name="' . $name . '", phone_number="' . $phoneNumber . '",
             address="' . $address . '", email="' . $email . '", updated_at="' . $updated_at . '" WHERE id=' . $id . ';';
-                execute($query);
-                echo $successMes;
-                http_response_code(203);
-            } else {
-                $avatarName = time() . $avatarFiles["name"];
-                $formFile = $avatarFiles["tmp_name"];
-                $toFile = "../store/" . $avatarName;
-                $query = "select * from users where id=" . $id . " limit 1";
-                $avartarOld = executeResult($query)[0]["avatar"];
-
-                if (count(executeResult($query)) >= 1) {
-                    $query = 'UPDATE users SET name="' . $name . '", phone_number="' . $phoneNumber . '",
-                                address="' . $address . '", email="' . $email . '",avatar="' . $avatarName . '", updated_at="' . $updated_at . '" WHERE id=' . $id . ';';
-                    if ($avartarOld == null) { //không cần xóa file cũ
-                        if (validateFile($_FILES["avatar"]) != "") {
-                            echo validateFile($_FILES["avatar"]);
-                            http_response_code(200);
+            execute($query);
+            echo $successMes;
+            http_response_code(201);
+            $query = 'select * from users where id=' . $id . ' limit 1';
+            $aboutUse = executeResult($query);
+            if (count($aboutUse) >= 1) {
+                $user = array("id" => $aboutUse[0]["id"], "role" => $aboutUse[0]["role_id"], "name" => $aboutUse[0]["name"], "avatar" => $aboutUse[0]["avatar"]);
+                Session::set("user", $user);
+            }
+            die();
+        } else {
+            $avatarName = time() . $avatarFiles["name"];
+            $formFile = $avatarFiles["tmp_name"];
+            $toFile = "../store/" . $avatarName;
+            $query = "select * from users where id=" . $id . " limit 1";
+            $dataOld = executeResult($query,true);
+            $avartarOld = !empty($dataOld["avatar"])?$dataOld["avatar"]:null;
+            if (count($dataOld) >= 1) {
+                $query = 'UPDATE users SET name="' . $name . '", phone_number="' . $phoneNumber . '",
+                            address="' . $address . '", email="' . $email . '",avatar="' . $avatarName . '", updated_at="' . $updated_at . '" WHERE id=' . $id . ';';
+                if ($avartarOld == null) { //không cần xóa file cũ
+                    if (validateFile($_FILES["avatar"]) != "") {//file khong hop le
+                        echo validateFile($_FILES["avatar"]);
+                        http_response_code(203);
+                        die();
+                    } else {
+                        if (move_uploaded_file($formFile, $toFile)) {
+                            execute($query);
+                            echo $successMes;
+                            http_response_code(201);
+                        } else {
+                            echo $failMess;
+                            http_response_code(203);
+                            die();
+                        }
+                    }
+                } else { //phải xóa file cũ
+                    if (validateFile($_FILES["avatar"]) != "") {//file khong hop le
+                        echo validateFile($_FILES["avatar"]);
+                        http_response_code(203);
+                        die();
+                    } else {
+                        if (file_exists("../store/" . $avartarOld)) {
+                            unlink("../store/" . $avartarOld);
+                            if (move_uploaded_file($formFile, $toFile)) {
+                                execute($query);
+                                http_response_code(201);
+                                echo $successMes;
+                            } else {
+                                echo $failMess;
+                                http_response_code(203);
+                                die();
+                            }
                         } else {
                             if (move_uploaded_file($formFile, $toFile)) {
                                 execute($query);
                                 echo $successMes;
+                                http_response_code(201);
                             } else {
                                 echo $failMess;
+                                http_response_code(203);
+                                die();
                             }
                         }
-                    } else { //phải xóa file cũ
-                        if (validateFile($_FILES["avatar"]) != "") {
-                            echo validateFile($_FILES["avatar"]);
-                            http_response_code(200);
-                        } else {
-                            if (file_exists("../store/" . $avartarOld)) {
-                                unlink("../store/" . $avartarOld);
-                                if (move_uploaded_file($formFile, $toFile)) {
-                                    execute($query);
-                                    echo $successMes;
-                                } else {
-                                    echo $failMess;
-                                }
-                            } else {
-                                if (move_uploaded_file($formFile, $toFile)) {
-                                    execute($query);
-                                    echo $successMes;
-                                } else {
-                                    echo $failMess;
-                                }
-                            }
-                        }
-                    }
-                    $query = 'select * from users where id=' . $id . ' limit 1';
-                    $aboutUse = executeResult($query);
-                    if (count($aboutUse) >= 1) {
-                        $user = array("id" => $aboutUse[0]["id"], "role" => $aboutUse[0]["role_id"], "name" => $aboutUse[0]["name"], "avatar" => $aboutUse[0]["avatar"]);
-                        Session::set("user", $user);
                     }
                 }
+                $query = 'select * from users where id=' . $id . ' limit 1';
+                $aboutUse = executeResult($query);
+                if (count($aboutUse) >= 1) {
+                    $user = array("id" => $aboutUse[0]["id"], "role" => $aboutUse[0]["role_id"], "name" => $aboutUse[0]["name"], "avatar" => $aboutUse[0]["avatar"]);
+                    Session::set("user", $user);
+                }
             }
-        } else {
-            http_response_code(203);
-            echo "tên người dùng: dài từ 3->15 ký tự, chỉ bao gồm chữ không dấu, khoảng trắng. ";
+            die();
         }
     }
 }

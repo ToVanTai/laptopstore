@@ -39,17 +39,42 @@ fetch(`${baseUrl}api/user.php`,{
             btnSubmit.addEventListener('click',function(event){
                 event.preventDefault();
                 let form = new FormData($(".form__about"));
-                fetch(`${baseUrl}api/user.php`,{
-                    credentials:"include",
-                    method:"POST",
-                    body:form
-                }).then(resUpload=>{
-                    return resUpload.text().then((resUploadData)=>{
-                        alert(resUploadData);
-                    })
-                }).catch(err=>{
-                    alert("Có lỗi xảy ra");
-                })
+                let formParams = Object.fromEntries(form.entries());
+                let nameReg =  /^[\p{L}'][ \p{L}'-]*[\p{L}]$/u;//name
+                let phoneNumberReg = /^0{1}[0-9]{8,12}$/ ;//phone_number
+                // let addressReg = /^$/;//address
+                let emailReg = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;//email
+                let {name, phone_number, address, email} = formParams;
+                if(name.trim()&&phone_number.trim()&&address.trim()&&email.trim()){
+                    let errMessage = "";
+                    if(!nameReg.test(name)||nameReg.length > 25)
+                        errMessage+="Tên không phù hợp.\n";
+                    if(!phoneNumberReg.test(phone_number))
+                        errMessage+="Số điện thoại không phù hợp.\n";
+                    if(!emailReg.test(email))
+                        errMessage+="Email không phù hợp.\n";
+                    if(errMessage){
+                        alert(errMessage);
+                    }else{
+                        fetch(`${baseUrl}api/user.php`,{
+                        credentials:"include",
+                        method:"POST",
+                        body:form
+                        }).then(res=>{
+                            if(res.status==200||res.status==201){
+                                alert("Cập nhật thành công.");
+                            }else{
+                                res.text().then(res=>{
+                                    alert(res);
+                                })
+                            }
+                        }).catch(err=>{
+                            alert("Có lỗi xảy ra");
+                        })
+                    }
+                }else{
+                    alert("vui long dien day du thong tin");
+                }
             })
         }
     });
