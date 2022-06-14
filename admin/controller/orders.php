@@ -14,6 +14,15 @@ if (empty(Session::get("user")["role"])||Session::get("user")["role"]!=2) {
 }
 $method = $_SERVER["REQUEST_METHOD"];
 if($method == "GET" && !empty(getGET("id"))){
+    getOrderDetail();
+}
+if($method == "GET"){
+    getAllOrders();
+}
+if($method == "PATCH"){
+    updateOrder();
+}
+function getOrderDetail(){
     $idOrder = getGET("id");
     $query = "select users.name as userName, users.phone_number as userPhoneNumber, users.address as userAddress, users.email as userEmail, orders.id as orderId,status.id as statusId, status.name as statusName, 
     orders.created_at, orders.updated_at from orders inner join status on orders.status_id = status.id inner join users on users.id = orders.user_id 
@@ -32,9 +41,8 @@ if($method == "GET" && !empty(getGET("id"))){
     echo json_encode($listDataMain);
     http_response_code(200);
     die();
-
 }
-if($method == "GET"){
+function getAllOrders(){
     $statusId = getGET("status-id");
     $query = "select orders.id as orderId,status.id as statusId, status.name as statusName, orders.created_at as createAt, orders.updated_at as updatedAt from orders inner join status on orders.status_id = status.id  where status.id = '".$statusId."' 
     ORDER BY orders.created_at DESC";
@@ -43,8 +51,7 @@ if($method == "GET"){
     http_response_code(200);
     die();
 }
-if($method == "PATCH"){
-    //chỉ dành cho người quản tri
+function updateOrder(){
     $dataBody = json_decode(file_get_contents("php://input"),true);
     if(empty($dataBody["statusChange"])||empty($dataBody["orderId"])){
         echo "Cập nhật thất bại!";
@@ -55,4 +62,5 @@ if($method == "PATCH"){
     execute($query);
     http_response_code(201);
 }
+
 ?>

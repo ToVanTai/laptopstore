@@ -24,16 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     die();
 }
 if($_SERVER["REQUEST_METHOD"] == "PATCH"){
-    $idUser = Session::get("user")["id"];
-    $dataBody = json_decode(file_get_contents("php://input"),true);
-    if(empty($dataBody["statusChange"])||empty($dataBody["orderId"])){
-        echo "Cập nhật thất bại!";
-        http_response_code(203);
-        die();
-    }
-    $query='update orders set status_id = "'.$dataBody["statusChange"].'" where id = "'.$dataBody["orderId"].'" and user_id = "'.$idUser.'";';
-    execute($query);
-    http_response_code(201);
+    updateOrders();
 }
 function addToOrders()
 {
@@ -109,4 +100,16 @@ function viewOrders(){
     echo json_encode($listDataMain);
     http_response_code(200);
 
+}
+function updateOrders(){
+    $idUser = Session::get("user")["id"];
+    $dataBody = json_decode(file_get_contents("php://input"),true);
+    if(empty($dataBody["statusChange"])||empty($dataBody["orderId"])){
+        echo "Cập nhật thất bại!";
+        http_response_code(203);
+        die();
+    }
+    $query='update orders set status_id = "'.$dataBody["statusChange"].'" where id = "'.$dataBody["orderId"].'" and user_id = "'.$idUser.'";';
+    execute($query);
+    http_response_code(201);
 }

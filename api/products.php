@@ -36,5 +36,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET"&& $categoryName!=null) {
     Product::readPage($page, $limit, null, $categoryName);
     die();
 }
+
 ?>
 
