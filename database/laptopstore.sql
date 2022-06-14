@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th6 11, 2022 lúc 11:32 AM
+-- Thời gian đã tạo: Th6 14, 2022 lúc 07:42 PM
 -- Phiên bản máy phục vụ: 10.4.21-MariaDB
 -- Phiên bản PHP: 7.4.25
 
@@ -68,7 +68,10 @@ CREATE TABLE `orders` (
 
 INSERT INTO `orders` (`id`, `user_id`, `status_id`, `created_at`, `updated_at`) VALUES
 (32, 26, 10, '2022-06-08 08:54:51', '2022-06-08 08:54:51'),
-(33, 26, 2, '2022-06-08 09:10:39', '2022-06-08 09:10:39');
+(33, 26, 2, '2022-06-08 09:10:39', '2022-06-08 09:10:39'),
+(34, 28, 4, '2022-06-14 10:16:29', '2022-06-14 10:16:29'),
+(35, 28, 10, '2022-06-14 10:27:02', '2022-06-14 10:27:02'),
+(36, 21, 10, '2022-06-14 10:34:07', '2022-06-14 10:34:07');
 
 -- --------------------------------------------------------
 
@@ -91,7 +94,12 @@ CREATE TABLE `order_details` (
 
 INSERT INTO `order_details` (`id`, `order_id`, `product_id`, `capacity_id`, `quantity`, `price`) VALUES
 (29, 32, 54, 82, 1, 103191400),
-(30, 33, 32, 45, 1, 78010600);
+(30, 33, 32, 45, 1, 78010600),
+(31, 34, 14, 9, 1, 35000000),
+(32, 34, 14, 8, 1, 22790000),
+(33, 35, 15, 10, 2, 11950800),
+(34, 36, 16, 13, 2, 33250000),
+(35, 36, 16, 12, 3, 29440500);
 
 -- --------------------------------------------------------
 
@@ -184,12 +192,12 @@ CREATE TABLE `product_capacities` (
 --
 
 INSERT INTO `product_capacities` (`id`, `product_id`, `capacity_name`, `price`, `quantity`) VALUES
-(8, 14, '8GB/ 120GB SSD ', 22790000, 18009999),
-(9, 14, '16GB/ 256GB SSD', 35000000, 190050505),
-(10, 15, '8GB/ 120GB SSD ', 12990000, 100050),
+(8, 14, '8GB/ 120GB SSD ', 22790000, 18009998),
+(9, 14, '16GB/ 256GB SSD', 35000000, 190050504),
+(10, 15, '8GB/ 120GB SSD ', 12990000, 100048),
 (11, 15, '16GB/ 256GB SSD', 15000000, 5000),
-(12, 16, '8GB/ 120GB SSD ', 30990000, 5000),
-(13, 16, '16GB/ 256GB SSD', 35000000, 5000),
+(12, 16, '8GB/ 120GB SSD ', 30990000, 4997),
+(13, 16, '16GB/ 256GB SSD', 35000000, 4998),
 (14, 17, '8GB/ 120GB SSD ', 15190000, 1000),
 (15, 17, '16GB/ 256GB SSD', 17190000, 1000),
 (16, 18, '16GB/ 256GB SSD', 33990000, 2000),
@@ -320,7 +328,7 @@ CREATE TABLE `users` (
   `account` varchar(50) COLLATE utf8_vietnamese_ci NOT NULL,
   `password` varchar(255) COLLATE utf8_vietnamese_ci NOT NULL,
   `name` varchar(50) COLLATE utf8_vietnamese_ci DEFAULT NULL,
-  `phone_number` int(20) DEFAULT NULL,
+  `phone_number` varchar(20) COLLATE utf8_vietnamese_ci DEFAULT NULL,
   `address` text COLLATE utf8_vietnamese_ci DEFAULT NULL,
   `avatar` text COLLATE utf8_vietnamese_ci DEFAULT NULL,
   `email` varchar(255) COLLATE utf8_vietnamese_ci DEFAULT NULL,
@@ -333,8 +341,12 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `role_id`, `account`, `password`, `name`, `phone_number`, `address`, `avatar`, `email`, `created_at`, `updated_at`) VALUES
-(21, 2, 'admin', '25d55ad283aa400af464c76d713c07ad', 'tô văn tài', 973867269, 'Xóm 4, thôn Gia Lễ, xã Đông Mỹ, thành phố Thái Bình, tỉnh Thái Bình', '1653793675sexygirl.jpg', 'tovantaidz2001@gmail.com', '2022-05-29 10:06:46', '2022-06-04 02:58:01'),
-(26, 1, 'sonbita', '25d55ad283aa400af464c76d713c07ad', 'Nguyen Van Son', 9347384, 'Xóm 4, thôn Gia Lễ, xã Đông Mỹ, thành phố Thái Bình', NULL, 'nguyenvanson@gmail.com', '2022-06-08 08:52:06', '2022-06-11 11:23:51');
+(21, 2, 'admin', '25d55ad283aa400af464c76d713c07ad', 'tô văn tài', '973867269', 'Xóm 4, thôn Gia Lễ, xã Đông Mỹ, thành phố Thái Bình, tỉnh Thái Bình', '1653793675sexygirl.jpg', 'tovantaidz2001@gmail.com', '2022-05-29 10:06:46', '2022-06-04 02:58:01'),
+(26, 1, 'sonbita', '25d55ad283aa400af464c76d713c07ad', 'Nguyen Van Son', '9347384', 'Xóm 4, thôn Gia Lễ, xã Đông Mỹ, thành phố Thái Bình', NULL, 'nguyenvanson@gmail.com', '2022-06-08 08:52:06', '2022-06-11 11:23:51'),
+(27, 1, 'account1', '827ccb0eea8a706c4c34a16891f84e7b', 'Nguyen Van Phuc', '09244234', 'xom 4, thon gia le, xa dong my, thanh pho thai binh, tinh thai binh', '1655023468hotgirl.jpg', 'tovantaidz2001@gmail.com', '2022-06-12 03:27:48', '2022-06-12 03:44:52'),
+(28, 1, 'account2', '827ccb0eea8a706c4c34a16891f84e7b', 'Tô Văn Tài', '097324234', 'Xóm 4, thôn Gia Lễ, xã Đông Mỹ, thành phố Thái Bình', '1655027495cuteness.jpg', 'tovantaidz2001@gmail.com', '2022-06-12 03:45:23', '2022-06-12 04:51:35'),
+(29, 1, 'account3', '827ccb0eea8a706c4c34a16891f84e7b', 'to van tai', '0934752835', 'THAI BINH', '1655027598hotgirl.jpg', 'tovantaidz2001@gmail.com', '2022-06-12 04:52:30', '2022-06-12 04:56:41'),
+(30, 1, 'account4', '827ccb0eea8a706c4c34a16891f84e7b', NULL, NULL, NULL, NULL, NULL, '2022-06-12 05:03:49', '2022-06-12 05:03:49');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -412,13 +424,13 @@ ALTER TABLE `brands`
 -- AUTO_INCREMENT cho bảng `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT cho bảng `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT cho bảng `products`
@@ -448,7 +460,7 @@ ALTER TABLE `status`
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
