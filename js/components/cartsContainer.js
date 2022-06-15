@@ -98,20 +98,15 @@ function renderCartList(data){
             let productIdChange = this.dataset.product;
             let capacityIdChange = this.dataset.capacity;
             let quantityRemain=Number(dataCarts.find((elm)=>elm.productId==productIdChange&&elm.capacityId==capacityIdChange)["detail"]["quantityRemain"]);
-            console.log("element "+this);
-            console.log("quantityOld "+quantityOld);
-            console.log("quantityRemain "+quantityRemain);
+            
 
             if(quantityOld>=quantityRemain){
-                console.log("th1");
                 this.value=quantityRemain-1;
                 quantityOld=quantityRemain-1;
             }else if(quantityOld<=0){
-                console.log("th2");
                 this.value=1;
                 quantityOld=1;
             }else{
-                console.log("th3");
                 for(let i=0;i<dataCarts.length;i++){
                     if(dataCarts[i]["productId"]==productIdChange&&dataCarts[i]["capacityId"]==capacityIdChange){
                         dataCarts[i].quantity=quantityOld;
@@ -160,7 +155,7 @@ $(".carts__btn-update").addEventListener('click',function onUpdateCarts(){
                     isReadyBuyCarts=true;
                 })
             }else{
-                console.log("Cập nhật thất bại.");
+                // console.log("Cập nhật thất bại.");
             }
         })
     }

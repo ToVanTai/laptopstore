@@ -33,7 +33,6 @@ function addToOrders()
         http_response_code(203);
         echo "Giỏ hàng trống!";
     } else {
-
         $idUser = Session::get("user")["id"];
         $query = 'select name, phone_number, address, email from users where id = ' . $idUser . ' ;';
         $aboutUser = executeResult($query, true);

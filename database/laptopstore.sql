@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th6 14, 2022 lúc 07:42 PM
+-- Thời gian đã tạo: Th6 15, 2022 lúc 09:13 PM
 -- Phiên bản máy phục vụ: 10.4.21-MariaDB
 -- Phiên bản PHP: 7.4.25
 
@@ -41,7 +41,7 @@ CREATE TABLE `brands` (
 --
 
 INSERT INTO `brands` (`id`, `name`, `image`, `created_by`, `created_at`, `updated_at`) VALUES
-(8, 'DELL', '1653968485dell.webp', 21, '2022-05-30 09:55:54', '2022-06-01 10:30:48'),
+(8, 'DELL', '16552165891653968485dell.webp', 21, '2022-05-30 09:55:54', '2022-06-14 09:23:09'),
 (9, 'ACER', '1653968513acer.webp', 21, '2022-05-31 10:41:53', '2022-05-31 10:41:53'),
 (10, 'ASUS', '1653968528asus.webp', 21, '2022-05-31 10:42:08', '2022-05-31 10:42:08'),
 (11, 'GIGABYTE', '1653968550gigabyte.webp', 21, '2022-05-31 10:42:30', '2022-05-31 10:42:30'),
@@ -71,7 +71,12 @@ INSERT INTO `orders` (`id`, `user_id`, `status_id`, `created_at`, `updated_at`) 
 (33, 26, 2, '2022-06-08 09:10:39', '2022-06-08 09:10:39'),
 (34, 28, 4, '2022-06-14 10:16:29', '2022-06-14 10:16:29'),
 (35, 28, 10, '2022-06-14 10:27:02', '2022-06-14 10:27:02'),
-(36, 21, 10, '2022-06-14 10:34:07', '2022-06-14 10:34:07');
+(36, 21, 10, '2022-06-14 10:34:07', '2022-06-14 10:34:07'),
+(37, 28, 1, '2022-06-15 01:38:28', '2022-06-15 01:38:28'),
+(38, 28, 3, '2022-06-15 01:39:47', '2022-06-15 01:39:47'),
+(39, 28, 10, '2022-06-15 01:47:58', '2022-06-15 01:47:58'),
+(40, 21, 10, '2022-06-15 02:12:06', '2022-06-15 02:12:06'),
+(41, 21, 10, '2022-06-15 09:09:45', '2022-06-15 09:09:45');
 
 -- --------------------------------------------------------
 
@@ -99,7 +104,13 @@ INSERT INTO `order_details` (`id`, `order_id`, `product_id`, `capacity_id`, `qua
 (32, 34, 14, 8, 1, 22790000),
 (33, 35, 15, 10, 2, 11950800),
 (34, 36, 16, 13, 2, 33250000),
-(35, 36, 16, 12, 3, 29440500);
+(35, 36, 16, 12, 3, 29440500),
+(36, 37, 14, 9, 1, 35000000),
+(37, 37, 14, 8, 1, 22790000),
+(38, 38, 14, 8, 2, 22790000),
+(39, 39, 14, 8, 1, 22790000),
+(40, 40, 15, 10, 1, 11950800),
+(41, 41, 14, 8, 1, 22790000);
 
 -- --------------------------------------------------------
 
@@ -192,9 +203,9 @@ CREATE TABLE `product_capacities` (
 --
 
 INSERT INTO `product_capacities` (`id`, `product_id`, `capacity_name`, `price`, `quantity`) VALUES
-(8, 14, '8GB/ 120GB SSD ', 22790000, 18009998),
-(9, 14, '16GB/ 256GB SSD', 35000000, 190050504),
-(10, 15, '8GB/ 120GB SSD ', 12990000, 100048),
+(8, 14, '8GB/ 120GB SSD ', 22790000, 18009993),
+(9, 14, '16GB/ 256GB SSD', 35000000, 190050503),
+(10, 15, '8GB/ 120GB SSD ', 12990000, 100047),
 (11, 15, '16GB/ 256GB SSD', 15000000, 5000),
 (12, 16, '8GB/ 120GB SSD ', 30990000, 4997),
 (13, 16, '16GB/ 256GB SSD', 35000000, 4998),
@@ -346,7 +357,9 @@ INSERT INTO `users` (`id`, `role_id`, `account`, `password`, `name`, `phone_numb
 (27, 1, 'account1', '827ccb0eea8a706c4c34a16891f84e7b', 'Nguyen Van Phuc', '09244234', 'xom 4, thon gia le, xa dong my, thanh pho thai binh, tinh thai binh', '1655023468hotgirl.jpg', 'tovantaidz2001@gmail.com', '2022-06-12 03:27:48', '2022-06-12 03:44:52'),
 (28, 1, 'account2', '827ccb0eea8a706c4c34a16891f84e7b', 'Tô Văn Tài', '097324234', 'Xóm 4, thôn Gia Lễ, xã Đông Mỹ, thành phố Thái Bình', '1655027495cuteness.jpg', 'tovantaidz2001@gmail.com', '2022-06-12 03:45:23', '2022-06-12 04:51:35'),
 (29, 1, 'account3', '827ccb0eea8a706c4c34a16891f84e7b', 'to van tai', '0934752835', 'THAI BINH', '1655027598hotgirl.jpg', 'tovantaidz2001@gmail.com', '2022-06-12 04:52:30', '2022-06-12 04:56:41'),
-(30, 1, 'account4', '827ccb0eea8a706c4c34a16891f84e7b', NULL, NULL, NULL, NULL, NULL, '2022-06-12 05:03:49', '2022-06-12 05:03:49');
+(30, 1, 'account4', '827ccb0eea8a706c4c34a16891f84e7b', NULL, NULL, NULL, NULL, NULL, '2022-06-12 05:03:49', '2022-06-12 05:03:49'),
+(31, 1, 'account5', '827ccb0eea8a706c4c34a16891f84e7b', NULL, NULL, NULL, NULL, NULL, '2022-06-14 08:27:38', '2022-06-14 08:27:38'),
+(32, 1, 'account6', '827ccb0eea8a706c4c34a16891f84e7b', NULL, NULL, NULL, NULL, NULL, '2022-06-15 01:52:39', '2022-06-15 01:52:39');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -424,13 +437,13 @@ ALTER TABLE `brands`
 -- AUTO_INCREMENT cho bảng `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT cho bảng `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT cho bảng `products`
@@ -460,7 +473,7 @@ ALTER TABLE `status`
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
