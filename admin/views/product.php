@@ -65,7 +65,7 @@
                 <button type="submit" style="margin-top: 10px" class="btn">Lưu</button>
             </form>
         </div>
-        <script src="js/components/addProduct.js"></script>';
+        <script type="module" src="js/components/addProduct.js"></script>';
     }elseif($_GET["view"]=="product"){
         $id = $_GET["id"];
         $query = 'select model,  brands.name as "nameBrand", screen, RAM, hardware, OS, CPU,

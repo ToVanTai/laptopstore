@@ -1,5 +1,5 @@
 <?php
-    class Product{
+    class Product{ 
         public static function readItem($id){
             $idQuery = $id;
             $queryProduct = "select products.id as 'id', brands.name as 'brand', VGA, model, screen, RAM, hardware, OS, CPU, VGA, background, warranty, discount, color, products.created_at, products.updated_at from products inner join brands on products.brand_id = brands.id where products.id = ".$idQuery." limit 1 ;";
@@ -46,7 +46,7 @@
                 $sql="select products.id as 'id' from brands inner join products on brands.id=products.brand_id where brands.name like '%".$categoryName."%'";
                 $case=3;
             }
-            $count = count(executeResult($sql)); //54
+            $count = count(executeResult($sql)); //54 //8
             if($count>=1){
                 $totalPage = ceil($count / $limit);
                 if ($page > $totalPage) {

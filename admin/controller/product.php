@@ -44,9 +44,9 @@ function addNewProduct()
     $quantity = getPOST("quantity"); //*
     $price = getPOST("price"); //*
     $errMessage = "";
-    $regDiscount = "/^[0-9]{0,2}$/";
-    $regPrice = "/^[0-9]{1,}$/";
-    $regQuantity = "/^[0-9]{0,}$/";
+    $regDiscount = "/^[0-9]{0,2}$/";//0->
+    $regPrice = "/^[0-9]{1,}$/";//
+    $regQuantity = "/^[0-9]{0,}$/";//
     $files = !empty($_FILES["background"]["name"]) ? $_FILES["background"] : null;
     if ($files == null || $brand_id == null || $model == null || $screen == null || $RAM == null || $hardware == null || $OS == null || $CPU == null || $VGA == null || $warranty == null || $color == null || $capacity_name == null) {
         $errMessage = "Vui lòng điền đầy đủ các trường. ";
