@@ -30,7 +30,7 @@ btnSubmit.addEventListener("click", function (event) {
         }).then(res => 
             {
                 if(res.status==200||res.status==201){
-                    window.location.href=`${baseUrl}index.php`;
+                    window.location.href=`${baseUrl}login.php`;
                 }else{
                     res.text().then(res=>{
                         alert(res);

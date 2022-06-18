@@ -82,7 +82,7 @@ function register()
         die();
     }
     $passwordMd5 = md5($password);
-    $role_id = 1;
+    $role_id = 1;//users
     $created_at = date("Y-m-d h:i:s");
     $updated_at = date("Y-m-d h:i:s");
     $query = 'insert into users(role_id, account, password, created_at, updated_at) values("' . $role_id . '", "' . $account . '", "' . $passwordMd5 . '", "' . $created_at . '", "' . $updated_at . '");';
@@ -100,13 +100,6 @@ function login()
 {
     $account = getPOST("account");
     $password = getPOST("password");
-    $messageErr = "";
-    if ($account == null || $password == null) {
-        $messageErr = "Vui lòng điền đầy đủ thông tin.";
-        http_response_code(203);
-        echo $messageErr;
-        die();
-    }
     $query = 'select * from users where account = "' . $account . '" and password = "' . md5($password) . '" limit 1';
     $responseData = executeResult($query);
     $isSuccessfully = count($responseData) >= 1 ? true : false;

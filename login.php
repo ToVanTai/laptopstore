@@ -1,7 +1,12 @@
 <?php
     require_once "./utils/session.php";
+    require_once "./db/config.php";
     if(!empty(Session::get("user"))){
-        header("Location: index.php");
+        echo '<script>
+            alert("Bạn đã đăng nhập.");
+            window.location.href="'.baseUrl.'";
+        </script>';
+        die();
     }
 
 ?>
