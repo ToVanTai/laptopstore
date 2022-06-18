@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th6 18, 2022 lúc 09:05 AM
+-- Thời gian đã tạo: Th6 18, 2022 lúc 03:29 PM
 -- Phiên bản máy phục vụ: 10.4.21-MariaDB
 -- Phiên bản PHP: 7.4.25
 
@@ -317,7 +317,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `role_id`, `account`, `password`, `name`, `phone_number`, `address`, `avatar`, `email`, `created_at`, `updated_at`) VALUES
-(21, 2, 'admin', '25d55ad283aa400af464c76d713c07ad', 'tô văn tài', '973867269', 'Xóm 4, thôn Gia Lễ, xã Đông Mỹ, thành phố Thái Bình, tỉnh Thái Bình', '1653793675sexygirl.jpg', 'tovantaidz2001@gmail.com', '2022-05-29 10:06:46', '2022-06-04 02:58:01');
+(21, 2, 'admin', '25d55ad283aa400af464c76d713c07ad', 'tô văn tài', '973867269', 'Xóm 4, thôn Gia Lễ, xã Đông Mỹ, thành phố Thái Bình, tỉnh Thái Bình', '1653793675sexygirl.jpg', 'tovantaidz2001@gmail.com', '2022-05-29 10:06:46', '2022-06-04 02:58:01'),
+(33, 1, 'account1', 'e10adc3949ba59abbe56e057f20f883e', 'to van tai', '029847235', 'Xóm 4, thôn Gia Lễ, xã Đông Mỹ, thành phố Thái Bình', '1655527694hotgirl.jpg', 'tovantaidz2001@gmail.com', '2022-06-18 11:24:30', '2022-06-18 11:48:14');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -431,7 +432,7 @@ ALTER TABLE `status`
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
