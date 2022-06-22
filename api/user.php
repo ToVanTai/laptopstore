@@ -110,6 +110,7 @@ function login()
         if (empty(Session::get("carts"))) {
             Session::set("carts", array());
         }
+        echo $responseData[0]["role_id"];
     } else {
         http_response_code(203);
         echo "Tên tài khoản hoặc mật khẩu không chính xác";

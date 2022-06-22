@@ -94,7 +94,6 @@ function addToCart(){
             die();   
         }
     }
-    
 };
 function updateCarts(){
     $dataBody = json_decode(file_get_contents("php://input"),true);

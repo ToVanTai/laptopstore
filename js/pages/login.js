@@ -22,17 +22,24 @@ btnSubmit.addEventListener("click", function (event) {
             method: "POST",
             credentials: "include",
             body: formData
-        }).then(res => 
-            {
-                if(res.status==200||res.status==201){
-                    window.location.href=`${baseUrl}index.php`;
-                }else{
-                    res.text().then(res=>{
-                        alert(res);
-                    })
-                }
+        }).then(res => {
+            if (res.status == 200 || res.status == 201) {
+                // window.location.href=`${baseUrl}index.php`;//update here!!
+                res.text().then(res => {
+                    // role
+                    if (Number(res) == 2) {
+                        window.location.href = `${baseUrl}admin/`;
+                    } else {
+                        window.location.href = `${baseUrl}index.php`;
+                    }
+                })
+            } else {
+                res.text().then(res => {
+                    alert(res);
+                })
             }
-        ).catch(err=>{
+        }
+        ).catch(err => {
             alert("dang ky that bai");
         })
     }
