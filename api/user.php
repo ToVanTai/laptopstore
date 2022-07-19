@@ -3,7 +3,14 @@ include_once "../db/config.php";
 include_once "../utils/dbhelper.php";
 include_once "../utils/session.php";
 include_once "../utils/validate.php";
-header("Access-Control-Allow-Origin: ".origin);
+$http_origin = "";
+if (!empty($_SERVER['HTTP_ORIGIN'])) {
+    if (in_array($_SERVER['HTTP_ORIGIN'], allowedOrigins)) {
+        $http_origin = $_SERVER['HTTP_ORIGIN'];
+    }
+}
+
+header("Access-Control-Allow-Origin: " . $http_origin);
 header("Access-Control-Allow-Methods: GET,POST,PATCH,DELETE");
 header("Access-Control-Allow-Credentials: true");
 Session::init();
@@ -82,7 +89,7 @@ function register()
         die();
     }
     $passwordMd5 = md5($password);
-    $role_id = 1;//users
+    $role_id = 1; //users
     $created_at = date("Y-m-d h:i:s");
     $updated_at = date("Y-m-d h:i:s");
     $query = 'insert into users(role_id, account, password, created_at, updated_at) values("' . $role_id . '", "' . $account . '", "' . $passwordMd5 . '", "' . $created_at . '", "' . $updated_at . '");';
@@ -126,7 +133,7 @@ function update1()
     if (!empty(Session::get("user"))) {
         $id = Session::get("user")["id"];
         $name = getPOST("name");
-        $phoneNumber = getPOST("phone_number")==null?"":getPOST("phone_number");
+        $phoneNumber = getPOST("phone_number") == null ? "" : getPOST("phone_number");
         $address = getPOST("address");
         $email = getPOST("email");
         $avatarFiles = $_FILES["avatar"];
@@ -151,13 +158,13 @@ function update1()
             $formFile = $avatarFiles["tmp_name"];
             $toFile = "../store/" . $avatarName;
             $query = "select * from users where id=" . $id . " limit 1";
-            $dataOld = executeResult($query,true);
-            $avartarOld = !empty($dataOld["avatar"])?$dataOld["avatar"]:null;
+            $dataOld = executeResult($query, true);
+            $avartarOld = !empty($dataOld["avatar"]) ? $dataOld["avatar"] : null;
             if (count($dataOld) >= 1) {
                 $query = 'UPDATE users SET name="' . $name . '", phone_number="' . $phoneNumber . '",
                             address="' . $address . '", email="' . $email . '",avatar="' . $avatarName . '", updated_at="' . $updated_at . '" WHERE id=' . $id . ';';
                 if ($avartarOld == null) { //không cần xóa file cũ
-                    if (validateFile($_FILES["avatar"]) != "") {//file khong hop le
+                    if (validateFile($_FILES["avatar"]) != "") { //file khong hop le
                         echo validateFile($_FILES["avatar"]);
                         http_response_code(203);
                         die();
@@ -173,7 +180,7 @@ function update1()
                         }
                     }
                 } else { //phải xóa file cũ
-                    if (validateFile($_FILES["avatar"]) != "") {//file khong hop le
+                    if (validateFile($_FILES["avatar"]) != "") { //file khong hop le
                         echo validateFile($_FILES["avatar"]);
                         http_response_code(203);
                         die();
@@ -237,20 +244,20 @@ function updatev2()
 
     $query = "select account from users where id = '" . $idUser . "'  and  account = '" . $account . "'  and  password = '" . md5($password) . "' ;";
     $resOld = executeResult($query);
-    if (count($resOld) >=1 ) {
+    if (count($resOld) >= 1) {
         if ($newPassword == $password) {
             $errMessage = $errMessage . "Mật khẩu cũ với mật khẩu mới không được khớp!\n";
             echo $errMessage;
             http_response_code(203);
             die();
-        }else{
-            $query = 'update users set password = "'.md5($newPassword).'" where id = "'.$idUser.'" and account= "'.$account.'" and password = "'.md5($password).'" ;';
+        } else {
+            $query = 'update users set password = "' . md5($newPassword) . '" where id = "' . $idUser . '" and account= "' . $account . '" and password = "' . md5($password) . '" ;';
             execute($query);
             http_response_code(201);
             echo "Cập nhật thành công!\nVui lòng đăng nhập lại.";
             Session::destroy();
         }
-    }else{
+    } else {
         echo "Mật khẩu không đúng!\n";
         http_response_code(203);
         die();
