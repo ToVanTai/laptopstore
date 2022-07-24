@@ -1,1 +1,1 @@
-export const baseURL="http://localhost/BTL_N8/";
+export const baseURL="http://localhost/laptopstore/";
