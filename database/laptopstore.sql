@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th6 18, 2022 lúc 03:29 PM
+-- Thời gian đã tạo: Th7 28, 2022 lúc 09:39 AM
 -- Phiên bản máy phục vụ: 10.4.21-MariaDB
 -- Phiên bản PHP: 7.4.25
 
@@ -62,6 +62,16 @@ CREATE TABLE `orders` (
   `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `orders`
+--
+
+INSERT INTO `orders` (`id`, `user_id`, `status_id`, `created_at`, `updated_at`) VALUES
+(42, 21, 1, '2022-06-19 11:12:11', '2022-06-19 11:12:11'),
+(43, 21, 10, '2022-06-22 04:01:18', '2022-06-22 04:01:18'),
+(44, 34, 1, '2022-06-23 04:59:23', '2022-06-23 04:59:23'),
+(45, 34, 1, '2022-06-23 05:17:44', '2022-06-23 05:17:44');
+
 -- --------------------------------------------------------
 
 --
@@ -76,6 +86,17 @@ CREATE TABLE `order_details` (
   `quantity` int(11) NOT NULL,
   `price` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `order_details`
+--
+
+INSERT INTO `order_details` (`id`, `order_id`, `product_id`, `capacity_id`, `quantity`, `price`) VALUES
+(42, 42, 15, 10, 1, 11950800),
+(43, 43, 54, 82, 1, 103191400),
+(44, 44, 14, 9, 1, 35000000),
+(45, 44, 14, 8, 1, 22790000),
+(46, 45, 17, 14, 1, 13974800);
 
 -- --------------------------------------------------------
 
@@ -168,13 +189,13 @@ CREATE TABLE `product_capacities` (
 --
 
 INSERT INTO `product_capacities` (`id`, `product_id`, `capacity_name`, `price`, `quantity`) VALUES
-(8, 14, '8GB/ 120GB SSD ', 22790000, 18009993),
-(9, 14, '16GB/ 256GB SSD', 35000000, 190050503),
-(10, 15, '8GB/ 120GB SSD ', 12990000, 100047),
+(8, 14, '8GB/ 120GB SSD ', 22790000, 18009992),
+(9, 14, '16GB/ 256GB SSD', 35000000, 190050502),
+(10, 15, '8GB/ 120GB SSD ', 12990000, 100046),
 (11, 15, '16GB/ 256GB SSD', 15000000, 5000),
 (12, 16, '8GB/ 120GB SSD ', 30990000, 4997),
 (13, 16, '16GB/ 256GB SSD', 35000000, 4998),
-(14, 17, '8GB/ 120GB SSD ', 15190000, 1000),
+(14, 17, '8GB/ 120GB SSD ', 15190000, 999),
 (15, 17, '16GB/ 256GB SSD', 17190000, 1000),
 (16, 18, '16GB/ 256GB SSD', 33990000, 2000),
 (17, 17, '32GB/ 500GB SSD', 39990000, 1000),
@@ -242,7 +263,7 @@ INSERT INTO `product_capacities` (`id`, `product_id`, `capacity_name`, `price`, 
 (79, 51, '8GB/ 120GB SSD ', 29990000, 100),
 (80, 52, '16GB/ 256GB SSD', 53990000, 100),
 (81, 53, '32GB/ 500GB SSD', 89990000, 10),
-(82, 54, '64GB/ 500GB SSD', 119990000, 9);
+(82, 54, '64GB/ 500GB SSD', 119990000, 8);
 
 -- --------------------------------------------------------
 
@@ -318,7 +339,9 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `role_id`, `account`, `password`, `name`, `phone_number`, `address`, `avatar`, `email`, `created_at`, `updated_at`) VALUES
 (21, 2, 'admin', '25d55ad283aa400af464c76d713c07ad', 'tô văn tài', '973867269', 'Xóm 4, thôn Gia Lễ, xã Đông Mỹ, thành phố Thái Bình, tỉnh Thái Bình', '1653793675sexygirl.jpg', 'tovantaidz2001@gmail.com', '2022-05-29 10:06:46', '2022-06-04 02:58:01'),
-(33, 1, 'account1', 'e10adc3949ba59abbe56e057f20f883e', 'to van tai', '029847235', 'Xóm 4, thôn Gia Lễ, xã Đông Mỹ, thành phố Thái Bình', '1655527694hotgirl.jpg', 'tovantaidz2001@gmail.com', '2022-06-18 11:24:30', '2022-06-18 11:48:14');
+(33, 1, 'account1', '827ccb0eea8a706c4c34a16891f84e7b', 'van tai', '0973867269', 'Xóm 3, thôn Gia Lễ, xã Đông Mỹ, thành phố Thái Bình', '1655597592cuteness.jpg', 'tovantaidz2002@gmail.com', '2022-06-18 11:24:30', '2022-06-19 07:13:12'),
+(34, 1, 'account2', '827ccb0eea8a706c4c34a16891f84e7b', 'to van tai', '0973867269', 'Xom 4, thon gia le, xa dong my, thanh pho thai binh', NULL, 'tovantaidz2001@gmail.com', '2022-06-19 07:18:52', '2022-06-23 04:24:21'),
+(35, 1, 'account5', '827ccb0eea8a706c4c34a16891f84e7b', 'to van tai', '015423454', 'THAI BINH', NULL, 'tovantaidz2001@gmail.com', '2022-07-24 04:34:33', '2022-07-24 04:35:11');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -396,13 +419,13 @@ ALTER TABLE `brands`
 -- AUTO_INCREMENT cho bảng `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT cho bảng `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT cho bảng `products`
@@ -432,7 +455,7 @@ ALTER TABLE `status`
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
