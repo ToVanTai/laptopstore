@@ -142,8 +142,8 @@ function renderCartList(data){
 $(".carts__btn-update").addEventListener('click',function onUpdateCarts(){
     if(confirm("Bạn có muấn cập nhật giỏ hàng lên máy chủ?")){
         let dataBody = JSON.stringify(dataCarts);
-        fetch(`${baseUrl}api/carts.php`,{
-            method:"PATCH",
+        fetch(`${baseUrl}api/carts.php?crud_req=updateCarts`,{
+            method:"POST",
             credentials:"include",
             body:dataBody
         }).then(res=>{

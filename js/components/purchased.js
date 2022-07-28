@@ -88,8 +88,8 @@ function onChangeStatus () {
     let statusChange12 = this.dataset.change;
     if (confirm("Bạn có muấn lưu thay đổi trạng thái đơn hàng?")) {
         let body = JSON.stringify({ "statusChange": statusChange12, "orderId": orderId12 });
-        fetch(`${baseUrl}api/orders.php`, {
-            method: "PATCH",
+        fetch(`${baseUrl}api/orders.php?crud_req=updateOrders`, {
+            method: "POST",
             credentials: "include",
             body
         }).then(res => {

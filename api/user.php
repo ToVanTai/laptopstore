@@ -35,15 +35,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['crud_req'] == "update") {
     update1();
     die();
 }
-if ($_SERVER["REQUEST_METHOD"] == "PATCH" && empty($_POST['crud_req'])) {
-    updatev2();
+if ($_SERVER["REQUEST_METHOD"] =="POST" && $_POST['crud_req'] == "changePassword") {//change patch to post
+    updatev2();//change password
     die();
 }
 // if ($_SERVER["REQUEST_METHOD"] == "PATCH") {
 //     update();
 //     die();
 // }
-if ($_SERVER["REQUEST_METHOD"] == "DELETE") {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && empty($_POST['crud_req']) && $_GET["crud_req"] == "logout") {//change delete to post
     logout(); //oke
     die();
 }
@@ -229,18 +229,10 @@ function updatev2()
         http_response_code(203);
         die();
     };
-    $dataBody = json_decode(file_get_contents("php://input"), true);
     $idUser = Session::get("user")["id"];
-    $account = $dataBody["account"];
-    $password = $dataBody["password"];
-    $newPassword = $dataBody["newPassword"];
-    $crudReq = $dataBody["crud_req"];
-    if ($crudReq != "changePassword") {
-        $errMessage = $errMessage . "Yêu cầu không được thực hiện!\n";
-        echo $errMessage;
-        http_response_code(203);
-        die();
-    }
+    $account = getPOST("account");
+    $password = getPOST("password");
+    $newPassword = getPOST("newPassword");
 
     $query = "select account from users where id = '" . $idUser . "'  and  account = '" . $account . "'  and  password = '" . md5($password) . "' ;";
     $resOld = executeResult($query);

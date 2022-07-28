@@ -21,9 +21,9 @@ btnOpenNavbarMobile.onclick = openNavbarMobile;
 let btnLogout = $(".navbar__item__user__logged-loggout");
 if (btnLogout!=null) {
     btnLogout.addEventListener("click", function () {
-        fetch(`${baseUrl}api/user.php`, {
+        fetch(`${baseUrl}api/user.php?crud_req=logout`, {
             credentials: "include",
-            method: "DELETE"
+            method: "POST"
         }).then(res => {
             if (res.status == 200 || res.status == 201) {
                 window.location.reload();

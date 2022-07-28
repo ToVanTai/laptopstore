@@ -54,7 +54,7 @@ function addNewBrand()
                 echo "<script>
                         alert('Thêm thành công');
                         window.location.href='" . baseUrl . "admin/index.php?view=new-brand';
-                    </script>";
+                    </script>";    
             }
         }
     }

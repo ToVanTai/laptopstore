@@ -25,17 +25,17 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     getCart();
     die();
 }
-if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && empty($_GET['crud_req']) ) {
     //them vao cart
     addToCart();
     die();
 }
-if ($_SERVER["REQUEST_METHOD"] == "PATCH" ) {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && $_GET['crud_req'] == "updateCarts" ) {//change patch to post
     //cap nhat carts
     updateCarts();
     die();
 }
-if ($_SERVER["REQUEST_METHOD"] == "DELETE" ) {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && $_GET['crud_req'] == "deleteCarts" ) {//change delete to post
     //xoa cart
     deleteCart();
     die();

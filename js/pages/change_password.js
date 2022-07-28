@@ -30,9 +30,9 @@ btnSubmit.addEventListener("click", function (event) {
     if(isValidate==false){
         alert(messageErr);
     }else if (isValidate == true&&crud_req=="changePassword") {
-        let body=JSON.stringify({account,password,newPassword,crud_req});
+        let body= new FormData(document.getElementById("changePasswordForm"));
         fetch(`${baseUrl}api/user.php`, {
-            method: "PATCH",
+            method: "POST",
             credentials: "include",
             body
         }).then(res => 

@@ -20,7 +20,7 @@ if (empty(Session::get("user"))) {
     echo "Yêu cầu đăng nhập để thực hiện chức năng này.";
     die();
 }
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && empty($_GET['crud_req'])) {
     //yêu cầu đặt hàng.
     addToOrders();
     die();
@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     viewOrders();
     die();
 }
-if($_SERVER["REQUEST_METHOD"] == "PATCH"){
+if($_SERVER["REQUEST_METHOD"] == "POST" && $_GET['crud_req'] == "updateOrders"){//change patch to post 
     updateOrders();
 }
 function addToOrders()

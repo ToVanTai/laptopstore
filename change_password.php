@@ -27,7 +27,7 @@ if(empty(Session::get("user"))){
     <div class="container">
         <div class="container__registor">
             <h3>Đổi mật khẩu</h3>
-            <form class="form__register" action="" method="POST">
+            <form class="form__register" id="changePasswordForm" action="" method="POST">
                 <label for="account">Tên tài khoản</label>
                 <input required type="text" required placeholder="Nhập tên tài khoản" name="account" id="account" />
                 <label for="password">Mật khẩu cũ</label>
