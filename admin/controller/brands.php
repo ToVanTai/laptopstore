@@ -16,25 +16,22 @@ header("Access-Control-Allow-Credentials: true");
 $method = $_SERVER["REQUEST_METHOD"];
 Session::init();
 if ($method == "POST" && empty($_GET["id"])) {
-    //add new category
     addNewBrand();
     die();
 }
-if ($method == "GET" && empty($_GET["id"])) { //call api
-    //get categories
+if ($method == "GET" && empty($_GET["id"])) {
     getBrands();
     die();
 }
-// if($method=="DELETE" && isset($_GET["id"])){
-//     deleteBrands($_GET["id"]);
-//     die();
-// }
+if ($method == "GET") {
+    getBrand();
+    die();
+}
 if ($method == "POST" && !empty($_GET["id"])) {
-    //add new category
     updateBrands($_GET["id"]);
     die();
 }
-function addNewBrand()
+function addNewBrand()//change to api
 {
     $name = getPOST("name");
     $files = $_FILES["image"];
@@ -51,10 +48,7 @@ function addNewBrand()
                     '" . $name . "','" . $nameFile . "','" . $created_by . "','" . $created_at . "','" . $updated_at . "'
                 );";
                 execute($query);
-                echo "<script>
-                        alert('Thêm thành công');
-                        window.location.href='" . baseUrl . "admin/index.php?view=new-brand';
-                    </script>";    
+                http_response_code(200);  
             }
         }
     }
@@ -63,32 +57,32 @@ function getBrands()
 {
     $query = 'select * from brands';
     $dataRes = executeResult($query);
-    if (count($dataRes) >= 1) {
-        $i = 1;
-        foreach ($dataRes as $item) {
-            $image = baseUrl . 'store/' . $item['image'];
-            // echo '
-            //     <tr>
-            //         <td>'.$i.'</td>
-            //         <td>'.$item['name'].'</td>
-            //         <td><img style="height:50px; object-fit:cover" src="'.$image.'" alt=""></td>
-            //         <td>
-            //             <a href="index.php?view=change-brand&id='.$item['id'].'" class="btn">Sửa</a> 
-            //             <btn class="btn-delete btn" data-id="'.$item['id'].'" class="btn">Xóa</b>
-            //         </td>
-            //     </tr>';
-            echo '
-                    <tr>
-                        <td>' . $i . '</td>
-                        <td>' . $item['name'] . '</td>
-                        <td><img style="height:50px; object-fit:cover" src="' . $image . '" alt=""></td>
-                        <td>
-                            <a href="index.php?view=change-brand&id=' . $item['id'] . '" class="btn">Sửa</a> 
-                        </td>
-                    </tr>';
-            $i++;
-        }
-    }
+    echo json_encode($dataRes);
+    http_response_code(200);
+    // if (count($dataRes) >= 1) {
+    //     $i = 1;
+    //     foreach ($dataRes as $item) {
+    //         $image = baseUrl . 'store/' . $item['image'];
+    //         echo '
+    //                 <tr>
+    //                     <td>' . $i . '</td>
+    //                     <td>' . $item['name'] . '</td>
+    //                     <td><img style="height:50px; object-fit:cover" src="' . $image . '" alt=""></td>
+    //                     <td>
+    //                         <a href="index.php?view=change-brand&id=' . $item['id'] . '" class="btn">Sửa</a> 
+    //                     </td>
+    //                 </tr>';
+    //         $i++;
+    //     }
+    // }
+}
+function getBrand()
+{
+    $id = getGET("id");
+    $query = 'select * from brands where id = ' . $id . ' limit 1';
+    $resData = executeResult($query,true);
+    echo json_encode($resData);
+    http_response_code(200);
 }
 // function deleteBrands($id){
 
@@ -122,10 +116,7 @@ function updateBrands($id)
                 if (move_uploaded_file($from, $to)) {
                     $query = "update brands set name = '" . $name . "',image = '" . $nameFile . "', created_by = '" . $created_by . "', updated_at = '" . $updated_at . "' where id = " . $id . " ;";
                     execute($query);
-                    echo "<script>
-                            alert('Cập nhật thành công');
-                            window.location.href='" . baseUrl . "admin/index.php?view=change-brand&id=" . $id . "';
-                        </script>";
+                    http_response_code(200);
                 }
             }
         }
@@ -136,10 +127,7 @@ function updateBrands($id)
             $created_by = Session::get("user")["id"];
             $query = "update brands set name = '" . $name . "',created_by = '" . $created_by . "',updated_at = '" . $updated_at . "' where id = " . $id . " ; ";
             execute($query);
-            echo "<script>
-                        alert('Cập nhật thành công');
-                        window.location.href='" . baseUrl . "admin/index.php?view=change-brand&id=" . $id . "';
-                    </script>";
+            http_response_code(200);
         }
     }
 

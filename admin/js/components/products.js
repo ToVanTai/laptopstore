@@ -7,27 +7,31 @@ fetch(`${baseURL}admin/controller/products.php`,{
     credentials:"include"
 }).then(res=>{
     return res.text().then(resData=>{
-        productList.innerHTML=resData;
-        // let btnDetetes=$$(".btn-delete");
-        // btnDetetes.forEach(element=>{
-        //     element.addEventListener('click',function (event){
-        //         let nodeDelete = event.target.parentNode.parentNode;
-        //         let id = this.dataset.id;
-        //         let isConfirm = confirm("Bạn chắc chắn muấn xóa chứ!");
-        //         if(isConfirm){
-        //             fetch(`${baseURL}admin/controller/brands.php?id=${id}`,{
-        //                 method: "DELETE",
-        //                 credentials:"include"
-        //             }).then(res=>{
-        //                 if(res.status==201||res.status==200){
-        //                     alert("xóa thành công");
-        //                     nodeDelete.parentNode.removeChild(nodeDelete);
-        //                 }else{
-        //                     alert("xóa thất bại");
-        //                 }
-        //             });
-        //         }
-        //     })
-        // })
+        resData = JSON.parse(resData)
+        let productsHtml = ""
+        if(resData){
+            for(let i=0;i<resData.length;i++){
+                productsHtml+=`
+                <tr>
+                        <td>${i+1}</td>
+                        <td>${resData[i]['model']}</td>
+                        <td><img style="height:50px; object-fit:cover" src="${baseURL}store/${resData[i]['background']}" alt=""></td>
+                        <td>${resData[i]['screen']}</td>
+                        <td>${resData[i]['RAM']}</td>
+                        <td>${resData[i]['hardware']}</td>
+                        <td>${resData[i]['OS']}</td>
+                        <td>${resData[i]['CPU']}</td>
+                        <td>${resData[i]['VGA']}</td>
+                        <td>${resData[i]['warranty']}</td>
+                        <td>${resData[i]['discount']}</td>
+                        <td>${resData[i]['color']}</td>
+                        <td>
+                            <a href="index.php?view=change-product&id=${resData[i]['id']}" class="btn">Sửa</a>
+                            <a href="index.php?view=product&id=${resData[i]['id']}" class="btn">Xem</a> 
+                        </td>
+                    </tr>`
+            }
+            productList.innerHTML=productsHtml
+        }
     })
 })

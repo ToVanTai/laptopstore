@@ -90,7 +90,7 @@ function onChangeStatus(){
         if(confirm("Bạn có muấn lưu thay đổi trạng thái đơn hàng?")){
             let body = JSON.stringify({"statusChange":statusChange12,"orderId":orderId12});
             fetch(`${baseURL}admin/controller/orders.php`,{
-                method:"PATCH",
+                method:"POST",
                 credentials:"include",
                 body
             }).then(res=>{

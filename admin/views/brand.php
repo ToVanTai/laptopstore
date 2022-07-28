@@ -13,43 +13,30 @@ switch ($mode) {
     case "new-brand":
         echo '
                 <div class="container__detail__product">
-                <form enctype="multipart/form-data" action="controller/brands.php" method="POST">
+                <form enctype="multipart/form-data" id="form-add-brand" method="POST">
                     <label for="name">Tên hãng</label>
                     <input type="text" required name="name" id="name" placeholder="Nhập tên hãng">
                     <label for="image">Ảnh nền</label>
                     <input type="file" name="image" required id="image" placeholder="Ảnh nền">
                     <button type="submit" class="btn">Lưu</button>
                 </form>
-            </div>';
+            </div>
+            <script type="module" src="js/components/addBrand.js"></script>';
         break;
     case "change-brand":
-        $id = getGET("id");
-        if ($id != null) {
-            $query = 'select * from brands where id = ' . $id . ' limit 1';
-            $resData = executeResult($query,true);
-            $name = $resData["name"];
-            $image = baseUrl."store/".$resData["image"];
             echo '
                 <div class="container__detail__product">
-                <form enctype="multipart/form-data" action="controller/brands.php?id='.$id.'" method="POST">
+                <form enctype="multipart/form-data" id="form-change-brand" method="POST">
                     <label for="name">Tên hãng</label>
-                    <input type="text" required name="name" value="'.$name.'" id="name" placeholder="Nhập tên hãng">
-                    <img style="height: 50px; object-fit:cover; margin-top:15px" src="'.$image.'" />
+                    <input type="text" required name="name" value="" id="name" placeholder="Nhập tên hãng">
+                    <img style="height: 50px; object-fit:cover; margin-top:15px" id="image" src="" />
                     <label for="image">Ảnh nền</label>
                     <input type="file" name="image" id="image" placeholder="Ảnh nền">
                     <button type="submit" class="btn">Lưu</button>
                 </form>
-            </div>';
-        }
-
+            </div>
+            <script type="module" src="js/components/changeBrand.js"></script>';
         break;
 }
 
 ?>
-<!-- <div class="container__detail__product">
-        <form action="">
-            <label for="name">Tên danh mục</label>
-            <input type="text" name="name" id="name" placeholder="Nhập tên danh mục">
-            <button type="submit" class="btn">Lưu</button>
-        </form>
-    </div> -->

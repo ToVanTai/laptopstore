@@ -7,27 +7,19 @@ fetch(`${baseURL}admin/controller/brands.php`,{
     credentials:"include"
 }).then(res=>{
     return res.text().then(resData=>{
-        brandList.innerHTML=resData;
-        // let btnDetetes=$$(".btn-delete");
-        // btnDetetes.forEach(element=>{
-        //     element.addEventListener('click',function (event){
-        //         let nodeDelete = event.target.parentNode.parentNode;
-        //         let id = this.dataset.id;
-        //         let isConfirm = confirm("Bạn chắc chắn muấn xóa chứ!");
-        //         if(isConfirm){
-        //             fetch(`${baseURL}admin/controller/brands.php?id=${id}`,{
-        //                 method: "DELETE",
-        //                 credentials:"include"
-        //             }).then(res=>{
-        //                 if(res.status==201||res.status==200){
-        //                     alert("xóa thành công");
-        //                     nodeDelete.parentNode.removeChild(nodeDelete);
-        //                 }else{
-        //                     alert("xóa thất bại");
-        //                 }
-        //             });
-        //         }
-        //     })
-        // })
+        let dataRes = JSON.parse(resData);
+        let listHtml = '';
+        for(let i=0;i<dataRes.length; i++){
+            listHtml+=`
+            <tr>
+                <td>${i+1}</td>
+                <td>${dataRes[i]["name"]}</td>
+                <td><img style="height:50px; object-fit:cover" src="${baseURL}store/${dataRes[i]["image"]}" alt=""></td>
+                <td>
+                    <a href="index.php?view=change-brand&id=${dataRes[i]["id"]}" class="btn">Sửa</a> 
+                </td>
+            </tr>`;
+        }
+        brandList.innerHTML=listHtml;
     })
 })

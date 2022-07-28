@@ -26,7 +26,7 @@ if($method == "GET" && !empty(getGET("id"))){
 if($method == "GET"){
     getAllOrders();
 }
-if($method == "PATCH"){
+if($method == "POST"){//change patch to post
     updateOrder();
 }
 function getOrderDetail(){
