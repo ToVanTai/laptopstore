@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th7 28, 2022 lúc 09:39 AM
+-- Thời gian đã tạo: Th7 29, 2022 lúc 09:19 AM
 -- Phiên bản máy phục vụ: 10.4.21-MariaDB
 -- Phiên bản PHP: 7.4.25
 
@@ -41,7 +41,7 @@ CREATE TABLE `brands` (
 --
 
 INSERT INTO `brands` (`id`, `name`, `image`, `created_by`, `created_at`, `updated_at`) VALUES
-(8, 'DELL', '16552165891653968485dell.webp', 21, '2022-05-30 09:55:54', '2022-06-14 09:23:09'),
+(8, 'DELL', '16552165891653968485dell.webp', 21, '2022-05-30 09:55:54', '2022-07-28 03:22:37'),
 (9, 'ACER', '1653968513acer.webp', 21, '2022-05-31 10:41:53', '2022-05-31 10:41:53'),
 (10, 'ASUS', '1653968528asus.webp', 21, '2022-05-31 10:42:08', '2022-05-31 10:42:08'),
 (11, 'GIGABYTE', '1653968550gigabyte.webp', 21, '2022-05-31 10:42:30', '2022-05-31 10:42:30'),
@@ -67,10 +67,10 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `user_id`, `status_id`, `created_at`, `updated_at`) VALUES
-(42, 21, 1, '2022-06-19 11:12:11', '2022-06-19 11:12:11'),
+(42, 21, 10, '2022-06-19 11:12:11', '2022-06-19 11:12:11'),
 (43, 21, 10, '2022-06-22 04:01:18', '2022-06-22 04:01:18'),
-(44, 34, 1, '2022-06-23 04:59:23', '2022-06-23 04:59:23'),
-(45, 34, 1, '2022-06-23 05:17:44', '2022-06-23 05:17:44');
+(44, 34, 10, '2022-06-23 04:59:23', '2022-06-23 04:59:23'),
+(45, 34, 10, '2022-06-23 05:17:44', '2022-06-23 05:17:44');
 
 -- --------------------------------------------------------
 
@@ -128,7 +128,7 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `brand_id`, `model`, `screen`, `RAM`, `hardware`, `OS`, `CPU`, `VGA`, `background`, `warranty`, `discount`, `color`, `created_by`, `created_at`, `updated_at`) VALUES
-(14, 8, 'Laptop Gaming Dell G15 5511 70266676', '                15.6\" FHD (1920 x1080) 120Hz, 250 nits, WVA, Anti-Glare, LED Backlit, Narrow Border Display\r\n                \r\n                \r\n                ', '8GB (8x1) DDR4 3200MHz (2x SO-DIMM socket, up to 32GB SDRAM)', '256GB SSD M.2 PCIe', 'Windows 11 Home + Office Home and Student 2021', 'Intel Core i5-11400H 2.7GHz up to 4.5GHz 12MB', '                                NVIDIA GeForce RTX 3050 4GB GDDR6\r\n                \r\n                \r\n                ', '1654489750dell_g5.webp', 'Bảo hành chính hãng 12 tháng.', 0, 'Dark Shadow Grey', 21, '2022-06-06 06:29:10', '2022-06-08 10:12:34'),
+(14, 8, 'Laptop Gaming Dell G15 5511', '                                                                        15.6\" FHD (1920 x1080) 120Hz, 250 nits, WVA, Anti-Glare, LED Backlit, Narrow Border Display\r\n                \r\n                \r\n                \r\n        \r\n        \r\n        \r\n        \r\n        \r\n        \r\n        ', '8GB (8x1) DDR4 3200MHz (2x SO-DIMM socket, up to 32GB SDRAM)', '256GB SSD M.2 PCIe', 'Windows 11 Home + Office Home and Student 2021', 'Intel Core i5-11400H 2.7GHz up to 4.5GHz 12MB', '                                                                                        NVIDIA GeForce RTX 3050 4GB GDDR6\r\n                \r\n                \r\n                \r\n        \r\n        \r\n        \r\n        \r\n        \r\n        \r\n        ', '1654489750dell_g5.webp', 'Bảo hành chính hãng 12 tháng.', 0, 'Dark Shadow Grey', 21, '2022-06-06 06:29:10', '2022-07-28 09:55:03'),
 (15, 8, 'Laptop Dell Vostro 3510 V5I3305W Black', '15.6 inch, Full HD (1920 x 1080), 60Hz, chống chói Anti Glare, WVA, LED Backlit', '8GB DDR4 2666MHz (Hỗ trợ tối đa 16GB)', '256 GB SSD NVMe PCIe (Có thể tháo ra, lắp thanh khác tối đa 2TB (2280) / 1TB (2230))Hỗ trợ khe cắm HDD SATA (nâng cấp tối đa 2TB)', 'Windows 11 Home SL + Office Home&Student 2021', 'Intel Core i3-1115G4, 2 nhân 4 luồng (3.0GHz - Turbo Boost 4.1GHz)', '	\r\nIntel UHD Graphics', '1654490413vostro_3510.webp', 'Bảo hành: 12 Tháng', 8, 'black', 21, '2022-06-06 06:40:13', '2022-06-06 06:40:13'),
 (16, 8, 'Laptop gaming Dell G15 5515 P105F004 70266674', '15.6 inch FHD (1920 x1080) 120Hz, 250 nits, WVA, Anti-Glare, LED Backlit, Narrow Border', 'DDR4 8GB (1 x 8GB) 3200MHz, 2 khe cắm tối đa 32GB', '512GB SSD NVMe M.2 PCIe', 'Windows 11 Home + Office Home & Student', 'AMD Ryzen 7 5800H 3.2GHz up to 4.4GHz 16MB', 'NVIDIA GeForce RTX™ 3050 4GB GDDR6', '1654695500g15_74.webp', 'Bảo hành chính hãng 12 tháng', 5, 'Phantom Grey', 21, '2022-06-08 03:38:20', '2022-06-08 03:38:20'),
 (17, 8, 'Laptop Dell Vostro 3400 P132G003 70270644', '14\'\' FHD (1920 x 1080), Anti-Glare, 45% NTSC, 220 Nits', '8GB DDR4 2666MHz (2x SO-DIMM socket, up to 16GB SDRAM)', '256GB SSD M.2 PCIE, 1x slot SATA3 2.5\"', 'Windows 11 Home SL + Office Home&Student 2021', 'Intel Core i3-1115G4 1.7GHz up to 4.1GHz 6MB', 'Intel® UHD Graphics', '1654695759dellvostro3400.webp', 'Bảo hành: 12 Tháng', 8, 'Đen', 21, '2022-06-08 03:42:39', '2022-06-08 03:42:39'),
@@ -168,7 +168,8 @@ INSERT INTO `products` (`id`, `brand_id`, `model`, `screen`, `RAM`, `hardware`, 
 (51, 10, 'Laptop ASUS ROG Zephyrus G14 GA401QH K2091W', '14\" WQHD (2560 x 1440) 16:9, IPS with 72% NTSC, 120Hz, 100% DCI-P3, Pantone Validated, 300nits', '8GB Onboard DDR4 3200MHz (1x SO-DIMM socket, up to 24GB SDRAM)', '512GB M.2 NVMe™ PCIe® 3.0 SSD', 'Windows 11 Home', 'AMD Ryzen™ 7-5800HS 2.8GHz up to 4.4GHz, 8 cores 16 threads', 'NVIDIA GeForce GTX 1650 4GB GDDR6, With ROG Boost up to 1515MHz at 50W (65W with Dynamic Boost)', '16547057407.webp', 'Bảo hành chính hãng 12 tháng.', 8, 'Eclipse Gray', 21, '2022-06-08 06:29:00', '2022-06-08 06:29:00'),
 (52, 11, 'Laptop GIGABYTE AORUS 15P XD 73S1324GH', '15.6 inch Thin Bezel FHD (1920x1080) IPS-level Anti-glare Display LCD (240Hz, 72% NTSC)', '16GB (2x8GB) DDR4-3200Mhz (2x khe ram nâng cấp tối đa 64GB RAM)', '1TB SSD M.2 2242 PCIe NVMe 3.0x4', 'Windows 11 Home', 'Intel Core i7-11800H 2.30GHz up to 4.60GHz, 8 nhân 16 luồng', 'NVIDIA GeForce RTX 3070 8GB GDDR6 + Intel UHD Graphics', '16547058938.png', 'Bảo hành chính hãng 12 tháng', 5, 'Đen', 21, '2022-06-08 06:31:33', '2022-06-08 06:31:33'),
 (53, 13, 'Laptop gaming MSI Stealth GS77 12UH 075VN', '17.3\" QHD (2560x1440) IPS with Anti-Glare, 240Hz, DCI-P3 100% typical', '32GB (16GBx2) DDR5 4800MHz (2x SO-DIMM socket, up to 64GB SDRAM)', '2TB SSD PCIE G4X4 (2 slots)', 'Windows 11 Home', 'Intel Core i9-12900H 3.8GHz up to 5.0GHz 24MB', 'NVIDIA GeForce RTX3080 Max-Q 8GB GDDR6, Up to 1345MHz Boost Clock, 105W Maximum Graphics Power with Dynamic Boost.    ', '16547060224.jpg', 'Bảo hành chính hãng 24 tháng', 10, 'Core Black', 21, '2022-06-08 06:33:42', '2022-06-08 06:33:42'),
-(54, 13, 'Laptop gaming MSI Raider GE76 12UHS 480VN', '17.3\" UHD (3840 x 2160) IPS, 120Hz, 100% sRGB, 100% Adobe RGB, NanoEdge ', '64GB (32GB x2) DDR5 4800MHz (2x SO-DIMM socket, up to 64GB SDRAM)', '2TB SSD PCIE G4X4 (2 slots)', 'Windows 11 Home', 'Intel Core i9-12900HK 3.8GHz up to 5.0GHz 24MB', 'NVIDIA GeForce RTX 3080Ti 16GB GDDR6 Up to 1690MHz Boost Clock, 175W Maximum Graphics Power with Dynamic Boost. Max. 220W CPU-GPU Power with MSI OverBoost Technology', '16547061385.webp', 'Bảo hành chính hãng 24 tháng', 14, 'Titanium Blue', 21, '2022-06-08 06:35:38', '2022-06-08 06:35:38');
+(54, 13, 'Laptop gaming MSI Raider GE76 12UHS 480VN', '17.3\" UHD (3840 x 2160) IPS, 120Hz, 100% sRGB, 100% Adobe RGB, NanoEdge ', '64GB (32GB x2) DDR5 4800MHz (2x SO-DIMM socket, up to 64GB SDRAM)', '2TB SSD PCIE G4X4 (2 slots)', 'Windows 11 Home', 'Intel Core i9-12900HK 3.8GHz up to 5.0GHz 24MB', 'NVIDIA GeForce RTX 3080Ti 16GB GDDR6 Up to 1690MHz Boost Clock, 175W Maximum Graphics Power with Dynamic Boost. Max. 220W CPU-GPU Power with MSI OverBoost Technology', '16547061385.webp', 'Bảo hành chính hãng 24 tháng', 14, 'Titanium Blue', 21, '2022-06-08 06:35:38', '2022-06-08 06:35:38'),
+(55, 13, 'tesst', '       sdfs         ', 'sfs', 'sfs', 'sfds', 'sf', '    sfsd            ', '1658999613cuteness.jpg', 'sfs', 2, 'sd', 21, '2022-07-28 04:13:33', '2022-07-28 04:13:33');
 
 -- --------------------------------------------------------
 
@@ -189,7 +190,7 @@ CREATE TABLE `product_capacities` (
 --
 
 INSERT INTO `product_capacities` (`id`, `product_id`, `capacity_name`, `price`, `quantity`) VALUES
-(8, 14, '8GB/ 120GB SSD ', 22790000, 18009992),
+(8, 14, '8GB/ 120GB SSD ', 22790000, 18009991),
 (9, 14, '16GB/ 256GB SSD', 35000000, 190050502),
 (10, 15, '8GB/ 120GB SSD ', 12990000, 100046),
 (11, 15, '16GB/ 256GB SSD', 15000000, 5000),
@@ -263,7 +264,10 @@ INSERT INTO `product_capacities` (`id`, `product_id`, `capacity_name`, `price`, 
 (79, 51, '8GB/ 120GB SSD ', 29990000, 100),
 (80, 52, '16GB/ 256GB SSD', 53990000, 100),
 (81, 53, '32GB/ 500GB SSD', 89990000, 10),
-(82, 54, '64GB/ 500GB SSD', 119990000, 8);
+(82, 54, '64GB/ 500GB SSD', 119990000, 8),
+(83, 55, 'OO la la', 3, 3),
+(84, 14, '32GB/SSD 1TB', 40000000, 6),
+(85, 15, '32GB/SSD 1TB', 38000000, 4);
 
 -- --------------------------------------------------------
 
@@ -340,7 +344,7 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `role_id`, `account`, `password`, `name`, `phone_number`, `address`, `avatar`, `email`, `created_at`, `updated_at`) VALUES
 (21, 2, 'admin', '25d55ad283aa400af464c76d713c07ad', 'tô văn tài', '973867269', 'Xóm 4, thôn Gia Lễ, xã Đông Mỹ, thành phố Thái Bình, tỉnh Thái Bình', '1653793675sexygirl.jpg', 'tovantaidz2001@gmail.com', '2022-05-29 10:06:46', '2022-06-04 02:58:01'),
 (33, 1, 'account1', '827ccb0eea8a706c4c34a16891f84e7b', 'van tai', '0973867269', 'Xóm 3, thôn Gia Lễ, xã Đông Mỹ, thành phố Thái Bình', '1655597592cuteness.jpg', 'tovantaidz2002@gmail.com', '2022-06-18 11:24:30', '2022-06-19 07:13:12'),
-(34, 1, 'account2', '827ccb0eea8a706c4c34a16891f84e7b', 'to van tai', '0973867269', 'Xom 4, thon gia le, xa dong my, thanh pho thai binh', NULL, 'tovantaidz2001@gmail.com', '2022-06-19 07:18:52', '2022-06-23 04:24:21'),
+(34, 1, 'account2', '25d55ad283aa400af464c76d713c07ad', 'to van tai', '0973867269', 'Xom 4, thon gia le, xa dong my, thanh pho thai binh', NULL, 'tovantaidz2001@gmail.com', '2022-06-19 07:18:52', '2022-06-23 04:24:21'),
 (35, 1, 'account5', '827ccb0eea8a706c4c34a16891f84e7b', 'to van tai', '015423454', 'THAI BINH', NULL, 'tovantaidz2001@gmail.com', '2022-07-24 04:34:33', '2022-07-24 04:35:11');
 
 --
@@ -413,7 +417,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT cho bảng `brands`
 --
 ALTER TABLE `brands`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT cho bảng `orders`
@@ -431,13 +435,13 @@ ALTER TABLE `order_details`
 -- AUTO_INCREMENT cho bảng `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT cho bảng `product_capacities`
 --
 ALTER TABLE `product_capacities`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
 
 --
 -- AUTO_INCREMENT cho bảng `role`
