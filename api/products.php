@@ -1,7 +1,8 @@
 <?php
+include_once "../utils/session.php";
+Session::init();
 include_once "../db/config.php";
 include_once "../utils/dbhelper.php";
-include_once "../utils/session.php";
 include_once "../utils/validate.php";
 include_once "../classes/Product.php";
 $http_origin = "";

@@ -1,7 +1,8 @@
 <?php
+    include_once "../utils/session.php";
+    Session::init();
     include_once "../db/config.php";
     include_once "../utils/dbhelper.php";
-    include_once "../utils/session.php";
     include_once "../utils/validate.php";
     $http_origin = "";
     if (!empty($_SERVER['HTTP_ORIGIN'])) {
@@ -9,11 +10,10 @@
             $http_origin = $_SERVER['HTTP_ORIGIN'];
         }
     }
-    
     header("Access-Control-Allow-Origin: " . $http_origin);
     header("Access-Control-Allow-Methods: GET,POST,PATCH,DELETE");
     header("Access-Control-Allow-Credentials: true");
-    Session::init();
+    
     //dữ liệu được gửi toàn bộ từ form\
     if ($_SERVER["REQUEST_METHOD"] == "GET") {
         check();
@@ -29,6 +29,5 @@
             echo $dataRes;
             http_response_code(203);
         }
-        
     }
 ?>
