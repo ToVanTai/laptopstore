@@ -1,7 +1,8 @@
 <?php
+include_once "../../utils/session.php";
+Session::init();
 include_once "../../db/config.php";
 include_once "../../utils/dbhelper.php";
-include_once "../../utils/session.php";
 include_once "../../utils/validate.php";
 $http_origin = "";
 if (!empty($_SERVER['HTTP_ORIGIN'])) {
@@ -18,7 +19,6 @@ if (empty(Session::get("user")["role"])||Session::get("user")["role"]!=2) {
     die();
 }
 $method = $_SERVER["REQUEST_METHOD"];
-Session::init();
 if ($method == "GET" && !empty($_GET["product_id"])) {
     getCapacities();
     die();

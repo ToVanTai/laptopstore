@@ -1,7 +1,8 @@
 <?php
+include_once "../../utils/session.php";
+Session::init();
 include_once "../../db/config.php";
 include_once "../../utils/dbhelper.php";
-include_once "../../utils/session.php";
 include_once "../../utils/validate.php";
 $http_origin = "";
 if (!empty($_SERVER['HTTP_ORIGIN'])) {
@@ -15,7 +16,6 @@ header("Access-Control-Allow-Methods: GET,POST");
 header("Access-Control-Allow-Credentials: true");
 
 $method = $_SERVER["REQUEST_METHOD"];
-Session::init();
 if ($method == "POST" && !empty($_POST["crud_request"]) && $_POST["crud_request"] == "add-newproduct") {
     addNewProduct();
     die();
