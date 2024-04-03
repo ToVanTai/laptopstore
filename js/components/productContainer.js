@@ -212,11 +212,11 @@ function onOrders(){
                 })
             }else{
                 res.text().then(res=>{
-                    alert("Thêm thành công.");
-                    let cartsRes = JSON.parse(res);
-                    renderCartHeader(cartsRes);
+                    console.log(res);
                 })
             }
+        }).catch(err =>{
+            console.log(err)
         })
     }
 }
