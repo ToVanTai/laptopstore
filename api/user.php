@@ -15,7 +15,9 @@ header("Access-Control-Allow-Origin: " . $http_origin);
 header("Access-Control-Allow-Methods: GET,POST,PATCH,DELETE");
 header("Access-Control-Allow-Credentials: true");
 
-//dữ liệu được gửi toàn bộ từ form\
+/**
+ * lấy dữ liệu thông tin người dùng
+ */
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     about();
     die();
@@ -40,18 +42,15 @@ if ($_SERVER["REQUEST_METHOD"] =="POST" && $_POST['crud_req'] == "changePassword
     updatev2();//change password
     die();
 }
-// if ($_SERVER["REQUEST_METHOD"] == "PATCH") {
-//     update();
-//     die();
-// }
 if ($_SERVER["REQUEST_METHOD"] == "POST" && empty($_POST['crud_req']) && $_GET["crud_req"] == "logout") {//change delete to post
     logout(); //oke
     die();
 }
+/**
+ * lấy dữ liệu thông tin người dùng
+ */
 function about()
 {
-    // $idUser = getGET("id");
-
     $responseData = [];
     if (!empty(Session::get("user"))) {
         $idUser = Session::get("user")["id"];
