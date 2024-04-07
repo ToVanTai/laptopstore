@@ -1,21 +1,13 @@
 <?php
 include_once __DIR__."/../../utils/index.php";
 Session::init();
-    $http_origin = "";
-    if (!empty($_SERVER['HTTP_ORIGIN'])) {
-        if (in_array($_SERVER['HTTP_ORIGIN'], allowedOrigins)) {
-            $http_origin = $_SERVER['HTTP_ORIGIN'];
-        }
-    }
-    
-    header("Access-Control-Allow-Origin: " . $http_origin);
-    header("Access-Control-Allow-Methods: GET,POST");
-    header("Access-Control-Allow-Credentials: true");
-    
     $method = $_SERVER["REQUEST_METHOD"];
     if($method=="GET" && empty($_GET["id"])){//call api
-        //get products
-        getProducts();
+        middleware(
+            function() {
+                getProducts();
+            }
+        );
         die();
     }
 

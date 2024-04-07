@@ -5,46 +5,63 @@ include_once __DIR__ . "/../enum/index.php";
 
 
 use laptopstore\enum\{StatusCodeResponse};
-$http_origin = "";
-if (!empty($_SERVER['HTTP_ORIGIN'])) {
-    if (in_array($_SERVER['HTTP_ORIGIN'], allowedOrigins)) {
-        $http_origin = $_SERVER['HTTP_ORIGIN'];
-    }
-}
-
-header("Access-Control-Allow-Origin: " . $http_origin);
-header("Access-Control-Allow-Methods: GET,POST,PATCH,DELETE");
-header("Access-Control-Allow-Credentials: true");
-
 /**
  * lấy dữ liệu thông tin người dùng
  */
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    about();
+    middleware(
+        function() {
+            about();
+        }
+    );
     die();
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST" && empty($_POST['crud_req'])) {
-    logout(); //oke
+    middleware(
+        function() {
+            logout();
+        }
+    );
     die();
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['crud_req'] == "register") {
-    register(); //oke
+    middleware(
+        function() {
+            register();
+        }
+    );
     die();
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['crud_req'] == "login") {
-    login(); //oke
+    middleware(
+        function() {
+            login();
+        }
+    );
     die();
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['crud_req'] == "update") {
-    update1();
+    middleware(
+        function() {
+            update1();
+        }
+    );
     die();
 }
 if ($_SERVER["REQUEST_METHOD"] =="POST" && $_POST['crud_req'] == "changePassword") {//change patch to post
-    updatev2();//change password
+    middleware(
+        function() {
+            updatev2();
+        }
+    );
     die();
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST" && empty($_POST['crud_req']) && $_GET["crud_req"] == "logout") {//change delete to post
-    logout(); //oke
+    middleware(
+        function() {
+            logout();
+        }
+    );
     die();
 }
 /**

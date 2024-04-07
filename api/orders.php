@@ -1,17 +1,7 @@
 <?php
 include_once __DIR__."/../utils/index.php";
 Session::init(); 
-$http_origin = "";
-if (!empty($_SERVER['HTTP_ORIGIN'])) {
-    if (in_array($_SERVER['HTTP_ORIGIN'], allowedOrigins)) {
-        $http_origin = $_SERVER['HTTP_ORIGIN'];
-    }
-}
 
-header("Access-Control-Allow-Origin: " . $http_origin);
-header("Access-Control-Allow-Methods: GET,POST,PATCH,DELETE");
-header("Access-Control-Allow-Credentials: true");
-header("Content-Type: application/json");
 
 if (empty(Session::get("user"))) {
     http_response_code(203);
@@ -19,17 +9,27 @@ if (empty(Session::get("user"))) {
     die();
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST" && empty($_GET['crud_req'])) {
-    //yêu cầu đặt hàng.
-    addToOrders();
+    middleware(
+        function() {
+            addToOrders();
+        }
+    );
     die();
 }
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    //xem thông tin order
-    viewOrders();
+    middleware(
+        function() {
+            viewOrders();
+        }
+    );
     die();
 }
 if($_SERVER["REQUEST_METHOD"] == "POST" && $_GET['crud_req'] == "updateOrders"){//change patch to post 
-    updateOrders();
+    middleware(
+        function() {
+            updateOrders();
+        }
+    );
 }
 function addToOrders()
 {

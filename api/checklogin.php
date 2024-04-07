@@ -1,19 +1,15 @@
 <?php
     include_once __DIR__."/../utils/index.php";
     Session::init();
-    $http_origin = "";
-    if (!empty($_SERVER['HTTP_ORIGIN'])) {
-        if (in_array($_SERVER['HTTP_ORIGIN'], allowedOrigins)) {
-            $http_origin = $_SERVER['HTTP_ORIGIN'];
-        }
-    }
-    header("Access-Control-Allow-Origin: " . $http_origin);
-    header("Access-Control-Allow-Methods: GET,POST,PATCH,DELETE");
-    header("Access-Control-Allow-Credentials: true");
+    
     
     //dữ liệu được gửi toàn bộ từ form\
     if ($_SERVER["REQUEST_METHOD"] == "GET") {
-        check();
+        middleware(
+            function() {
+                check();
+            }
+        );
         die();
     }
     function check(){
