@@ -1,0 +1,17 @@
+{
+    "name": "laptopviet/laptopstore",
+    "require": {
+        "ircmaxell/password-compat": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Laptopviet\\Laptopstore\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "ToVanTai",
+            "email": "tovantaidz2001@gmail.com"
+        }
+    ]
+}

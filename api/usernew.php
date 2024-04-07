@@ -1,6 +1,10 @@
 <?php
 include_once __DIR__."/../utils/index.php";
 Session::init();
+include_once __DIR__ . "/../enum/index.php";
+
+
+use laptopstore\enum\{StatusCodeResponse};
 $http_origin = "";
 if (!empty($_SERVER['HTTP_ORIGIN'])) {
     if (in_array($_SERVER['HTTP_ORIGIN'], allowedOrigins)) {
@@ -252,41 +256,3 @@ function updatev2()
         die();
     }
 }
-// function update()
-// {
-//     parse_str(file_get_contents("php://input"), $_PATCH);
-//     $name = $_PATCH['name'];
-//     $password = $_PATCH['password'];
-//     $new_password = $_PATCH['new_password'];
-//     $confirm_password = $_PATCH['confirm_password'];
-//     // $sql = ""
-
-//     // $data = json_decode(file_get_contents("php://input"),true);
-//     // echo $data['img']['name'];
-
-//     // $name = $data['name'];
-//     // $password = $data['password'];
-//     // $new_password = $data['new_password'];
-//     // $confirm_password = $data['confirm_password'];
-
-
-//     // if ($new_password == $confirm_password) {
-//     //     $sql = "select password from users where name = '" . $name . "' and password = '" . $password . "' limit 1;";
-//     //     $dataRes = mysqli_query($conn, $sql);
-//     //     if (mysqli_num_rows($dataRes) > 0) {
-//     //         $sql = "update users set password = '" . $new_password . "' where name = '" . $name . "' ;";
-//     //         mysqli_query($conn, $sql);
-//     //         echo "cap nhat mk thanh " . $new_password;
-//     //         http_response_code(200);
-//     //         die();
-//     //     } else {
-//     //         echo "thong tin tai khoan mat khau khong hop le";
-//     //         http_response_code(400);
-//     //         die();
-//     //     }
-//     // } else {
-//     //     echo "mat khau khong khop";
-//     //     http_response_code(400);
-//     //     die();
-//     // }
-// }

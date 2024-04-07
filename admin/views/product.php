@@ -1,8 +1,5 @@
 <?php
-    include_once "../db/config.php";
-    include_once "../utils/dbhelper.php";
-    include_once "../utils/session.php";
-    include_once "../utils/validate.php";
+include_once __DIR__."/../../utils/index.php";
     if($_GET["view"]=="new-product"){
         echo '
             <div class="container__detail__product">

@@ -1,9 +1,6 @@
 <!-- them moi/sua/lay ra -->
 <?php
-include_once "../db/config.php";
-include_once "../utils/dbhelper.php";
-include_once "../utils/session.php";
-include_once "../utils/validate.php";
+include_once __DIR__."/../../utils/index.php";
 
 //change-brand&id=6
 //new-brand//khong co id
