@@ -1,9 +1,6 @@
 <?php
-include_once "../../utils/session.php";
+include_once __DIR__."/../../utils/index.php";
 Session::init();
-include_once "../../db/config.php";
-include_once "../../utils/dbhelper.php";
-include_once "../../utils/validate.php";
 $http_origin = "";
 if (!empty($_SERVER['HTTP_ORIGIN'])) {
     if (in_array($_SERVER['HTTP_ORIGIN'], allowedOrigins)) {

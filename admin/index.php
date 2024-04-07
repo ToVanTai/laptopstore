@@ -1,5 +1,6 @@
 <?php
-include_once "../utils/session.php";
+include_once __DIR__."/../utils/index.php";
+Session::init();
 $user = Session::get("user");
 if (empty($user)) {
     echo "<script>alert('Bạn chưa đăng nhập')</script>";
