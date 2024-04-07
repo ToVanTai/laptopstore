@@ -10,7 +10,7 @@ switch ($view) {
         include "./views/footer.php";
         break;
     case "carts":
-        include_once __DIR__."/db/config.php";
+        include_once __DIR__."/utils/index.php";
         Session::init();
         if(empty(Session::get("user"))){
             echo '<script>
@@ -29,7 +29,7 @@ switch ($view) {
         include "./views/footer.php";
         break;
     case "purchased":
-        include_once __DIR__."/db/config.php";
+        include_once __DIR__."/utils/index.php";
         Session::init();
         if(empty(Session::get("user"))){
             echo '<script>

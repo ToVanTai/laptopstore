@@ -2,8 +2,6 @@
 include_once __DIR__."/../utils/index.php";
 Session::init();
 include_once __DIR__ . "/../enum/index.php";
-
-
 use laptopstore\enum\{StatusCodeResponse};
 /**
  * lấy dữ liệu thông tin người dùng
@@ -89,45 +87,47 @@ function about()
     };
 }
 
+/**
+ * đăng ký mới tài khoản
+ */
 function register()
 {
     $account = getPOST("account");
     $password = getPOST("password");
-    $messageErr = "";
-    $isErr = false;
     $query = 'select * from users where account="' . $account . '" limit 1';
     $isUnit = count(executeResult($query)) >= 1 ? false : true;
     if ($isUnit == false) {
-        $isErr = true;
-        $messageErr = "Tài khoản đã tồn tại trên hệ thống";
-    }
-    if ($isErr == true) {
-        http_response_code(203);
-        echo $messageErr;
+        http_response_code(StatusCodeResponse::NonAuthoritativeInformation);
+        echo "Tài khoản đã tồn tại trên hệ thống";
         die();
-    }
-    $passwordMd5 = md5($password);
-    $role_id = 1; //users
-    $created_at = date("Y-m-d h:i:s");
-    $updated_at = date("Y-m-d h:i:s");
-    $query = 'insert into users(role_id, account, password, created_at, updated_at) values("' . $role_id . '", "' . $account . '", "' . $passwordMd5 . '", "' . $created_at . '", "' . $updated_at . '");';
-    execute($query);
-    $query = 'select * from users where account="' . $account . '" limit 1';
-    $result = executeResult($query);
-    if (count($result) >= 1 ? true : false) {
-        http_response_code(201);
-    } else {
-        http_response_code(203);
-        echo "Đăng ký tài khoản thất bại";
+    }else{
+        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+        $role_id = 1; //users
+        $created_at = date("Y-m-d h:i:s");
+        $updated_at = $created_at;
+        $query = 'insert into users(role_id, account, password, created_at, updated_at) values("' . $role_id . '", "' . $account . '", "' . $hashedPassword . '", "' . $created_at . '", "' . $updated_at . '");';
+        execute($query);
+        http_response_code(StatusCodeResponse::Created);
     }
 }
+
+/**
+ * đăng nhập
+ */
 function login()
 {
     $account = getPOST("account");
     $password = getPOST("password");
-    $query = 'select * from users where account = "' . $account . '" and password = "' . md5($password) . '" limit 1';
+    $query = 'select * from users where account = "' . $account . '" limit 1';
     $responseData = executeResult($query);
-    $isSuccessfully = count($responseData) >= 1 ? true : false;
+    $isSuccessfully = false;
+    if(count($responseData) >= 1){
+        $hashPassword = $responseData[0]["password"];
+        if (password_verify($password, $hashPassword)) {
+            $isSuccessfully = true;
+        } 
+    }
+
     if ($isSuccessfully == true) {
         http_response_code(200);
         $user = array("id" => $responseData[0]["id"], "role" => $responseData[0]["role_id"], "name" => $responseData[0]["name"], "avatar" => $responseData[0]["avatar"]);
@@ -141,11 +141,19 @@ function login()
         echo "Tên tài khoản hoặc mật khẩu không chính xác";
     }
 }
+
+/**
+ * đăng xuất
+ */
 function logout()
 {
     Session::destroy();
     http_response_code(200);
 }
+
+/**
+ * đổi thông tin cá nhân
+ */
 function update1()
 {
     if (!empty(Session::get("user"))) {
@@ -238,6 +246,10 @@ function update1()
         }
     }
 }
+
+/**
+ * đối mật khẩu
+ */
 function updatev2()
 {
     $errMessage = "";

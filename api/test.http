@@ -1,3 +1,21 @@
 ###
-GET http://localhost/laptopstore/api/usernew.php
+POST http://localhost/laptopstore/api/usernew.php
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="account"
+
+tovantai02s
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="password"
+
+12345678
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="crud_req"
+
+login
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+
+
 
