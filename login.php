@@ -1,6 +1,5 @@
 <?php
-    require_once "./utils/session.php";
-    require_once "./db/config.php";
+    include_once __DIR__."/db/config.php";
     if(!empty(Session::get("user"))){
         echo '<script>
             alert("Bạn đã đăng nhập.");
