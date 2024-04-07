@@ -11,7 +11,7 @@ $limit = getGET("limit")==null?8:getGET("limit");
 
 if ($_SERVER["REQUEST_METHOD"] == "GET"&& $id!=null) {
     middleware(
-        function() {
+        function() use($id) {
             Product::readItem($id);
         }
     );
@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET"&& $id!=null) {
 
 if ($_SERVER["REQUEST_METHOD"] == "GET"&& $search == null && $categoryName == null && $id==null) {
     middleware(
-        function() {
+        function() use($page, $limit) {
             Product::readPage($page, $limit, null, null);
         }
     );
@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET"&& $search == null && $categoryName == nu
 
 if ($_SERVER["REQUEST_METHOD"] == "GET" && $search != null) {
     middleware(
-        function() {
+        function() use($page, $limit, $search){
             Product::readPage($page, $limit, $search, null);
         }
     );
@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && $search != null) {
 
 if ($_SERVER["REQUEST_METHOD"] == "GET"&& $categoryName!=null) {
     middleware(
-        function() {
+        function() use ($page, $limit, $categoryName){
             Product::readPage($page, $limit, null, $categoryName);
         }
     );
