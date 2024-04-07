@@ -7,16 +7,7 @@ use laptopstore\model\{Cart};
 //phần enum
 include __DIR__ . "/../enum/index.php";
 use laptopstore\enum\{StatusCodeResponse};
-$http_origin = "";
-if (!empty($_SERVER['HTTP_ORIGIN'])) {
-    if (in_array($_SERVER['HTTP_ORIGIN'], allowedOrigins)) {
-        $http_origin = $_SERVER['HTTP_ORIGIN'];
-    }
-}
-header("Access-Control-Allow-Origin: " . $http_origin);
-header("Access-Control-Allow-Methods: GET,POST,PATCH,DELETE");
-header("Access-Control-Allow-Credentials: true");
-header("Content-Type: application/json");
+
 
 if(empty(Session::get("user"))){
     http_response_code(StatusCodeResponse::Unauthorized);
@@ -24,22 +15,35 @@ if(empty(Session::get("user"))){
     die();
 }
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    //lay toan bo cart
-    getCart();
+    middleware(
+        function() {
+            getCart();
+        }
+    );
     die();
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST" && empty($_GET['crud_req']) ) {
-    addToCart();
+    middleware(
+        function() {
+            addToCart();
+        }
+    );
     die();
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST" && $_GET['crud_req'] == "updateCarts" ) {//change patch to post
-    //cap nhat carts
-    updateCarts();
+    middleware(
+        function() {
+            updateCarts();
+        }
+    );
     die();
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST" && $_GET['crud_req'] == "deleteCarts" ) {//change delete to post
-    //xoa cart
-    deleteCart();
+    middleware(
+        function() {
+            deleteCart();
+        }
+    );
     die();
 }
 function getCart(){

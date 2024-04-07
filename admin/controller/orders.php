@@ -1,17 +1,6 @@
 <?php
 include_once __DIR__."/../../utils/index.php";
 Session::init();
-$http_origin = "";
-if (!empty($_SERVER['HTTP_ORIGIN'])) {
-    if (in_array($_SERVER['HTTP_ORIGIN'], allowedOrigins)) {
-        $http_origin = $_SERVER['HTTP_ORIGIN'];
-    }
-}
-
-header("Access-Control-Allow-Origin: " . $http_origin);
-header("Access-Control-Allow-Methods: GET,POST,PUT,PATCH,DELETE");
-header("Access-Control-Allow-Credentials: true");
-
 if (empty(Session::get("user")["role"])||Session::get("user")["role"]!=2) {
     http_response_code(203);
     echo "Bạn không là người quản trị.";
@@ -19,13 +8,25 @@ if (empty(Session::get("user")["role"])||Session::get("user")["role"]!=2) {
 }
 $method = $_SERVER["REQUEST_METHOD"];
 if($method == "GET" && !empty(getGET("id"))){
-    getOrderDetail();
+    middleware(
+        function() {
+            getOrderDetail();
+        }
+    );
 }
 if($method == "GET"){
-    getAllOrders();
+    middleware(
+        function() {
+            getAllOrders();
+        }
+    );
 }
 if($method == "POST"){//change patch to post
-    updateOrder();
+    middleware(
+        function() {
+            updateOrder();
+        }
+    );
 }
 function getOrderDetail(){
     $idOrder = getGET("id");

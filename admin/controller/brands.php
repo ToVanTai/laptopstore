@@ -1,32 +1,38 @@
 <?php
 include_once __DIR__."/../../utils/index.php";
 Session::init();
-$http_origin = "";
-if (!empty($_SERVER['HTTP_ORIGIN'])) {
-    if (in_array($_SERVER['HTTP_ORIGIN'], allowedOrigins)) {
-        $http_origin = $_SERVER['HTTP_ORIGIN'];
-    }
-}
-header("Access-Control-Allow-Origin: " . $http_origin);
-header("Access-Control-Allow-Methods: GET,POST");
-header("Access-Control-Allow-Credentials: true");
-
 $method = $_SERVER["REQUEST_METHOD"];
 
 if ($method == "POST" && empty($_GET["id"])) {
-    addNewBrand();
+    middleware(
+        function() {
+            addNewBrand();
+        }
+    );
     die();
 }
 if ($method == "GET" && empty($_GET["id"])) {
-    getBrands();
+    middleware(
+        function() {
+            getBrands();
+        }
+    );
     die();
 }
 if ($method == "GET") {
-    getBrand();
+    middleware(
+        function() {
+            getBrand();
+        }
+    );
     die();
 }
 if ($method == "POST" && !empty($_GET["id"])) {
-    updateBrands($_GET["id"]);
+    middleware(
+        function() {
+            updateBrands($_GET["id"]);
+        }
+    );
     die();
 }
 function addNewBrand()//change to api
@@ -82,16 +88,6 @@ function getBrand()
     echo json_encode($resData);
     http_response_code(200);
 }
-// function deleteBrands($id){
-
-//     $query = 'select * from brands where id = '.$id.' limit 1';
-//     $idInfor = executeResult($query,true);
-//     $image=$idInfor['image'];
-//     unlink("../../store/".$image);
-//     $query='DELETE from brands where id = '.$id.' ;';
-//     execute($query);
-//     http_response_code(201);
-// }
 function updateBrands($id)
 {
     //có hình ảnh

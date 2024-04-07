@@ -2,18 +2,14 @@
 include_once __DIR__."/../utils/index.php";
 Session::init();
 
-$http_origin = "";
-if (!empty($_SERVER['HTTP_ORIGIN'])) {
-    if (in_array($_SERVER['HTTP_ORIGIN'], allowedOrigins)) {
-        $http_origin = $_SERVER['HTTP_ORIGIN'];
-    }
-}
-header("Access-Control-Allow-Origin: " . $http_origin);
-header("Access-Control-Allow-Methods: GET");
-header("Access-Control-Allow-Credentials: true");
+
 // Session::init();
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    readAll();
+    middleware(
+        function() {
+            readAll();
+        }
+    );
 }
 function readAll(){
     $query = 'select id, name, image from brands';
