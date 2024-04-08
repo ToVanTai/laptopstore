@@ -3,6 +3,9 @@ include_once __DIR__."/../utils/index.php";
 Session::init();
 include_once __DIR__ . "/../enum/index.php";
 use laptopstore\enum\{StatusCodeResponse};
+//phần model
+include __DIR__ . "/../model/index.php";
+use laptopstore\model\{TokenInfo};
 /**
  * lấy dữ liệu thông tin người dùng
  */
@@ -34,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['crud_req'] == "login") {
     middleware(
         function() {
             login();
-        }
+        }, false
     );
     die();
 }
@@ -127,15 +130,29 @@ function login()
             $isSuccessfully = true;
         } 
     }
-
     if ($isSuccessfully == true) {
+        $userInfo = $responseData[0];
         http_response_code(200);
-        $user = array("id" => $responseData[0]["id"], "role" => $responseData[0]["role_id"], "name" => $responseData[0]["name"], "avatar" => $responseData[0]["avatar"]);
-        Session::set("user", $user);
-        if (empty(Session::get("carts"))) {
-            Session::set("carts", array());
+        $user = array("id" => $userInfo["id"], "role" => $userInfo["role_id"], "name" => $userInfo["name"], "avatar" => $userInfo["avatar"]);
+        //đăng ký access token theo userid, roleid
+        $accessToken = signAccessToken($userInfo["id"],$userInfo["role_id"]);
+        $refreshToken = signRefreshToken($userInfo["id"],$userInfo["role_id"]);
+        $tokenInfo = new TokenInfo(array(
+            "AccessToken" => $accessToken,
+            "RefreshToken" => $refreshToken,
+            "user_id" =>  $userInfo["id"],
+            "role_id" => $userInfo["role_id"],
+        ));
+        if($accessToken != null){
+            echo json_encode($tokenInfo->getTokenInfo());
+            Session::set("user", $user);
+            if (empty(Session::get("carts"))) {
+                Session::set("carts", array());
+            }
+        }else{
+            http_response_code(203);
+            echo "Tên tài khoản hoặc mật khẩu không chính xác";
         }
-        echo $responseData[0]["role_id"];
     } else {
         http_response_code(203);
         echo "Tên tài khoản hoặc mật khẩu không chính xác";
