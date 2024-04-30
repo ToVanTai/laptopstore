@@ -50,8 +50,8 @@ Session::init();
         </div>
         <div class="navbar__item user">
             <?php
-            if (!empty(Session::get("user"))) { //logged
-                $id = Session::get("user")["id"];
+            if (!empty(Session::get("user_id"))) { //logged
+                $id = Session::get("user_id");
                 $name = Session::get("user")["name"];
                 $avatar = Session::get("user")["avatar"];
                 if (!isset($name)) {

@@ -12,7 +12,7 @@ switch ($view) {
     case "carts":
         include_once __DIR__."/utils/index.php";
         Session::init();
-        if(empty(Session::get("user"))){
+        if(empty(Session::get("user_id"))){
             echo '<script>
                 alert("Vui lòng đăng nhập để sử dụng chức năng này.");
                 window.location.href="'.baseUrl.'";
@@ -31,7 +31,7 @@ switch ($view) {
     case "purchased":
         include_once __DIR__."/utils/index.php";
         Session::init();
-        if(empty(Session::get("user"))){
+        if(empty(Session::get("user_id"))){
             echo '<script>
                 alert("Vui lòng đăng nhập để sử dụng chức năng này.");
                 window.location.href="'.baseUrl.'";

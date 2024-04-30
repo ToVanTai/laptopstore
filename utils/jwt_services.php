@@ -18,7 +18,7 @@ function signAccessToken($id, $role_id)
         $payload1 = array(
             "user_id" => $id,
             "role_id" => $role_id,
-            "exp" => getDateForToken('PT15M') // Thời hạn 15 phút tính theo múi giờ UTC
+            "exp" => getDateForToken('PT60M') // Thời hạn 15 phút tính theo múi giờ UTC
         );
 
 
@@ -41,7 +41,7 @@ function signRefreshToken($id, $role_id)
         $payload2 = array(
             "user_id" => $id,
             "role_id" => $role_id,
-            "exp" => getDateForToken('PT59M') // Thời hạn 15 phút tính theo múi giờ UTC
+            "exp" => getDateForToken('P1Y') // Thời hạn 15 phút tính theo múi giờ UTC
         );
 
         $refreshToken = JWT::encode($payload2, secretKeyRefresh, 'HS256');
@@ -133,6 +133,24 @@ function verifyRefreshToken(){
         return null;
     }
 }
+
+function delRefreshToken()
+{
+    if(isset($_SERVER['HTTP_REFRESH_TOKEN'])){
+        $refreshToken = $_SERVER['HTTP_REFRESH_TOKEN'];
+        try {
+            // Xác minh tính hợp lệ của access token
+            $decodedRefreshToken = JWT::decode($refreshToken, secretKeyRefresh, ['HS256']);
+            $formattedStringToken =  sprintf(strRefreshToken, $decodedRefreshToken->user_id, $decodedRefreshToken->role_id);
+            RedisService::deleteKey($formattedStringToken);
+        } catch (Exception $e) {
+            return $e->getMessage() == "Expired token" ? false : null;
+        }
+    }else{
+        return null;
+    }
+}
+
 /**
  * P1Y: 1 năm
  * PT1HL: 1 giờ 

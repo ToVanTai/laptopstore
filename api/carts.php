@@ -1,4 +1,8 @@
 <?php
+header('Access-Control-Allow-Origin: *');
+header("Access-Control-Allow-Methods: GET,POST,PATCH,DELETE");
+header('Access-Control-Allow-Headers: Content-Type, access-token, refresh-token');
+header("Access-Control-Allow-Credentials: true");
 include_once __DIR__."/../utils/index.php";
 Session::init();
 //phần model
@@ -9,7 +13,7 @@ include __DIR__ . "/../enum/index.php";
 use laptopstore\enum\{StatusCodeResponse};
 
 
-if(empty(Session::get("user"))){
+if(empty(Session::get("user_id"))){
     http_response_code(StatusCodeResponse::Unauthorized);
     echo "Yêu cầu đăng nhập để thực hiện chức năng này.";
     die();

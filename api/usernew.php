@@ -1,4 +1,8 @@
 <?php
+header('Access-Control-Allow-Origin: *');
+header("Access-Control-Allow-Methods: GET,POST,PATCH,DELETE");
+header('Access-Control-Allow-Headers: Content-Type, access-token, refresh-token');
+header("Access-Control-Allow-Credentials: true");
 include_once __DIR__."/../utils/index.php";
 Session::init();
 include_once __DIR__ . "/../enum/index.php";
@@ -32,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && empty($_POST['crud_req'])) {
     middleware(
         function() {
             logout();
-        }
+        }, false//tạm thời để kiểu này
     );
     die();
 }
@@ -81,9 +85,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && empty($_POST['crud_req']) && $_GET["
  */
 function about()
 {
+    $a = Session::get("user_id");
+    $b = Session::get("role_id");
     $responseData = [];
-    if (!empty(Session::get("user"))) {
-        $idUser = Session::get("user")["id"];
+    if (!empty(Session::get("user_id"))) {
+        $idUser = Session::get("user_id");
         $query = 'select * from users where id = ' . $idUser . ' limit 1;';
         $response = executeResult($query, true);
         $responseData = array(
@@ -160,6 +166,8 @@ function login()
             RedisService::setKeyWithExpiration($formattedStringToken, $refreshToken, 59*60);
             echo json_encode($tokenInfo->getTokenInfo());
             Session::set("user", $user);
+            Session::set("user_id",$userInfo["id"]);
+            Session::set("role_id",$userInfo["role_id"]);
             if (empty(Session::get("carts"))) {
                 Session::set("carts", array());
             }
@@ -188,6 +196,11 @@ function refreshToken(){
         }
     }else{
         $tokenInfo = new TokenInfo($generateAccessToken);
+        Session::set("user_id",$generateAccessToken["user_id"]);
+        Session::set("role_id",$generateAccessToken["role_id"]);
+        if (empty(Session::get("carts"))) {
+            Session::set("carts", array());
+        }
         //gán refreshToken vào redis
         $formattedStringToken =  sprintf(strRefreshToken, $generateAccessToken["user_id"], $generateAccessToken["role_id"]);
         RedisService::setKeyWithExpiration($formattedStringToken, $generateAccessToken["RefreshToken"], 59*60);
@@ -200,6 +213,7 @@ function refreshToken(){
  */
 function logout()
 {
+    delRefreshToken();
     Session::destroy();
     http_response_code(200);
 }
@@ -209,8 +223,8 @@ function logout()
  */
 function update1()
 {
-    if (!empty(Session::get("user"))) {
-        $id = Session::get("user")["id"];
+    if (!empty(Session::get("user_id"))) {
+        $id = Session::get("user_id");
         $name = getPOST("name");
         $phoneNumber = getPOST("phone_number") == null ? "" : getPOST("phone_number");
         $address = getPOST("address");
@@ -306,13 +320,13 @@ function update1()
 function updatev2()
 {
     $errMessage = "";
-    if (empty(Session::get("user"))) {
+    if (empty(Session::get("user_id"))) {
         $errMessage = $errMessage . "Bạn chưa đăng nhập!\n";
         echo $errMessage;
         http_response_code(203);
         die();
     };
-    $idUser = Session::get("user")["id"];
+    $idUser = Session::get("user_id");
     $account = getPOST("account");
     $password = getPOST("password");
     $newPassword = getPOST("newPassword");

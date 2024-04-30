@@ -1,7 +1,7 @@
 <?php
 include_once __DIR__."/../../utils/index.php";
 Session::init();
-if (empty(Session::get("user")["role"])||Session::get("user")["role"]!=2) {
+if (empty(Session::get("role_id"))||Session::get("role_id")!=2) {
     http_response_code(203);
     echo "Bạn không là người quản trị.";
     die();

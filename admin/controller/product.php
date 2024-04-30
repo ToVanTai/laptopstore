@@ -79,8 +79,8 @@ function addNewProduct()
         $from = $files["tmp_name"];
         $to = "../../store/" . $nameFile;
         $created_at = $updated_at = date("Y-m-d h:i:s");
-        $created_by = Session::get("user")["id"];
-        $role = Session::get("user")["role"];
+        $created_by = Session::get("user_id");
+        $role = Session::get("role_id");
         if ($role == 2) {
             if (move_uploaded_file($from, $to)) {
                 $query =  "INSERT INTO `products` (`brand_id`, `model`, `screen`, `RAM`, `hardware`, `OS`,
@@ -109,7 +109,7 @@ function addNewProduct()
 }
 function changeProduct()
 {
-    $role = Session::get("user")["role"];
+    $role = Session::get("role_id");
     if ($role == 2) {
         $id = getGET("id");
         $isValidate = true;

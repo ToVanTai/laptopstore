@@ -8,16 +8,16 @@ use laptopstore\enum\{StatusCodeResponse};
  * @isVerifyAccessToken api có cần verify accessToken không
  */
 function middleware($next,$isVerifyAccessToken=true) {
-    $http_origin = "";
-    if (!empty($_SERVER['HTTP_ORIGIN'])) {
-        if (in_array($_SERVER['HTTP_ORIGIN'], allowedOrigins)) {
-            $http_origin = $_SERVER['HTTP_ORIGIN'];
-        }
-    }
+    // $http_origin = "";
+    // if (!empty($_SERVER['HTTP_ORIGIN'])) {
+    //     if (in_array($_SERVER['HTTP_ORIGIN'], allowedOrigins)) {
+    //         $http_origin = $_SERVER['HTTP_ORIGIN'];
+    //     }
+    // }
 
-    header("Access-Control-Allow-Origin: " . $http_origin);
-    header("Access-Control-Allow-Methods: GET,POST,PATCH,DELETE");
-    header("Access-Control-Allow-Credentials: true");
+    // header("Access-Control-Allow-Origin: " . $http_origin);
+    // header("Access-Control-Allow-Methods: GET,POST,PATCH,DELETE");
+    // header("Access-Control-Allow-Credentials: true");
 
     // Thực hiện các xử lý trung gian khác tại đây nếu cần
     if($isVerifyAccessToken){
@@ -34,13 +34,34 @@ function middleware($next,$isVerifyAccessToken=true) {
                     die();
                 }
             }else{
+                getUserInfo($infoRefreshToken["user_id"]);
+                Session::set("user_id",$infoRefreshToken["user_id"]);
+                Session::set("role_id",$infoRefreshToken["role_id"]);
                 return $next();
             }
         }else{
+            getUserInfo($infoAccessToken["user_id"]);
+
+            Session::set("user_id",$infoAccessToken["user_id"]);
+            Session::set("role_id",$infoAccessToken["role_id"]);
             return $next();
         }
 
     }else{
         return $next();
+    }
+}
+/**
+ * set userInfo vào sesion
+ */
+function getUserInfo($userId){
+    try{
+        $query = 'select * from users where id = "' . $userId . '" limit 1';
+        $responseData = executeResult($query);
+        $userInfo = $responseData[0];
+        $user = array("id" => $userInfo["id"], "role" => $userInfo["role_id"], "name" => $userInfo["name"], "avatar" => $userInfo["avatar"]);
+        Session::set("user", $user);
+    }catch(Exception $e){
+        return null;
     }
 }
