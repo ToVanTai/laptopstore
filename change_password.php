@@ -1,5 +1,5 @@
 <?php
-include_once __DIR__."/db/config.php";
+include_once __DIR__."/utils/index.php";
 if(empty(Session::get("user"))){
     echo '<script>
         alert("Vui lòng đăng nhập để sử dụng chức năng này.");

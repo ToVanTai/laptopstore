@@ -2,7 +2,7 @@
 include_once __DIR__."/../../utils/index.php";
 Session::init();
 
-if (empty(Session::get("user")["role"])||Session::get("user")["role"]!=2) {
+if (empty(Session::get("role_id"))||Session::get("role_id")) {
     http_response_code(203);
     echo "Bạn không là người quản trị.";
     die();
@@ -82,7 +82,7 @@ function changeCapacityProduct()
         echo 'Cập nhât bại do ' . $errMessage;
         http_response_code(203);
     } else {
-        $role = Session::get("user")["role"];
+        $role = Session::get("role_id");
         if ($role == 2) {
             $query = "UPDATE product_capacities SET capacity_name='" . $capacity_name . "',
             price='" . $price . "', quantity='" . $quantity . "'
@@ -123,7 +123,7 @@ function addCapacityProduct()
             echo "Thêm thất bại do " . $errMessage;
             http_response_code(203);
         } else {
-            $role = Session::get("user")["role"];
+            $role = Session::get("role_id");
             if ($role == 2) {
                 $query = "INSERT INTO `product_capacities` 
                     (`product_id`, `capacity_name`, `price`, `quantity`) VALUES 

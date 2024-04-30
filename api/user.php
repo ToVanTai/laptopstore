@@ -1,4 +1,8 @@
 <?php
+header('Access-Control-Allow-Origin: *');
+header("Access-Control-Allow-Methods: GET,POST,PATCH,DELETE");
+header('Access-Control-Allow-Headers: Content-Type, access-token, refresh-token');
+header("Access-Control-Allow-Credentials: true");
 include_once __DIR__."/../utils/index.php";
 Session::init();
 $http_origin = "";
@@ -49,8 +53,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && empty($_POST['crud_req']) && $_GET["
 function about()
 {
     $responseData = [];
-    if (!empty(Session::get("user"))) {
-        $idUser = Session::get("user")["id"];
+    if (!empty(Session::get("user_id"))) {
+        $idUser = Session::get("user_id");
         $query = 'select * from users where id = ' . $idUser . ' limit 1;';
         $response = executeResult($query, true);
         $responseData = array(
@@ -127,8 +131,8 @@ function logout()
 }
 function update1()
 {
-    if (!empty(Session::get("user"))) {
-        $id = Session::get("user")["id"];
+    if (!empty(Session::get("user_id"))) {
+        $id = Session::get("user_id");
         $name = getPOST("name");
         $phoneNumber = getPOST("phone_number") == null ? "" : getPOST("phone_number");
         $address = getPOST("address");
@@ -220,13 +224,13 @@ function update1()
 function updatev2()
 {
     $errMessage = "";
-    if (empty(Session::get("user"))) {
+    if (empty(Session::get("user_id"))) {
         $errMessage = $errMessage . "Bạn chưa đăng nhập!\n";
         echo $errMessage;
         http_response_code(203);
         die();
     };
-    $idUser = Session::get("user")["id"];
+    $idUser = Session::get("user_id");
     $account = getPOST("account");
     $password = getPOST("password");
     $newPassword = getPOST("newPassword");

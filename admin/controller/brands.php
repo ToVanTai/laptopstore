@@ -44,8 +44,8 @@ function addNewBrand()//change to api
         $from = $files["tmp_name"];
         $to = "../../store/" . $nameFile;
         $created_at = $updated_at = date("Y-m-d h:i:s");
-        $created_by = Session::get("user")["id"];
-        $role = Session::get("user")["role"];
+        $created_by = Session::get("user_id");
+        $role = Session::get("role_id");
         if ($role == 2) {
             if (move_uploaded_file($from, $to)) {
                 $query = "insert into brands(name, image, created_by, created_at, updated_at) values(
@@ -93,7 +93,7 @@ function updateBrands($id)
     //có hình ảnh
     $name = $_POST["name"];
     if (!empty($_FILES["image"]["name"])) {
-        $role = Session::get("user")["role"];
+        $role = Session::get("role_id");
         if ($role == 2) {
             $query = 'select * from brands where id = ' . $id . ' limit 1';
             $idInfor = executeResult($query, true);
@@ -106,7 +106,7 @@ function updateBrands($id)
                 $from = $files["tmp_name"];
                 $to = "../../store/" . $nameFile;
                 $updated_at = date("Y-m-d h:i:s");
-                $created_by = Session::get("user")["id"];
+                $created_by = Session::get("user_id");
                 if (move_uploaded_file($from, $to)) {
                     $query = "update brands set name = '" . $name . "',image = '" . $nameFile . "', created_by = '" . $created_by . "', updated_at = '" . $updated_at . "' where id = " . $id . " ;";
                     execute($query);
@@ -115,10 +115,10 @@ function updateBrands($id)
             }
         }
     } else {
-        $role = Session::get("user")["role"];
+        $role = Session::get("role_id");
         if ($role == 2) {
             $updated_at = date("Y-m-d h:i:s");
-            $created_by = Session::get("user")["id"];
+            $created_by = Session::get("user_id");
             $query = "update brands set name = '" . $name . "',created_by = '" . $created_by . "',updated_at = '" . $updated_at . "' where id = " . $id . " ; ";
             execute($query);
             http_response_code(200);

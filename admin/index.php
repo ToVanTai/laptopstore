@@ -1,16 +1,16 @@
 <?php
 include_once __DIR__."/../utils/index.php";
 Session::init();
-$user = Session::get("user");
+$userID = Session::get("user_id");
+$roleID = Session::get("role_id");
 if (empty($user)) {
     echo "<script>alert('Bạn chưa đăng nhập')</script>";
     echo "<a href='../index.php'>về trang chủ</a>";
 } else {
-    $role = $user["role"];
-    if ($role == 1) {
+    if ($roleID == 1) {
         echo "<script>alert('Bạn không có quyền truy cập')</script>";
         echo "<a href='../index.php'>về trang chủ</a>";
-    } else {
+    } else if ($roleID == 2) {
         $view = "products";
         if (!empty($_GET["view"])) {
             $view = $_GET["view"];

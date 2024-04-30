@@ -1,7 +1,7 @@
 <?php
-    include_once __DIR__."/db/config.php";
+    include_once __DIR__."/utils/index.php";
     Session::init();
-    if(!empty(Session::get("user"))){
+    if(!empty(Session::get("user_id"))){
         echo '<script>
             alert("Bạn đã đăng nhập.");
             window.location.href="'.baseUrl.'";

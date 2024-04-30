@@ -1,7 +1,9 @@
 {
     "name": "laptopviet/laptopstore",
     "require": {
-        "ircmaxell/password-compat": "^1.0"
+        "ircmaxell/password-compat": "^1.0",
+        "firebase/php-jwt": "4.0.0",
+        "predis/predis": "^2.2"
     },
     "autoload": {
         "psr-4": {

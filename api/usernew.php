@@ -1,10 +1,26 @@
 <?php
+header('Access-Control-Allow-Origin: *');
+header("Access-Control-Allow-Methods: GET,POST,PATCH,DELETE");
+header('Access-Control-Allow-Headers: Content-Type, access-token, refresh-token');
+header("Access-Control-Allow-Credentials: true");
 include_once __DIR__."/../utils/index.php";
 Session::init();
 include_once __DIR__ . "/../enum/index.php";
-
-
 use laptopstore\enum\{StatusCodeResponse};
+//phần model
+include __DIR__ . "/../model/index.php";
+use laptopstore\model\{TokenInfo};
+/**
+ * lấy dữ liệu thông tin người dùng
+ */
+if ($_SERVER["REQUEST_METHOD"] == "GET" && getGET("refresh-token") != null) {
+    middleware(
+        function() {
+            refreshToken();
+        },false
+    );
+    die();
+}
 /**
  * lấy dữ liệu thông tin người dùng
  */
@@ -20,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && empty($_POST['crud_req'])) {
     middleware(
         function() {
             logout();
-        }
+        }, false//tạm thời để kiểu này
     );
     die();
 }
@@ -28,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['crud_req'] == "register") {
     middleware(
         function() {
             register();
-        }
+        },false
     );
     die();
 }
@@ -36,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['crud_req'] == "login") {
     middleware(
         function() {
             login();
-        }
+        }, false
     );
     die();
 }
@@ -69,9 +85,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && empty($_POST['crud_req']) && $_GET["
  */
 function about()
 {
+    $a = Session::get("user_id");
+    $b = Session::get("role_id");
     $responseData = [];
-    if (!empty(Session::get("user"))) {
-        $idUser = Session::get("user")["id"];
+    if (!empty(Session::get("user_id"))) {
+        $idUser = Session::get("user_id");
         $query = 'select * from users where id = ' . $idUser . ' limit 1;';
         $response = executeResult($query, true);
         $responseData = array(
@@ -89,67 +107,124 @@ function about()
     };
 }
 
+/**
+ * đăng ký mới tài khoản
+ */
 function register()
 {
     $account = getPOST("account");
     $password = getPOST("password");
-    $messageErr = "";
-    $isErr = false;
     $query = 'select * from users where account="' . $account . '" limit 1';
     $isUnit = count(executeResult($query)) >= 1 ? false : true;
     if ($isUnit == false) {
-        $isErr = true;
-        $messageErr = "Tài khoản đã tồn tại trên hệ thống";
-    }
-    if ($isErr == true) {
-        http_response_code(203);
-        echo $messageErr;
+        http_response_code(StatusCodeResponse::NonAuthoritativeInformation);
+        echo "Tài khoản đã tồn tại trên hệ thống";
         die();
-    }
-    $passwordMd5 = md5($password);
-    $role_id = 1; //users
-    $created_at = date("Y-m-d h:i:s");
-    $updated_at = date("Y-m-d h:i:s");
-    $query = 'insert into users(role_id, account, password, created_at, updated_at) values("' . $role_id . '", "' . $account . '", "' . $passwordMd5 . '", "' . $created_at . '", "' . $updated_at . '");';
-    execute($query);
-    $query = 'select * from users where account="' . $account . '" limit 1';
-    $result = executeResult($query);
-    if (count($result) >= 1 ? true : false) {
-        http_response_code(201);
-    } else {
-        http_response_code(203);
-        echo "Đăng ký tài khoản thất bại";
+    }else{
+        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+        $role_id = 1; //users
+        $created_at = date("Y-m-d h:i:s");
+        $updated_at = $created_at;
+        $query = 'insert into users(role_id, account, password, created_at, updated_at) values("' . $role_id . '", "' . $account . '", "' . $hashedPassword . '", "' . $created_at . '", "' . $updated_at . '");';
+        execute($query);
+        http_response_code(StatusCodeResponse::Created);
     }
 }
+
+/**
+ * đăng nhập
+ */
 function login()
 {
     $account = getPOST("account");
     $password = getPOST("password");
-    $query = 'select * from users where account = "' . $account . '" and password = "' . md5($password) . '" limit 1';
+    $query = 'select * from users where account = "' . $account . '" limit 1';
     $responseData = executeResult($query);
-    $isSuccessfully = count($responseData) >= 1 ? true : false;
+    $isSuccessfully = false;
+    if(count($responseData) >= 1){
+        $hashPassword = $responseData[0]["password"];
+        if (password_verify($password, $hashPassword)) {
+            $isSuccessfully = true;
+        } 
+    }
     if ($isSuccessfully == true) {
+        $userInfo = $responseData[0];
         http_response_code(200);
-        $user = array("id" => $responseData[0]["id"], "role" => $responseData[0]["role_id"], "name" => $responseData[0]["name"], "avatar" => $responseData[0]["avatar"]);
-        Session::set("user", $user);
-        if (empty(Session::get("carts"))) {
-            Session::set("carts", array());
+        $user = array("id" => $userInfo["id"], "role" => $userInfo["role_id"], "name" => $userInfo["name"], "avatar" => $userInfo["avatar"]);
+        //đăng ký access token theo userid, roleid
+        $accessToken = signAccessToken($userInfo["id"],$userInfo["role_id"]);
+        $refreshToken = signRefreshToken($userInfo["id"],$userInfo["role_id"]);
+        $tokenInfo = new TokenInfo(array(
+            "AccessToken" => $accessToken,
+            "RefreshToken" => $refreshToken,
+            "user_id" =>  $userInfo["id"],
+            "role_id" => $userInfo["role_id"],
+        ));
+        if($accessToken != null){
+            //gán refreshToken vào redis
+            $formattedStringToken =  sprintf(strRefreshToken, $userInfo["id"], $userInfo["role_id"]);
+            RedisService::setKeyWithExpiration($formattedStringToken, $refreshToken, 59*60);
+            echo json_encode($tokenInfo->getTokenInfo());
+            Session::set("user", $user);
+            Session::set("user_id",$userInfo["id"]);
+            Session::set("role_id",$userInfo["role_id"]);
+            if (empty(Session::get("carts"))) {
+                Session::set("carts", array());
+            }
+        }else{
+            http_response_code(203);
+            echo "Tên tài khoản hoặc mật khẩu không chính xác";
         }
-        echo $responseData[0]["role_id"];
     } else {
         http_response_code(203);
         echo "Tên tài khoản hoặc mật khẩu không chính xác";
     }
 }
+
+/**
+ * lấy tại accessToken
+ */
+function refreshToken(){
+    $generateAccessToken = generateAccessTokenByRefreshToken();
+    if($generateAccessToken === null || $generateAccessToken === false) {
+        if($generateAccessToken === null){
+            http_response_code(StatusCodeResponse::Unauthorized);//token không hợp lệ hoặc 0 có
+            die();
+        }else{
+            header('HTTP/1.1 440 Login Timeout');//đăng nhập bị hết hạn
+            die();
+        }
+    }else{
+        $tokenInfo = new TokenInfo($generateAccessToken);
+        Session::set("user_id",$generateAccessToken["user_id"]);
+        Session::set("role_id",$generateAccessToken["role_id"]);
+        if (empty(Session::get("carts"))) {
+            Session::set("carts", array());
+        }
+        //gán refreshToken vào redis
+        $formattedStringToken =  sprintf(strRefreshToken, $generateAccessToken["user_id"], $generateAccessToken["role_id"]);
+        RedisService::setKeyWithExpiration($formattedStringToken, $generateAccessToken["RefreshToken"], 59*60);
+        echo json_encode($tokenInfo->getTokenInfo());
+    }
+}
+
+/**
+ * đăng xuất
+ */
 function logout()
 {
+    delRefreshToken();
     Session::destroy();
     http_response_code(200);
 }
+
+/**
+ * đổi thông tin cá nhân
+ */
 function update1()
 {
-    if (!empty(Session::get("user"))) {
-        $id = Session::get("user")["id"];
+    if (!empty(Session::get("user_id"))) {
+        $id = Session::get("user_id");
         $name = getPOST("name");
         $phoneNumber = getPOST("phone_number") == null ? "" : getPOST("phone_number");
         $address = getPOST("address");
@@ -238,16 +313,20 @@ function update1()
         }
     }
 }
+
+/**
+ * đối mật khẩu
+ */
 function updatev2()
 {
     $errMessage = "";
-    if (empty(Session::get("user"))) {
+    if (empty(Session::get("user_id"))) {
         $errMessage = $errMessage . "Bạn chưa đăng nhập!\n";
         echo $errMessage;
         http_response_code(203);
         die();
     };
-    $idUser = Session::get("user")["id"];
+    $idUser = Session::get("user_id");
     $account = getPOST("account");
     $password = getPOST("password");
     $newPassword = getPOST("newPassword");

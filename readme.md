@@ -18,4 +18,6 @@
             "php.debug.executablePath": "E:\\php\\php\\php.exe",
         }
     
-
+5. phpredis
+composer require predis
+6. redis-commander

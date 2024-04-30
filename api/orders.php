@@ -1,9 +1,13 @@
 <?php
+header('Access-Control-Allow-Origin: *');
+header("Access-Control-Allow-Methods: GET,POST,PATCH,DELETE");
+header('Access-Control-Allow-Headers: Content-Type, access-token, refresh-token');
+header("Access-Control-Allow-Credentials: true");
 include_once __DIR__."/../utils/index.php";
 Session::init(); 
 
 
-if (empty(Session::get("user"))) {
+if (empty(Session::get("user_id"))) {
     http_response_code(203);
     echo "Yêu cầu đăng nhập để thực hiện chức năng này.";
     die();
@@ -38,7 +42,7 @@ function addToOrders()
         http_response_code(203);
         echo "Giỏ hàng trống!";
     } else {
-        $idUser = Session::get("user")["id"];
+        $idUser = Session::get("user_id");
         $query = 'select name, phone_number, address, email from users where id = ' . $idUser . ' ;';
         $aboutUser = executeResult($query, true);
         if (empty($aboutUser["name"]) || empty($aboutUser["phone_number"]) || empty($aboutUser["address"]) || empty($aboutUser["email"])) {
@@ -73,7 +77,7 @@ function addToOrders()
     }
 }
 function viewOrders(){
-    $idUser = Session::get("user")["id"];
+    $idUser = Session::get("user_id");
     $query = "select orders.id as orderId,status.id as statusId, status.name as statusName, 
     orders.created_at, orders.updated_at from orders inner join status on orders.status_id = status.id 
     inner join users on users.id = orders.user_id where orders.user_id= ".$idUser ." ORDER BY orders.created_at DESC ;";
@@ -106,7 +110,7 @@ function viewOrders(){
 
 }
 function updateOrders(){
-    $idUser = Session::get("user")["id"];
+    $idUser = Session::get("user_id");
     $dataBody = json_decode(file_get_contents("php://input"),true);
     if(empty($dataBody["statusChange"])||empty($dataBody["orderId"])){
         echo "Cập nhật thất bại!";
