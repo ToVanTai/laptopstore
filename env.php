@@ -16,4 +16,6 @@
         'port' => 6379,
         'password' => '',
     ];
+    //format key cho refreshToken 
+    const strRefreshToken = "refreshTokenUserID%dRoleID%d";
 ?>

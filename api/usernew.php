@@ -155,6 +155,9 @@ function login()
             "role_id" => $userInfo["role_id"],
         ));
         if($accessToken != null){
+            //gán refreshToken vào redis
+            $formattedStringToken =  sprintf(strRefreshToken, $userInfo["id"], $userInfo["role_id"]);
+            RedisService::setKeyWithExpiration($formattedStringToken, $refreshToken, 59*60);
             echo json_encode($tokenInfo->getTokenInfo());
             Session::set("user", $user);
             if (empty(Session::get("carts"))) {
@@ -185,6 +188,9 @@ function refreshToken(){
         }
     }else{
         $tokenInfo = new TokenInfo($generateAccessToken);
+        //gán refreshToken vào redis
+        $formattedStringToken =  sprintf(strRefreshToken, $generateAccessToken["user_id"], $generateAccessToken["role_id"]);
+        RedisService::setKeyWithExpiration($formattedStringToken, $generateAccessToken["RefreshToken"], 59*60);
         echo json_encode($tokenInfo->getTokenInfo());
     }
 }

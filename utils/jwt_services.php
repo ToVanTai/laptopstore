@@ -18,7 +18,7 @@ function signAccessToken($id, $role_id)
         $payload1 = array(
             "user_id" => $id,
             "role_id" => $role_id,
-            "exp" => getDateForToken('PT1M') // Thời hạn 15 phút tính theo múi giờ UTC
+            "exp" => getDateForToken('PT15M') // Thời hạn 15 phút tính theo múi giờ UTC
         );
 
 
@@ -41,7 +41,7 @@ function signRefreshToken($id, $role_id)
         $payload2 = array(
             "user_id" => $id,
             "role_id" => $role_id,
-            "exp" => getDateForToken('PT15M') // Thời hạn 15 phút tính theo múi giờ UTC
+            "exp" => getDateForToken('PT59M') // Thời hạn 15 phút tính theo múi giờ UTC
         );
 
         $refreshToken = JWT::encode($payload2, secretKeyRefresh, 'HS256');
