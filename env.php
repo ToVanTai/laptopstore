@@ -9,5 +9,11 @@
     //cấu hình cho jwt services
     const secretKeyAccess = 'gsWcD8nWVJTKZXsN7a8GT2jNShpeF7uv';
     const secretKeyRefresh = 'qYanKDEuz7wqkdvTWxHeAKyW4MWjAhFT';
-
+    //cấu hình redis
+    const REDIS_CONFIG = [
+        'scheme' => 'tcp',
+        'host' => 'localhost',
+        'port' => 6379,
+        'password' => '',
+    ];
 ?>

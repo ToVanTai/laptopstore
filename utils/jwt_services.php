@@ -18,7 +18,7 @@ function signAccessToken($id, $role_id)
         $payload1 = array(
             "user_id" => $id,
             "role_id" => $role_id,
-            "exp" => getDateForToken('PT15M') // Thời hạn 15 phút tính theo múi giờ UTC
+            "exp" => getDateForToken('PT1M') // Thời hạn 15 phút tính theo múi giờ UTC
         );
 
 
@@ -41,7 +41,7 @@ function signRefreshToken($id, $role_id)
         $payload2 = array(
             "user_id" => $id,
             "role_id" => $role_id,
-            "exp" => getDateForToken('P1Y') // Thời hạn 15 phút tính theo múi giờ UTC
+            "exp" => getDateForToken('PT15M') // Thời hạn 15 phút tính theo múi giờ UTC
         );
 
         $refreshToken = JWT::encode($payload2, secretKeyRefresh, 'HS256');
@@ -65,9 +65,9 @@ function verifyAccessToken(){
         $accessToken = $_SERVER['HTTP_ACCESS_TOKEN'];
         try {
             // Xác minh tính hợp lệ của access token
-            $decodedToken = JWT::decode($accessToken, secretKeyAccess, ['HS256']);
+            $decodedAccessToken = JWT::decode($accessToken, secretKeyAccess, ['HS256']);
             $tokenInfo = new TokenInfo();
-            $tokenInfo->setTokenInfo($decodedToken);
+            $tokenInfo->setTokenInfo($decodedAccessToken);
             return $tokenInfo->getTokenInfo();
         } catch (Exception $e) {
             return $e->getMessage() == "Expired token" ? false : null;
@@ -77,6 +77,62 @@ function verifyAccessToken(){
     }
 }
 
+/**
+ * hàm để lấy accessToken mới dựa vào refreshToken.
+ * đối tượng tokenInfo
+ * null: không có license
+ * false: hết hạn license
+ */
+function generateAccessTokenByRefreshToken(){
+    if(isset($_SERVER['HTTP_REFRESH_TOKEN'])){
+        $refreshToken = $_SERVER['HTTP_REFRESH_TOKEN'];
+        try {
+            // Xác minh tính hợp lệ của access token
+            $decodedRefreshToken = JWT::decode($refreshToken, secretKeyRefresh, ['HS256']);
+            // $tokenInfo = new TokenInfo();
+            // $tokenInfo->setTokenInfo($decodedRefreshToken);
+            $signAccessToken = signAccessToken($decodedRefreshToken->user_id, $decodedRefreshToken->role_id);
+            return array(
+                'AccessToken' => $signAccessToken,
+                'RefreshToken' => $refreshToken,
+                'role_id' => $decodedRefreshToken->role_id,
+                'user_id' => $decodedRefreshToken->user_id
+            );
+        } catch (Exception $e) {
+            return $e->getMessage() == "Expired token" ? false : null;
+        }
+    }else{
+        return null;
+    }
+}
+/**
+ * hàm để verify access token.
+ * null: nếu không verify
+ * đối tượng tokenInfo
+ * null: không có license
+ * false: hết hạn license
+ * đối tượng TokenInfo
+ */
+function verifyRefreshToken(){
+    if(isset($_SERVER['HTTP_REFRESH_TOKEN'])){
+        $refreshToken = $_SERVER['HTTP_REFRESH_TOKEN'];
+        try {
+            // Xác minh tính hợp lệ của access token
+            $decodedRefreshToken = JWT::decode($refreshToken, secretKeyRefresh, ['HS256']);
+            // $tokenInfo = new TokenInfo();
+            // $tokenInfo->setTokenInfo($decodedRefreshToken);
+            $signAccessToken = signAccessToken($decodedRefreshToken->user_id, $decodedRefreshToken->role_id);
+            $decodedAccessToken = JWT::decode($signAccessToken, secretKeyAccess, ['HS256']);
+            $tokenInfo = new TokenInfo();
+            $tokenInfo->setTokenInfo($decodedAccessToken);
+            return $tokenInfo->getTokenInfo();
+        } catch (Exception $e) {
+            return $e->getMessage() == "Expired token" ? false : null;
+        }
+    }else{
+        return null;
+    }
+}
 /**
  * P1Y: 1 năm
  * PT1HL: 1 giờ 

@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     middleware(
         function() {
             readAll();
-        }
+        }, false
     );
 }
 function readAll(){

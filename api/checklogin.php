@@ -8,7 +8,7 @@
         middleware(
             function() {
                 check();
-            }
+            }, false
         );
         die();
     }

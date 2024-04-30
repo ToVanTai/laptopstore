@@ -20,7 +20,14 @@ login
 ###
 GET  http://localhost/laptopstore/api/usernew.php
 Content-Type: application/json;
-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMzQiLCJyb2xlX2lkIjoiMSIsImV4cCI6MTcxMjUxMDEwMn0.-Et6KltYWZgjrrAKEnUK4IYUuCv8IKc4NyIxDD7fuqc
+access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMzQiLCJyb2xlX2lkIjoiMSIsImV4cCI6MTcxNDQ2ODAxMH0.NKU__8tQHuErRv1wf6s5Pei51VGIQ3VhRhFU6QJinCQ
+refresh-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMzQiLCJyb2xlX2lkIjoiMSIsImV4cCI6MTcxNDQ2ODgwOH0.L6ukYVM_HLMI0xzXLS8PCxf9wEYA8m_RxobxTD_a1S4
+
+###
+GET  http://localhost/laptopstore/api/usernew.php?refresh-token=true
+Content-Type: application/json;
+access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMzQiLCJyb2xlX2lkIjoiMSIsImV4cCI6MTcxNDQ2Nzk2OH0.iKdhCUK7oXWHOQKaIbu_MPYGbCf9x5DG6pymhtG0el0
+refresh-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMzQiLCJyb2xlX2lkIjoiMSIsImV4cCI6MTcxNDQ2ODgwOH0.L6ukYVM_HLMI0xzXLS8PCxf9wEYA8m_RxobxTD_a1S4
 
 
 

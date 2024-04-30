@@ -9,6 +9,17 @@ use laptopstore\model\{TokenInfo};
 /**
  * lấy dữ liệu thông tin người dùng
  */
+if ($_SERVER["REQUEST_METHOD"] == "GET" && getGET("refresh-token") != null) {
+    middleware(
+        function() {
+            refreshToken();
+        },false
+    );
+    die();
+}
+/**
+ * lấy dữ liệu thông tin người dùng
+ */
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     middleware(
         function() {
@@ -29,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['crud_req'] == "register") {
     middleware(
         function() {
             register();
-        }
+        },false
     );
     die();
 }
@@ -156,6 +167,25 @@ function login()
     } else {
         http_response_code(203);
         echo "Tên tài khoản hoặc mật khẩu không chính xác";
+    }
+}
+
+/**
+ * lấy tại accessToken
+ */
+function refreshToken(){
+    $generateAccessToken = generateAccessTokenByRefreshToken();
+    if($generateAccessToken === null || $generateAccessToken === false) {
+        if($generateAccessToken === null){
+            http_response_code(StatusCodeResponse::Unauthorized);//token không hợp lệ hoặc 0 có
+            die();
+        }else{
+            header('HTTP/1.1 440 Login Timeout');//đăng nhập bị hết hạn
+            die();
+        }
+    }else{
+        $tokenInfo = new TokenInfo($generateAccessToken);
+        echo json_encode($tokenInfo->getTokenInfo());
     }
 }
 
