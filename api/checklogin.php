@@ -6,7 +6,7 @@
     include_once __DIR__."/../utils/index.php";
     Session::init();
     
-    
+
     //dữ liệu được gửi toàn bộ từ form\
     if ($_SERVER["REQUEST_METHOD"] == "GET") {
         middleware(

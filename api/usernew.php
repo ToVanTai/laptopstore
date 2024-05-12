@@ -9,7 +9,7 @@ include_once __DIR__ . "/../enum/index.php";
 use laptopstore\enum\{StatusCodeResponse};
 //phần model
 include __DIR__ . "/../model/index.php";
-use laptopstore\model\{TokenInfo};
+use laptopstore\model\{TokenInfo, UserEmailRegister};
 /**
  * lấy dữ liệu thông tin người dùng
  */
@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && empty($_POST['crud_req'])) {
     middleware(
         function() {
             logout();
-        }, false//tạm thời để kiểu này
+        }
     );
     die();
 }
@@ -121,12 +121,39 @@ function register()
         echo "Tài khoản đã tồn tại trên hệ thống";
         die();
     }else{
+        //thông tin user
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
         $role_id = 1; //users
         $created_at = date("Y-m-d h:i:s");
         $updated_at = $created_at;
-        $query = 'insert into users(role_id, account, password, created_at, updated_at) values("' . $role_id . '", "' . $account . '", "' . $hashedPassword . '", "' . $created_at . '", "' . $updated_at . '");';
-        execute($query);
+        //tạo ra key của redis lưu thông tin trên
+        $guid = 'SendUserEmailRegister_'.uniqid();
+        $userEmailRegister = new UserEmailRegister(array(
+            'role_id' => $role_id,
+            'account' => $account,
+            'hashedPassword' => $hashedPassword,
+            'created_at' => $created_at,
+            'updated_at' => $updated_at,
+        ));
+        //
+        RedisService::setKeyWithExpiration($guid, json_encode($userEmailRegister->getInfo()), 60*5);//5 phút
+        //thêm yêu cầu gửi mail vào hàng đợi
+        $rabbitSender = new RabbitMQSender('SendUserEmailRegister',
+            array(
+                'passive' => false,
+                'durable' => false,
+                'exclusive' => false,
+                'auto_delete' => true
+            )
+        );
+        $rabbitSender->send($guid, array(
+            'delivery_mode' => 1,
+            'expiration' => 60*5*1000
+        ));
+        $rabbitSender->close();
+        // $query = 'insert into users(role_id, account, password, created_at, updated_at) values("' . $role_id . '", "' . $account . '", "' . $hashedPassword . '", "' . $created_at . '", "' . $updated_at . '");';
+        // execute($query);
+        echo 'okeee';
         http_response_code(StatusCodeResponse::Created);
     }
 }
@@ -163,7 +190,7 @@ function login()
         if($accessToken != null){
             //gán refreshToken vào redis
             $formattedStringToken =  sprintf(strRefreshToken, $userInfo["id"], $userInfo["role_id"]);
-            RedisService::setKeyWithExpiration($formattedStringToken, $refreshToken, 59*60);
+            RedisService::setKeyWithExpiration($formattedStringToken, $refreshToken, 60*60*24*365);//1 năm
             echo json_encode($tokenInfo->getTokenInfo());
             Session::set("user", $user);
             Session::set("user_id",$userInfo["id"]);
@@ -203,7 +230,7 @@ function refreshToken(){
         }
         //gán refreshToken vào redis
         $formattedStringToken =  sprintf(strRefreshToken, $generateAccessToken["user_id"], $generateAccessToken["role_id"]);
-        RedisService::setKeyWithExpiration($formattedStringToken, $generateAccessToken["RefreshToken"], 59*60);
+        RedisService::setKeyWithExpiration($formattedStringToken, $generateAccessToken["RefreshToken"], 60*60*24*365);
         echo json_encode($tokenInfo->getTokenInfo());
     }
 }

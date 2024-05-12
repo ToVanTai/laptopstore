@@ -18,4 +18,13 @@
     ];
     //format key cho refreshToken 
     const strRefreshToken = "refreshTokenUserID%dRoleID%d";
-?>
+    //cấu hình gửi email
+    const EMAIL_CONFIG = array(
+        'FROM_EMAIL'=>"tovantaidz2002@gmail.com",
+        'FROM_PASSWORD_EMAIL'=> "fhmk tqfc hfkb aonh",
+        'HOST'=> 'smtp.gmail.com',
+        'PORT'=> 587,
+        'SMTPSecure' => 'tls',
+        'SMTPAuth' => true,
+        'Heading' => 'TOPLAP store',
+    );
