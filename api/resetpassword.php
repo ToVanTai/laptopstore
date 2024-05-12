@@ -16,7 +16,7 @@ use laptopstore\model\{TokenInfo, UserEmailRegister};
 if ($_SERVER["REQUEST_METHOD"] == "GET" && getGET("id") != null) {
     middleware(
         function() {
-            register();
+            resetPassword();
         },false
     );
     die();
@@ -24,9 +24,9 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && getGET("id") != null) {
 
 
 /**
- * đăng ký mới tài khoản
+ * Lấy lại mật khẩu
  */
-function register()
+function resetPassword()
 {
     $isSuccess = false;
     try{
@@ -35,11 +35,11 @@ function register()
         if($redisCacheUserJson != null){
             RedisService::deleteKey($id);
             $userEmailInfor = json_decode($redisCacheUserJson);
-            if($userEmailInfor != null && $userEmailInfor->type == EmailUserType::REGISTER && isset($userEmailInfor->role_id) && isset($userEmailInfor->account) && isset($userEmailInfor->hashedPassword)){
+            if($userEmailInfor != null && $userEmailInfor->type == EmailUserType::REST_PASSWORD){
                 $query = 'select * from users where account="' . $userEmailInfor->account . '" limit 1';
                 $isUnit = count(executeResult($query)) >= 1 ? false : true;
-                if($isUnit == true){
-                    $query = 'insert into users(role_id, account, password, created_at, updated_at) values("' . $userEmailInfor->role_id . '", "' . $userEmailInfor->account . '", "' . $userEmailInfor->hashedPassword . '", "' . $userEmailInfor->created_at . '", "' . $userEmailInfor->updated_at . '");';
+                if($isUnit == false && isset($userEmailInfor->account) && isset($userEmailInfor->hashedPassword)){
+                    $query = 'update users set password = "' . $userEmailInfor->hashedPassword . '" where account = "' .$userEmailInfor->account. '";';
                     execute($query);
                     $isSuccess = true;
                 }
@@ -49,8 +49,8 @@ function register()
         
     }
     if($isSuccess == true){
-        echo "Tài khoản của bạn đã được kích hoạt";
+        echo "Lấy lại mật khẩu thành công";
     }else{
-        echo "Kích hoạt tài khoản thất bại do tài khoản đã tồn tại hoặc quá hạn 5 phút";
+        echo "lấy lại mật khẩu thất bại do quá hạn 5 phút";
     }
 }

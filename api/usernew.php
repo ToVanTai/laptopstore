@@ -6,10 +6,10 @@ header("Access-Control-Allow-Credentials: true");
 include_once __DIR__."/../utils/index.php";
 Session::init();
 include_once __DIR__ . "/../enum/index.php";
-use laptopstore\enum\{StatusCodeResponse};
+use laptopstore\enum\{StatusCodeResponse, EmailUserType};
 //phần model
 include __DIR__ . "/../model/index.php";
-use laptopstore\model\{TokenInfo, UserEmailRegister};
+use laptopstore\model\{TokenInfo, UserEmailRegister, UserEmailResetPassword};
 /**
  * lấy dữ liệu thông tin người dùng
  */
@@ -48,6 +48,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['crud_req'] == "register") {
     );
     die();
 }
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['crud_req'] == "reset_password") {
+    middleware(
+        function() {
+            resetPassword();
+        },false
+    );
+    die();
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['crud_req'] == "login") {
     middleware(
         function() {
@@ -134,16 +144,18 @@ function register()
             'hashedPassword' => $hashedPassword,
             'created_at' => $created_at,
             'updated_at' => $updated_at,
+            'type' => EmailUserType::REGISTER
         ));
         //
         RedisService::setKeyWithExpiration($guid, json_encode($userEmailRegister->getInfo()), 60*5);//5 phút
         //thêm yêu cầu gửi mail vào hàng đợi
-        $rabbitSender = new RabbitMQSender('SendUserEmailRegister',
+        $rabbitSender = new RabbitMQSender('SendUserEmail',
             array(
                 'passive' => false,
                 'durable' => false,
                 'exclusive' => false,
-                'auto_delete' => true
+                'auto_delete' => true,
+                'type' => EmailUserType::REGISTER
             )
         );
         $rabbitSender->send($guid, array(
@@ -157,7 +169,48 @@ function register()
         http_response_code(StatusCodeResponse::Created);
     }
 }
-
+function resetPassword(){
+    $account = getPOST("account");
+    $password = getPOST("password");
+    $query = 'select * from users where account="' . $account . '" limit 1';
+    $isUnit = count(executeResult($query)) >= 1 ? false : true;
+    if ($isUnit == true) {
+        http_response_code(StatusCodeResponse::NonAuthoritativeInformation);
+        echo "Tài khoản không tồn tại hệ thống";
+        die();
+    }else{
+        //thông tin user
+        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+        //tạo ra key của redis lưu thông tin trên
+        $guid = 'SendUserEmailResetPassword_'.uniqid();
+        $userEmailRegister = new UserEmailResetPassword(array(
+            'account' => $account,
+            'hashedPassword' => $hashedPassword,
+            'type' => EmailUserType::REST_PASSWORD
+        ));
+        //
+        RedisService::setKeyWithExpiration($guid, json_encode($userEmailRegister->getInfo()), 60*5);//5 phút
+        //thêm yêu cầu gửi mail vào hàng đợi
+        $rabbitSender = new RabbitMQSender('SendUserEmail',
+            array(
+                'passive' => false,
+                'durable' => false,
+                'exclusive' => false,
+                'auto_delete' => true,
+                'type' => EmailUserType::REST_PASSWORD
+            )
+        );
+        $rabbitSender->send($guid, array(
+            'delivery_mode' => 1,
+            'expiration' => 60*5*1000
+        ));
+        $rabbitSender->close();
+        // $query = 'insert into users(role_id, account, password, created_at, updated_at) values("' . $role_id . '", "' . $account . '", "' . $hashedPassword . '", "' . $created_at . '", "' . $updated_at . '");';
+        // execute($query);
+        echo 'okeee';
+        http_response_code(StatusCodeResponse::Created);
+    }
+}
 /**
  * đăng nhập
  */
