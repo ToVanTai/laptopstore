@@ -7,7 +7,7 @@ if ($method == "POST" && !empty($_POST["crud_request"]) && $_POST["crud_request"
     middleware(
         function() {
             addNewProduct();
-        }
+        }, false
     );
     die();
 }
@@ -15,7 +15,7 @@ if ($method == "GET" && !empty($_GET["id"])) {
     middleware(
         function() {
             getProduct();
-        }
+        }, false
     );
     die();
 }
@@ -24,7 +24,7 @@ if ($method == "POST"  && !empty($_POST["crud_request"]) && $_POST["crud_request
     middleware(
         function() {
             changeProduct();
-        }
+        }, false
     );
 }
 

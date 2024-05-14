@@ -7,11 +7,7 @@ include_once __DIR__."/../utils/index.php";
 Session::init(); 
 
 
-if (empty(Session::get("user_id"))) {
-    http_response_code(203);
-    echo "Yêu cầu đăng nhập để thực hiện chức năng này.";
-    die();
-}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && empty($_GET['crud_req'])) {
     middleware(
         function() {
@@ -37,15 +33,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_GET['crud_req'] == "updateOrders"){
 }
 function addToOrders()
 {
-    $carts = Session::get("carts");
+    $cartKey = sprintf(strCarts, Session::get("user_id"));
+    $carts=RedisService::getCarts($cartKey);
     if (count($carts) <= 0) {
         http_response_code(203);
         echo "Giỏ hàng trống!";
     } else {
         $idUser = Session::get("user_id");
-        $query = 'select name, phone_number, address, email from users where id = ' . $idUser . ' ;';
+        $query = 'select name, phone_number, address, account from users where id = ' . $idUser . ' ;';
         $aboutUser = executeResult($query, true);
-        if (empty($aboutUser["name"]) || empty($aboutUser["phone_number"]) || empty($aboutUser["address"]) || empty($aboutUser["email"])) {
+        if (empty($aboutUser["name"]) || empty($aboutUser["phone_number"]) || empty($aboutUser["address"]) || empty($aboutUser["account"])) {
             http_response_code(203);
             echo "Vui lòng cập nhật thông tin họ tên, số điện thoại, địa chỉ, email.";
         } else {
@@ -69,7 +66,8 @@ function addToOrders()
                 };
                 // echo $query;
                 execute($query, true);
-                Session::set("carts", array());
+                // Session::set("carts", array());
+                RedisService::updateCarts($cartKey, array());
                 echo "Đặt hàng thành công!";
             }
             http_response_code(201);

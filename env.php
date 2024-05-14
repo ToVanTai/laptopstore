@@ -28,3 +28,6 @@
         'SMTPAuth' => true,
         'Heading' => 'TOPLAP store',
     );
+
+    //format key cho carts 
+    const strCarts = "carts_%d";//userid

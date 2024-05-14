@@ -20,13 +20,20 @@
         $dataRes = false;
 
         if(!empty(Session::get("user_id"))){
-            if (empty(Session::get("carts"))) {
-                Session::set("carts", array());
-            };
+            
             if (empty(Session::get("user"))) {
                 Session::set("user", array());
             };
-            $dataRes = array("user"=>Session::get("user"),"carts"=>Session::get("carts"));
+            $cartKey = sprintf(strCarts, Session::get("user_id"));
+            $carts=RedisService::getCarts($cartKey);
+            $query = 'select id, account, name, phone_number, address , avatar, email, role_id as role  from users where id = ' . Session::get("user_id") . ' limit 1;';
+            $userAbout = executeResult($query, true);
+            $dataRes = array(
+                "userAbout"=>$userAbout,
+                "carts"=>$carts,
+                "roleId"=>Session::get("role_id"),
+                "user"=>$userAbout
+            );
             echo json_encode($dataRes);
             http_response_code(200);
         }else {

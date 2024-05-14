@@ -7,17 +7,13 @@ include_once __DIR__."/../utils/index.php";
 Session::init();
 //phần model
 include __DIR__ . "/../model/index.php";
-use laptopstore\model\{Cart};
 //phần enum
-include __DIR__ . "/../enum/index.php";
+include_once __DIR__ . "/../enum/index.php";
 use laptopstore\enum\{StatusCodeResponse};
 
+//định dạng format cart là 
 
-if(empty(Session::get("user_id"))){
-    http_response_code(StatusCodeResponse::Unauthorized);
-    echo "Yêu cầu đăng nhập để thực hiện chức năng này.";
-    die();
-}
+
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     middleware(
         function() {
@@ -59,6 +55,7 @@ function getCart(){
  */
 function addToCart(){
     try{
+        $cartKey = sprintf(strCarts, Session::get("user_id"));
         $productId=getGET("product_id");//mã sản phẩm cần thêm
         $capacityId=getGET("capacity_id");//mã dung lượng cần thêm
         $quantity=getGET("quantity");//số lượng cần thêm
@@ -70,7 +67,7 @@ function addToCart(){
             die();
         }
         //thêm vào session carts
-        $carts=Session::get("carts");
+        $carts=RedisService::getCarts($cartKey);
         //nếu session trống thì thêm luôn
         if(count($carts)==0){
             $cartAdd=array("productId"=>$productId,
@@ -79,9 +76,9 @@ function addToCart(){
             "detail"=>$dataBody
             );
             array_unshift($carts,$cartAdd);
-            Session::set("carts",$carts);
+            RedisService::updateCarts($cartKey, $carts);
             http_response_code(StatusCodeResponse::Created);
-            echo json_encode(Session::get("carts"));
+            echo json_encode($carts);
             die();
         };
         //nếu giở hàng không trống
@@ -102,9 +99,9 @@ function addToCart(){
             if($isAddNew==false){//TH1
                 $quantity=(int)$quantity+(int)$quantityOld;
                 $carts[$indexAddNew]["quantity"]=$quantity;
-                Session::set("carts",$carts);
+                RedisService::updateCarts($cartKey, $carts);
                 http_response_code(StatusCodeResponse::OK);
-                echo json_encode(Session::get("carts"));
+                echo json_encode($carts);
                 die();
             }//TH2
             if($isAddNew==true){ 
@@ -114,9 +111,9 @@ function addToCart(){
                 "detail"=>$dataBody
                 );
                 array_unshift($carts,$cartAdd);
-                Session::set("carts",$carts);
+                RedisService::updateCarts($cartKey, $carts);
                 http_response_code(StatusCodeResponse::Created);
-                echo json_encode(Session::get("carts"));
+                echo json_encode($carts);
                 die();   
             }
         }
@@ -127,10 +124,13 @@ function addToCart(){
 };
 function updateCarts(){
     $dataBody = json_decode(file_get_contents("php://input"),true);
-    Session::set("carts",$dataBody);
+    $cartKey = sprintf(strCarts, Session::get("user_id"));
+    RedisService::updateCarts($cartKey, $dataBody);
     http_response_code(StatusCodeResponse::Created);
-    echo json_encode( Session::get("carts"));
+    echo json_encode( $dataBody);
 };
 function deleteCart(){
+    $cartKey = sprintf(strCarts, Session::get("user_id"));
+    RedisService::updateCarts($cartKey, array());
     echo "xoa cart";
 };

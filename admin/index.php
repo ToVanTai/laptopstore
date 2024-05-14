@@ -3,13 +3,13 @@ include_once __DIR__."/../utils/index.php";
 Session::init();
 $userID = Session::get("user_id");
 $roleID = Session::get("role_id");
-if (empty($user)) {
+if (empty($userID)) {
     echo "<script>alert('Bạn chưa đăng nhập')</script>";
-    echo "<a href='../index.php'>về trang chủ</a>";
+    echo "<a href='../login.php'>về trang đăng nhập</a>";
 } else {
     if ($roleID == 1) {
-        echo "<script>alert('Bạn không có quyền truy cập')</script>";
-        echo "<a href='../index.php'>về trang chủ</a>";
+        echo "<script>alert('Bạn chưa đăng nhập')</script>";
+        echo "<a href='../login.php'>về trang đăng nhập</a>";
     } else if ($roleID == 2) {
         $view = "products";
         if (!empty($_GET["view"])) {

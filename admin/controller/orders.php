@@ -11,21 +11,21 @@ if($method == "GET" && !empty(getGET("id"))){
     middleware(
         function() {
             getOrderDetail();
-        }
+        }, false
     );
 }
 if($method == "GET"){
     middleware(
         function() {
             getAllOrders();
-        }
+        }, false
     );
 }
 if($method == "POST"){//change patch to post
     middleware(
         function() {
             updateOrder();
-        }
+        }, false
     );
 }
 function getOrderDetail(){

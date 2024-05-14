@@ -6,7 +6,7 @@ Session::init();
         middleware(
             function() {
                 getProducts();
-            }
+            }, false
         );
         die();
     }

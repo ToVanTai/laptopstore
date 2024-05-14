@@ -8,7 +8,7 @@ if($method == "GET"){
     middleware(
         function() {
             getStatus();
-        }
+        }, false
     );
 }
 function getStatus(){

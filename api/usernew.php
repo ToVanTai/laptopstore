@@ -101,8 +101,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && empty($_POST['crud_req']) && $_GET["
  */
 function about()
 {
-    $a = Session::get("user_id");
-    $b = Session::get("role_id");
     $responseData = [];
     if (!empty(Session::get("user_id"))) {
         $idUser = Session::get("user_id");

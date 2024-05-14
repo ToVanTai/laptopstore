@@ -2,7 +2,7 @@
 include_once __DIR__."/../../utils/index.php";
 Session::init();
 
-if (empty(Session::get("role_id"))||Session::get("role_id")) {
+if (empty(Session::get("role_id"))||Session::get("role_id")!=2) {
     http_response_code(203);
     echo "Bạn không là người quản trị.";
     die();
@@ -12,7 +12,7 @@ if ($method == "GET" && !empty($_GET["product_id"])) {
     middleware(
         function() {
             getCapacities();
-        }
+        }, false
     );
     die();
 }
@@ -20,7 +20,7 @@ if ($method == "GET" && !empty($_GET["id"])) {
     middleware(
         function() {
             getCapacityProduct();
-        }
+        }, false
     );
     die();
 }
@@ -28,7 +28,7 @@ if ($method == "POST" && !empty($_GET["id"])) {
     middleware(
         function() {
             changeCapacityProduct();
-        }
+        }, false
     );
     die();
 }
@@ -36,7 +36,7 @@ if ($method == "POST" && !empty($_GET["id-product"])) {
     middleware(
         function() {
             addCapacityProduct();
-        }
+        }, false
     );
     die();
 }

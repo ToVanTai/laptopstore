@@ -55,7 +55,7 @@ function about()
     $responseData = [];
     if (!empty(Session::get("user_id"))) {
         $idUser = Session::get("user_id");
-        $query = 'select * from users where id = ' . $idUser . ' limit 1;';
+        $query = 'select id, account, name, phone_number, address , avatar, email  from users where id = ' . $idUser . ' limit 1;';
         $response = executeResult($query, true);
         $responseData = array(
             "id" => $response["id"],
@@ -108,17 +108,31 @@ function login()
 {
     $account = getPOST("account");
     $password = getPOST("password");
-    $query = 'select * from users where account = "' . $account . '" and password = "' . md5($password) . '" limit 1';
+    $query = 'select * from users where account = "' . $account . '"';
     $responseData = executeResult($query);
     $isSuccessfully = count($responseData) >= 1 ? true : false;
     if ($isSuccessfully == true) {
-        http_response_code(200);
-        $user = array("id" => $responseData[0]["id"], "role" => $responseData[0]["role_id"], "name" => $responseData[0]["name"], "avatar" => $responseData[0]["avatar"]);
-        Session::set("user", $user);
-        if (empty(Session::get("carts"))) {
-            Session::set("carts", array());
+        if($responseData[0]["role_id"] == 2){
+            http_response_code(200);
+            $hashPassword = $responseData[0]["password"];
+            if (password_verify($password, $hashPassword)) {
+                $user = array("id" => $responseData[0]["id"], "role" => $responseData[0]["role_id"], "name" => $responseData[0]["name"], "avatar" => $responseData[0]["avatar"]);
+                Session::set("user", $user);
+                Session::set("user_id", $responseData[0]["id"]);
+                Session::set("role_id", $responseData[0]["role_id"]);
+                Session::set("carts", array());
+                // if (empty(Session::get("carts"))) {
+                // }
+                echo $responseData[0]["role_id"];
+            }else{
+                http_response_code(203);
+            echo "Tên tài khoản hoặc mật khẩu không chính xác";
+            }
+            
+        }else{
+            http_response_code(203);
+            echo "Tên tài khoản hoặc mật khẩu không chính xác";
         }
-        echo $responseData[0]["role_id"];
     } else {
         http_response_code(203);
         echo "Tên tài khoản hoặc mật khẩu không chính xác";

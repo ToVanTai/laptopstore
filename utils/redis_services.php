@@ -44,6 +44,24 @@ class RedisService{
     public static function destroy() {
         self::$redis->disconnect();
     }
+    
+    // trả về danh sách cart trong redis
+    public static function getCarts($cartKey){
+        self::init();
+        $cartListStr =  self::$redis->get($cartKey);
+        if($cartListStr == null || !isset($cartListStr) || empty($cartListStr)){
+            return array();
+        }else{
+            return unserialize($cartListStr);
+        };
+    }
+
+    //lưu danh sách cart vào trong redis
+    public static function updateCarts($cartKey, $cartList){
+        self::init();
+        $cartListStr = serialize($cartList);
+        self::$redis->set($cartKey, $cartListStr);
+    }
 }
 
 

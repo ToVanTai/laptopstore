@@ -5,17 +5,21 @@ btnSubmit.addEventListener("click", function (event) {
     event.preventDefault();
     let account = document.getElementById("account").value.trim();
     let password = document.getElementById("password").value;
-    let accountRegular = /^[a-z0-9]{3,15}$/;
-    let passwordRegular = /^\S{3,15}$/;
+    // let accountRegular = /^[a-z0-9]{3,15}$/;
+    // let passwordRegular = /^\S{3,15}$/;
     let isValidate = true;
-    if (!accountRegular.test(account)) {
-        isValidate = false;
-        alert("tên tài khoản: dài từ 3->15 ký tự, bao gồm số hoặc chữ thường, không chứa ký tự đặc biệt");
+    if(!account || !password){
+        alert("tên tài khoản hoặc mật khẩu không được bỏ trống");
     }
-    if (!passwordRegular.test(password)) {
-        isValidate = false;;
-        alert("mật khẩu: dài từ 3->15 ký tự, không được có khoảng trắng");
-    }
+    // if (!accountRegular.test(account)) {
+    //     isValidate = false;
+    //     alert("tên tài khoản: dài từ 3->15 ký tự, bao gồm số hoặc chữ thường, không chứa ký tự đặc biệt");
+    // }
+    // if (!passwordRegular.test(password)) {
+    //     isValidate = false;;
+    //     alert("mật khẩu: dài từ 3->15 ký tự, không được có khoảng trắng");
+    // }
+
     if (isValidate == true) {
         let formData = new FormData($("form"));
         fetch(`${baseUrl}api/user.php`, {
@@ -29,9 +33,10 @@ btnSubmit.addEventListener("click", function (event) {
                     // role
                     if (Number(res) == 2) {
                         window.location.href = `${baseUrl}admin/`;
-                    } else {
-                        window.location.href = `${baseUrl}index.php`;
-                    }
+                    } 
+                    // else {
+                    //     window.location.href = `${baseUrl}index.php`;
+                    // }
                 })
             } else {
                 res.text().then(res => {
