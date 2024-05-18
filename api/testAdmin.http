@@ -1,0 +1,7 @@
+
+###
+GET http://localhost/laptopstore/admin/controller/charts.php?type=sales-chart&fromDate=2022-06-01&toDate=2022-12-31
+
+
+###
+GET http://localhost/laptopstore/admin/controller/charts.php?type=visitors-chart

@@ -32,11 +32,7 @@
 	</li>
 	<li class="chart-box">
 		<div class="chart-header bg-white">
-			<div class="chart-header-title">Doanh số bán hàng theo hãng sản xuất</div>
-			<div class="chart-header-action">
-				<select name="visitorChartAction" id="visitorChartAction" style="">
-				</select>
-			</div>
+			<div class="chart-header-title">Doanh số bán hàng theo tháng</div>
 		</div>
 		<div class="chart-body">
 			<canvas id="visitors-chart"></canvas>

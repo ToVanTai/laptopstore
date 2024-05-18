@@ -8,6 +8,10 @@ if($method == "GET" && $_GET["type"] == "sales-chart"){
     getDataForSalesChart();
     die();
 }
+if($method == "GET" && $_GET["type"] == "visitors-chart"){
+    getDataForVisitorsChart();
+    die();
+}
 function getDataForSalesChart(){
     $fromDate = getGET("fromDate");
     $toDate = getGET("toDate");
@@ -34,6 +38,17 @@ function getDataForSalesChart(){
         "branchs"=>$list2,
     );
     echo json_encode($dataResponse);
+    http_response_code(200);
+}
+function getDataForVisitorsChart(){
+    $query1 = "SELECT MONTH(orders.created_at) AS month, SUM(order_details.quantity * order_details.price) AS total_revenue
+    FROM orders
+    JOIN order_details ON orders.id = order_details.order_id
+    WHERE YEAR(orders.created_at) = YEAR(CURRENT_DATE())
+    GROUP BY MONTH(orders.created_at)
+    ORDER BY MONTH(orders.created_at)";
+    $list1 = executeResult($query1);
+    echo json_encode($list1);
     http_response_code(200);
 }
 ?>

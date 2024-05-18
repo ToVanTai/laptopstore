@@ -54,31 +54,31 @@ document.addEventListener("DOMContentLoaded", async function () {
 });
 
 
-const renderSaleChart = async function(){
+const renderSaleChart = async function () {
     let valueChart = -1;
-    if(this && this.value){
+    if (this && this.value) {
         valueChart = this.value;
     }
-    let timmer = getTimer().find(x=>x.id == valueChart);
+    let timmer = getTimer().find(x => x.id == valueChart);
     let data = await getSaleChart(`${baseURL}admin/controller/charts.php?type=sales-chart&fromDate=${timmer.value.fromDate}&toDate=${timmer.value.toDate}`)
-    
+
     // Dữ liệu giả (fake data)
-    var categories = data.branchs.map(x=>x.name);
+    var categories = data.branchs.map(x => x.name);
     var salesData = [];
-    categories.forEach(item=>{
-        if(data && data.listQuantity){
-            let itemFind = data.listQuantity.find(x=>x.branch_name == item);
+    categories.forEach(item => {
+        if (data && data.listQuantity) {
+            let itemFind = data.listQuantity.find(x => x.branch_name == item);
             let quantities = itemFind && itemFind.total ? itemFind.total : 0;
             salesData.push(quantities);
-        }else{
+        } else {
             salesData.push(0);
         }
-        
+
     })
 
     // Vẽ biểu đồ
     var salesChartBox = document.querySelector('#sales-chart');
-    if(salesChart){
+    if (salesChart) {
         salesChart.destroy();
     }
     salesChart = new Chart(salesChartBox, {
@@ -102,78 +102,109 @@ const renderSaleChart = async function(){
         }
     });
 };
-const renderVisitorsChart = async function(){
+const renderVisitorsChart = async function () {
     var visitorsChartBox = document.querySelector('#visitors-chart');
-    if(visitorsChart){
+    if (visitorsChart) {
         visitorsChart.destroy();
-    }
+    };
+    let data = await getSaleChart(`${baseURL}admin/controller/charts.php?type=visitors-chart`)
+    const revenueData = [
+        { month: 'T1', id: 1, revenue: 0 },
+        { month: 'T2', id: 2, revenue: 0 },
+        { month: 'T3', id: 3, revenue: 0 },
+        { month: 'T4', id: 4, revenue: 0 },
+        { month: 'T5', id: 5, revenue: 0 },
+        { month: 'T6', id: 6, revenue: 0 },
+        { month: 'T7', id: 7, revenue: 0 },
+        { month: 'T8', id: 8, revenue: 0 },
+        { month: 'T9', id: 9, revenue: 0 },
+        { month: 'T10', id: 10, revenue: 0 },
+        { month: 'T11', id: 11, revenue: 0 },
+        { month: 'T12', id: 12, revenue: 0 }
+    ];
+    revenueData.forEach(item=>{
+        if(data){
+            let itemFind = data.find(x=>x.month == item.id);
+            if(itemFind){
+                item.revenue = itemFind.total_revenue;
+            }
+        }
+    })
     visitorsChart = new Chart(visitorsChartBox, {
-        type: 'doughnut',
+        type: 'line',
         data: {
-            labels: ['Children', 'Teenager', 'Parent'],
+            labels: revenueData.map(data => data.month), // Lấy tên các tháng làm nhãn trục x
             datasets: [{
-                backgroundColor: ['#6610f2', '#198754', '#ffc107'],
-                data: [40, 60, 80],
+                label: 'Doanh thu',
+                data: revenueData.map(data => data.revenue), // Lấy giá trị doanh thu làm dữ liệu
+                backgroundColor: 'rgba(0, 123, 255, 0.3)', // Màu nền của đường
+                borderColor: 'rgba(0, 123, 255, 1)', // Màu viền của đường
+                borderWidth: 2 // Độ dày viền của đường
             }]
         },
         options: {
-            plugins: {
-                legend: {
-                    display: true
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true // Bắt đầu trục y từ giá trị 0
                 }
             },
             maintainAspectRatio: false,
-            width: 250
+            width: 300
         }
-    })
+    }
+    )
 };
 
-async function mainFn(){
+async function mainFn() {
     let timmer = getTimer();
     renderSaleOption(timmer)
-    renderVisitorOption(timmer)
     //render combobox và addsk khi click vào item
 }
-function renderSaleOption(timmer){
+function renderSaleOption(timmer) {
     let actionsElm = document.getElementById("salesChartAction");
     let listOptionHtml = '';
-    timmer.forEach(element=>{
-        if(-1==element.id){
-            listOptionHtml+=`<option value="${element.id}" selected>${element.name}</option>`;
-        }else{
-            listOptionHtml+=`<option value="${element.id}">${element.name}</option>`
+    timmer.forEach(element => {
+        if (-1 == element.id) {
+            listOptionHtml += `<option value="${element.id}" selected>${element.name}</option>`;
+        } else {
+            listOptionHtml += `<option value="${element.id}">${element.name}</option>`
         }
     });
-    actionsElm.innerHTML=listOptionHtml;
-    actionsElm.addEventListener("change",renderSaleChart);
+    actionsElm.innerHTML = listOptionHtml;
+    actionsElm.addEventListener("change", renderSaleChart);
 }
 
-function renderVisitorOption(timmer){
-    let actionsElm = document.getElementById("visitorChartAction");
-    let listOptionHtml = '';
-    timmer.forEach(element=>{
-        if(-1==element.id){
-            listOptionHtml+=`<option value="${element.id}" selected>${element.name}</option>`;
-        }else{
-            listOptionHtml+=`<option value="${element.id}">${element.name}</option>`
-        }
-    });
-    actionsElm.innerHTML=listOptionHtml;
-    actionsElm.addEventListener("change",renderVisitorsChart);
-}
 mainFn();
 
-async function getSaleChart(url){
-    return await new Promise((resolve,reject)=>{
-        fetch(url,{
-            credentials:"include",
-            method:"GET"
-        }).then(res=>{
-            if(res.status==200){
-                res.text().then(res=>{
+async function getSaleChart(url) {
+    return await new Promise((resolve, reject) => {
+        fetch(url, {
+            credentials: "include",
+            method: "GET"
+        }).then(res => {
+            if (res.status == 200) {
+                res.text().then(res => {
                     resolve(JSON.parse(res));
                 })
-            }else{
+            } else {
+                reject([]);
+            }
+        })
+    })
+}
+
+async function getVisitorsChart(url) {
+    return await new Promise((resolve, reject) => {
+        fetch(url, {
+            credentials: "include",
+            method: "GET"
+        }).then(res => {
+            if (res.status == 200) {
+                res.text().then(res => {
+                    resolve(JSON.parse(res));
+                })
+            } else {
                 reject([]);
             }
         })
