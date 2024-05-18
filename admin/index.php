@@ -55,7 +55,9 @@ if (empty($userID)) {
                 include "./views/footer.php";
                 break;
             default:
+                include "./views/header.php";
                 include "./views/dashboard.php";
+                include "./views/footer.php";
                 break;
         }
     }
