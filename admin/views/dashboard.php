@@ -20,15 +20,23 @@
 <ul class="box-info">
 	<li class="chart-box">
 		<div class="chart-header bg-white">
-			Sales
+			<div class="chart-header-title">Doanh số bán hàng theo hãng sản xuất</div>
+			<div class="chart-header-action">
+				<select name="salesChartAction" id="salesChartAction" style="">
+				</select>
+			</div>
 		</div>
 		<div class="chart-body">
 			<canvas id="sales-chart"></canvas>
 		</div>
 	</li>
-	<li>
-	<div class="chart-header bg-white">
-			Sales
+	<li class="chart-box">
+		<div class="chart-header bg-white">
+			<div class="chart-header-title">Doanh số bán hàng theo hãng sản xuất</div>
+			<div class="chart-header-action">
+				<select name="visitorChartAction" id="visitorChartAction" style="">
+				</select>
+			</div>
 		</div>
 		<div class="chart-body">
 			<canvas id="visitors-chart"></canvas>
@@ -129,3 +137,4 @@
 		</ul>
 	</div>
 </div>
+<script src="./js/components/dashboard.js" type="module"></script>

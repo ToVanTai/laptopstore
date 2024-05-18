@@ -1,9 +1,13 @@
 <?php
 include_once __DIR__ . "/utils/index.php";
-if (!empty(Session::get("user_id"))) {
+Session::init();
+$userID = Session::get("user_id");
+$roleID = Session::get("role_id");
+$dashboard = baseUrl."admin/index.php";
+if ($roleID == 2) {
     echo '<script>
             alert("Bạn đã đăng nhập.");
-            window.location.href="' . baseUrl . '";
+            window.location.href="' . $dashboard . '";
         </script>';
     die();
 }

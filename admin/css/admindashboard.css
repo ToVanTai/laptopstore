@@ -388,6 +388,12 @@ body {
 	width: 100%;
 	height: 270px;
 }
+#content main .box-info .chart-header{
+	width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
 /* 
 #content main .box-info li .bx {
 	width: 80px;
