@@ -9,7 +9,10 @@
 	<link rel="stylesheet" href="css/grid.css" />
 	<link rel="stylesheet" href="css/reset.css" />
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script> -->
+	<!-- <script src="js/library/boxicons.min.js"></script> -->
+	<!-- <link href='css/library/boxicons.min.css' rel='stylesheet'> -->
+	<script src="js/library/moment.js"></script>
 	<link rel="stylesheet" href="css/admindashboard.css">
 	<link rel="stylesheet" href="css/components/combobox.css">
 </head>
