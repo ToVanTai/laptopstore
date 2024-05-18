@@ -3,15 +3,17 @@ include_once __DIR__."/../utils/index.php";
 Session::init();
 $userID = Session::get("user_id");
 $roleID = Session::get("role_id");
+$loginHref = baseUrl."login.php";
 if (empty($userID)) {
-    echo "<script>alert('Bạn chưa đăng nhập')</script>";
-    echo "<a href='../login.php'>về trang đăng nhập</a>";
+    echo "<script>alert('Vui lòng đăng nhập để sử dụng chức năng này')
+    window.location.href='".$loginHref. "' ;
+        </script>";
 } else {
     if ($roleID == 1) {
         echo "<script>alert('Bạn chưa đăng nhập')</script>";
         echo "<a href='../login.php'>về trang đăng nhập</a>";
     } else if ($roleID == 2) {
-        $view = "products";
+        $view = "dashboard";
         if (!empty($_GET["view"])) {
             $view = $_GET["view"];
         };
@@ -53,9 +55,7 @@ if (empty($userID)) {
                 include "./views/footer.php";
                 break;
             default:
-                include "./views/header.php";
-                include "./views/products.php";
-                include "./views/footer.php";
+                include "./views/dashboard.php";
                 break;
         }
     }

@@ -126,7 +126,7 @@ function login()
                 echo $responseData[0]["role_id"];
             }else{
                 http_response_code(203);
-            echo "Tên tài khoản hoặc mật khẩu không chính xác";
+                echo "Tên tài khoản hoặc mật khẩu không chính xác";
             }
             
         }else{
