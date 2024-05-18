@@ -38,9 +38,6 @@
 			<canvas id="visitors-chart"></canvas>
 		</div>
 	</li>
-	<li>
-		3
-	</li>
 </ul>
 
 
@@ -54,83 +51,22 @@
 		<table>
 			<thead>
 				<tr>
-					<th>User</th>
-					<th>Date Order</th>
-					<th>Status</th>
+					<th>Tên người dùng</th>
+					<th>Thời gian đặt hàng</th>
+					<th>Trạng thái</th>
 				</tr>
 			</thead>
-			<tbody>
-				<tr>
+			<tbody id="table-new-orders">
+				<!-- <tr>
 					<td>
 						<img src="css/imgs/people.png">
 						<p>John Doe</p>
 					</td>
 					<td>01-10-2021</td>
 					<td><span class="status completed">Completed</span></td>
-				</tr>
-				<tr>
-					<td>
-						<img src="css/imgs/people.png">
-						<p>John Doe</p>
-					</td>
-					<td>01-10-2021</td>
-					<td><span class="status pending">Pending</span></td>
-				</tr>
-				<tr>
-					<td>
-						<img src="css/imgs/people.png">
-						<p>John Doe</p>
-					</td>
-					<td>01-10-2021</td>
-					<td><span class="status process">Process</span></td>
-				</tr>
-				<tr>
-					<td>
-						<img src="css/imgs/people.png">
-						<p>John Doe</p>
-					</td>
-					<td>01-10-2021</td>
-					<td><span class="status pending">Pending</span></td>
-				</tr>
-				<tr>
-					<td>
-						<img src="css/imgs/people.png">
-						<p>John Doe</p>
-					</td>
-					<td>01-10-2021</td>
-					<td><span class="status completed">Completed</span></td>
-				</tr>
+				</tr> -->
 			</tbody>
 		</table>
-	</div>
-	<div class="todo">
-		<div class="head">
-			<h3>Todos</h3>
-			<i class='bx bx-plus'></i>
-			<i class='bx bx-filter'></i>
-		</div>
-		<ul class="todo-list">
-			<li class="completed">
-				<p>Todo List</p>
-				<i class='bx bx-dots-vertical-rounded'></i>
-			</li>
-			<li class="completed">
-				<p>Todo List</p>
-				<i class='bx bx-dots-vertical-rounded'></i>
-			</li>
-			<li class="not-completed">
-				<p>Todo List</p>
-				<i class='bx bx-dots-vertical-rounded'></i>
-			</li>
-			<li class="completed">
-				<p>Todo List</p>
-				<i class='bx bx-dots-vertical-rounded'></i>
-			</li>
-			<li class="not-completed">
-				<p>Todo List</p>
-				<i class='bx bx-dots-vertical-rounded'></i>
-			</li>
-		</ul>
 	</div>
 </div>
 <script src="./js/components/dashboard.js" type="module"></script>

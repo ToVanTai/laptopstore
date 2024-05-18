@@ -50,6 +50,7 @@ const getTimer = function () {
 document.addEventListener("DOMContentLoaded", async function () {
     await renderSaleChart();
     await renderVisitorsChart();
+    await renderTableOrders();
     // end: Charts
 });
 
@@ -194,19 +195,22 @@ async function getSaleChart(url) {
     })
 }
 
-async function getVisitorsChart(url) {
-    return await new Promise((resolve, reject) => {
-        fetch(url, {
-            credentials: "include",
-            method: "GET"
-        }).then(res => {
-            if (res.status == 200) {
-                res.text().then(res => {
-                    resolve(JSON.parse(res));
-                })
-            } else {
-                reject([]);
-            }
+async function renderTableOrders(){
+    let data = await getSaleChart(`${baseURL}admin/controller/charts.php?type=new_order`);
+    if(data){
+        var tableNewOrder = document.querySelector('#table-new-orders');
+        let htmlTableNewOrder = '';
+        data.forEach(item=>{
+            htmlTableNewOrder+=`
+                <tr>
+                        <td>
+                            ${item.name}
+                        </td>
+                        <td>${moment(item.created).format('YYYY-MM-DD')}</td>
+                        <td><span class="status completed">${item.status_name}</span></td>
+                    </tr>
+            `
         })
-    })
+        tableNewOrder.innerHTML = htmlTableNewOrder;
+    }
 }

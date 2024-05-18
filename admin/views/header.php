@@ -93,9 +93,9 @@
 					<i class='bx bxs-bell'></i>
 					<span class="num">8</span>
 				</a>
-				<a href="#" class="profile">
+				<!-- <a href="#" class="profile">
 					<img src="css/imgs/people">
-				</a>
+				</a> -->
 			</div>
 		</nav>
 		<!-- NAVBAR -->
