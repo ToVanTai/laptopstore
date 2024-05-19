@@ -1,7 +1,7 @@
 <?php
-include_once __DIR__."/../../utils/index.php";
-    if($_GET["view"]=="new-product"){
-        echo '
+include_once __DIR__ . "/../../utils/index.php";
+if ($_GET["view"] == "new-product") {
+    echo '
             <div class="container__detail__product">
             <form id="form-add-product" enctype="multipart/form-data" method="POST">
                 <label for="brand">Hãng sản xuất</label>
@@ -56,14 +56,14 @@ include_once __DIR__."/../../utils/index.php";
             </form>
         </div>
         <script type="module" src="js/components/addProduct.js"></script>';
-    }elseif($_GET["view"]=="product"){
-        echo '
+} elseif ($_GET["view"] == "product") {
+    echo '
         <div class="container" id="product-container">
             
         </div>
         <script type="module" src="js/components/product.js"></script>';
-    }else if($_GET["view"]=="change-capacity-product" && !empty($_GET["id"])){
-        echo '
+} else if ($_GET["view"] == "change-capacity-product" && !empty($_GET["id"])) {
+    echo '
         <div class="container">
             <form id="form-change-capacity" method="POST">
                 <label for="capacity_name">Dung lượng Ram/ hard_drive bán</label>
@@ -79,8 +79,8 @@ include_once __DIR__."/../../utils/index.php";
             </form>
         </div>
         <script type="module" src="js/components/changeCapacityProduct.js"></script>';
-    }else if($_GET["view"]=="add-capacity-product" && !empty($_GET["id-product"])){
-        echo '
+} else if ($_GET["view"] == "add-capacity-product" && !empty($_GET["id-product"])) {
+    echo '
         <div class="container">
             <form id="form-add-capacity" method="POST">
                 <label for="capacity_name">Dung lượng Ram/ hard_drive bán</label>
@@ -96,13 +96,13 @@ include_once __DIR__."/../../utils/index.php";
             </form>
         </div>
         <script type="module" src="js/components/addCapacityProduct.js"></script>';
-    }else if($_GET["view"]=="change-product" && !empty($_GET["id"])){
-        echo '
+} else if ($_GET["view"] == "change-product" && !empty($_GET["id"])) {
+    echo '
             <div class="container__detail__product">
             <form id="form-change-product" enctype="multipart/form-data" method="POST">
                 
             </form>
         </div>
         <script type="module" src="js/components/changeProduct.js"></script>';
-    }
+}
 ?>
