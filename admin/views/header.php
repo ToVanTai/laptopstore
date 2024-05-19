@@ -14,7 +14,8 @@
 	<!-- <link href='css/library/boxicons.min.css' rel='stylesheet'> -->
 	<script src="js/library/moment.js"></script>
 	<link rel="stylesheet" href="css/admindashboard.css">
-	<link rel="stylesheet" href="css/components/combobox.css">
+	<link rel="stylesheet" href="css/components/table.css">
+	<link rel="stylesheet" href="css/components/pagination.css">
 </head>
 <?php
 	$viewMode = isset($_GET["view"])?$_GET["view"]:"dashboard";

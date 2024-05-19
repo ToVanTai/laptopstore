@@ -37,7 +37,7 @@ html {
 
 body.dark {
 	--light: #0C0C1E;
-	--grey: #060714;
+	--grey: #e2e2e2;
 	--dark: #FBFBFB;
 }
 
@@ -313,11 +313,15 @@ body {
 
 /* MAIN */
 #content main {
+	background-image: url(./imgs/html_table.jpg);
 	width: 100%;
 	padding: 36px 24px;
 	font-family: var(--poppins);
-	max-height: calc(100vh - 56px);
-	overflow-y: auto;
+	min-height: calc(100vh - 56px);
+	height: 100%;
+	background-attachment: fixed;
+	background-size: cover;
+	background-repeat: no-repeat;
 }
 #content main .head-title {
 	display: flex;
