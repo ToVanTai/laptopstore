@@ -21,8 +21,10 @@ function renderTable(resData){
                     <td>${resData[i]['discount']}</td>
                     <td>${resData[i]['color']}</td>
                     <td>
-                        <a href="index.php?view=change-product&id=${resData[i]['id']}" class="btn">Sửa</a>
-                        <a href="index.php?view=product&id=${resData[i]['id']}" class="btn">Xem</a> 
+                        <div class="list-link">
+                            <a href="index.php?view=change-product&id=${resData[i]['id']}" class="link-item-1">Sửa</a>
+                            <a href="index.php?view=product&id=${resData[i]['id']}" class="link-item-2">Xem</a> 
+                        </div>
                     </td>
                 </tr>`
         }
