@@ -348,7 +348,8 @@ tbody td.active {
     height: auto;
 }
 
-.list-link a{
+.list-link a,
+.list-link div{
     display: inline-block;
     color: var(--blue);
 }
