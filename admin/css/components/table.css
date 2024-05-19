@@ -88,7 +88,9 @@
     overflow: overlay;
     height: 460px;
 }
-
+.table__body.second{
+    height: 100%;
+}
 .table__footer {
     border-top: 2px solid var(--dark);
     max-height: calc(89% - 1.6rem);

@@ -19,6 +19,7 @@
 	<link rel="stylesheet" href="css/components/spinder.css">
 	<link rel="stylesheet" href="css/components/button.css">
 	<link rel="stylesheet" href="css/components/form.css">
+	<link rel="stylesheet" href="css/components/formview.css">
 </head>
 <?php
 	$viewMode = isset($_GET["view"])?$_GET["view"]:"dashboard";

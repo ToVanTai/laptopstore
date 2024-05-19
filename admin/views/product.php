@@ -92,8 +92,13 @@ if ($_GET["view"] == "new-product") {
             <script type="module" src="js/components/addProduct.js"></script>';
 } elseif ($_GET["view"] == "product") {
     echo '
-        <div class="container" id="product-container">
-            
+        <div class="main-form-view">
+            <div class="form-view-container">
+                <h1 class="form-title">Thông tin sản phẩm</h1>
+                <div id="detail-container">
+
+                </div>
+            </div>
         </div>
         <script type="module" src="js/components/product.js"></script>';
 } else if ($_GET["view"] == "change-capacity-product" && !empty($_GET["id"])) {
