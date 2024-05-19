@@ -1,5 +1,6 @@
 import {$,$$} from "../configs/constants.js";
 import {baseURL} from "../configs/configs.js";
+import {loading, unLoading} from "../utils/utils.js";
 import {myPagination, configPagination, getAllData, getDataCurrent} from "./pagination.js";
 import "./table.js";
 document.title = "Trang quản lý sản phẩm";
@@ -28,6 +29,13 @@ function renderTable(resData){
         productList.innerHTML=productsHtml
     }
 }
+//fake 
+function callBackWhenChangePageIndex(totalPage, currentPage){
+    configPagination.totalPage = totalPage;
+    configPagination.currentPage = currentPage;
+    getDataCurrent(configPagination);
+    renderTable(configPagination.dataCurrent);
+}
 
 (async function () {
     //B1: get all data
@@ -35,6 +43,6 @@ function renderTable(resData){
     configPagination.allData = await getAllData(`${baseURL}admin/controller/products.php`);
     configPagination.totalPage = Math.ceil(configPagination.allData.length / configPagination.pageSize);
     getDataCurrent(configPagination);
-    myPagination(configPagination.totalPage, configPagination.currentPage);
+    myPagination(configPagination.totalPage, configPagination.currentPage, callBackWhenChangePageIndex);
     renderTable(configPagination.dataCurrent);
 })();

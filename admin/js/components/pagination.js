@@ -70,7 +70,7 @@ export let myPagination = function (total, current, callBackFn) {
                 paginationListItem[i].addEventListener("click", function () {
                     let pageDirection = Number(this.dataset.index);
                     callBackFn(total, pageDirection)
-                    employesPagination(total, pageDirection, callBackFn)
+                    myPagination(total, pageDirection, callBackFn)
                 })
             }
         }

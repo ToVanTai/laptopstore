@@ -125,12 +125,13 @@ table {
 }
 
 td img {
-    width: 36px;
-    height: 36px;
-    margin-right: .5rem;
-    border-radius: 50%;
-
+    width: 52px;
+    height: 53px;
+    background-size: cover;
+    background-position: center;
+    /* border-radius: 50%; */
     vertical-align: middle;
+    padding: 2px;
 }
 
 table,
