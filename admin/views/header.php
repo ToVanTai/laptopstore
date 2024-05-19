@@ -17,6 +17,7 @@
 	<link rel="stylesheet" href="css/components/table.css">
 	<link rel="stylesheet" href="css/components/pagination.css">
 	<link rel="stylesheet" href="css/components/spinder.css">
+	<link rel="stylesheet" href="css/components/button.css">
 </head>
 <?php
 	$viewMode = isset($_GET["view"])?$_GET["view"]:"dashboard";

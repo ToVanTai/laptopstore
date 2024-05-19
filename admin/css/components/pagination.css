@@ -34,13 +34,13 @@
 
 .pagination li.num:hover {
     border-color: var(--dark);
-    font-family: notosans semibold;
+    font-family: 'Roboto', sans-serif;
 }
 
 .pagination li.num.active {
     border-color: var(--blue);
     cursor: default;
-    font-family: notosans regular;
+    font-family: 'Roboto', sans-serif;
 }
 
 .pagination li.prev:hover,
