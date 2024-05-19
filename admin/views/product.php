@@ -137,11 +137,14 @@ if ($_GET["view"] == "new-product") {
         <script type="module" src="js/components/addCapacityProduct.js"></script>';
 } else if ($_GET["view"] == "change-product" && !empty($_GET["id"])) {
     echo '
-            <div class="container__detail__product">
-            <form id="form-change-product" enctype="multipart/form-data" method="POST">
+<div class="main-form">
+    <div class="form-container container__detail__product">
+        <h1 class="form-title">Cập nhật thông tin sản phẩm</h1>
+        <form id="form-change-product" enctype="multipart/form-data" method="POST">
                 
-            </form>
-        </div>
-        <script type="module" src="js/components/changeProduct.js"></script>';
+        </form>
+    </div>
+</div>
+<script type="module" src="js/components/changeProduct.js"></script>';
 }
 ?>
