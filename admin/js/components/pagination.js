@@ -1,8 +1,9 @@
+import {loading, unLoading} from "../utils/utils.js";
 export let configPagination = {
     allData: [],
     currentPage: 1,
     totalPage: 1,
-    pageSize: 20,
+    pageSize: 10,
     dataCurrent: []
 }
 export let myPagination = function (total, current, callBackFn) {
@@ -68,9 +69,12 @@ export let myPagination = function (total, current, callBackFn) {
         for (let i = 0; i < paginationListItem.length; i++) {
             if (!paginationListItem[i].classList.contains("active")) {
                 paginationListItem[i].addEventListener("click", function () {
+                    loading()
                     let pageDirection = Number(this.dataset.index);
-                    callBackFn(total, pageDirection)
-                    myPagination(total, pageDirection, callBackFn)
+                    setTimeout(function(){
+                        callBackFn(total, pageDirection)
+                        myPagination(total, pageDirection, callBackFn)
+                    },1000)
                 })
             }
         }

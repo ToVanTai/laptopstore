@@ -16,6 +16,7 @@
 	<link rel="stylesheet" href="css/admindashboard.css">
 	<link rel="stylesheet" href="css/components/table.css">
 	<link rel="stylesheet" href="css/components/pagination.css">
+	<link rel="stylesheet" href="css/components/spinder.css">
 </head>
 <?php
 	$viewMode = isset($_GET["view"])?$_GET["view"]:"dashboard";
@@ -28,6 +29,11 @@
 	}
 ?>
 <body>
+	<!-- Start spinder -->
+	<div id="spin-overlay" class="spin-overlay hide">
+		<span class="spinner"></span>
+    </div>
+	<!-- End spinder -->
 	<!-- SIDEBAR -->
 	<section id="sidebar">
 		<a href="index.php" class="brand">

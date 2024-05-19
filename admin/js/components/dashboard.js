@@ -1,5 +1,6 @@
 import { $, $$ } from "../configs/constants.js";
 import { baseURL } from "../configs/configs.js";
+import {loading, unLoading} from "../utils/utils.js";
 var salesChart;
 var visitorsChart;
 const getTimer = function () {
@@ -48,9 +49,11 @@ const getTimer = function () {
 
 //chart
 document.addEventListener("DOMContentLoaded", async function () {
+    loading();
     await renderSaleChart();
     await renderVisitorsChart();
     await renderTableOrders();
+    unLoading();
     // end: Charts
 });
 

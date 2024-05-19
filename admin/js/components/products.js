@@ -31,18 +31,27 @@ function renderTable(resData){
 }
 //fake 
 function callBackWhenChangePageIndex(totalPage, currentPage){
-    configPagination.totalPage = totalPage;
-    configPagination.currentPage = currentPage;
-    getDataCurrent(configPagination);
-    renderTable(configPagination.dataCurrent);
+    try {
+        configPagination.totalPage = totalPage;
+        configPagination.currentPage = currentPage;
+        getDataCurrent(configPagination);
+        renderTable(configPagination.dataCurrent);
+    } catch (error) {
+        
+    }
+    unLoading();
 }
 
 (async function () {
     //B1: get all data
     //B2: mặc định là 20 bản ghi/1 trang
-    configPagination.allData = await getAllData(`${baseURL}admin/controller/products.php`);
-    configPagination.totalPage = Math.ceil(configPagination.allData.length / configPagination.pageSize);
-    getDataCurrent(configPagination);
-    myPagination(configPagination.totalPage, configPagination.currentPage, callBackWhenChangePageIndex);
-    renderTable(configPagination.dataCurrent);
+    loading()
+    try{
+        configPagination.allData = await getAllData(`${baseURL}admin/controller/products.php`);
+        configPagination.totalPage = Math.ceil(configPagination.allData.length / configPagination.pageSize);
+        getDataCurrent(configPagination);
+        myPagination(configPagination.totalPage, configPagination.currentPage, callBackWhenChangePageIndex);
+        renderTable(configPagination.dataCurrent);
+    }catch(ex){};
+    unLoading();
 })();
