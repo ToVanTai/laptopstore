@@ -103,20 +103,31 @@ if ($_GET["view"] == "new-product") {
         <script type="module" src="js/components/product.js"></script>';
 } else if ($_GET["view"] == "change-capacity-product" && !empty($_GET["id"])) {
     echo '
-        <div class="container">
+    <div class="main-form">
+        <div class="form-container">
+            <h1 class="form-title">Sửa chi tiết sản phẩm</h1>
             <form id="form-change-capacity" method="POST">
-                <label for="capacity_name">Dung lượng Ram/ hard_drive bán</label>
-                <input type="text" required name="capacity_name" value="" id="capacity_name" placeholder="Nhập dung lượng Ram/ hard_drive">
-        
-                <label for="price">Giá bán</label>
-                <input type="number" value="" required name="price" id="price">
-        
-                <label for="quantity">Số lượng bán</label>
-                <input type="number" value="" required name="quantity" id="quantity">
-                <input type="hidden" name="crud_request" value="change-capacity-product">
-                <button type="submit" style="margin-top: 10px" class="btn">Lưu</button>
+                <div class="main-user-info">
+                    <div class="user-input-box">
+                        <label for="capacity_name">Dung lượng Ram/ hard_drive bán</label>
+                        <input type="text" required name="capacity_name" value="" id="capacity_name"
+                            placeholder="Nhập dung lượng Ram/ hard_drive">
+                    </div>
+                    <div class="user-input-box">
+                        <label for="price">Giá bán</label>
+                        <input type="number" value="" required name="price" id="price">
+                    </div>
+                    <div class="user-input-box">
+                        <label for="quantity">Số lượng bán</label>
+                        <input type="number" value="" required name="quantity" id="quantity">
+                    </div>
+                    <div class="user-input-box"></div>
+                    <input type="hidden" name="crud_request" value="change-capacity-product">
+                    <button type="submit" style="margin-top: 10px" class="btn">Lưu</button>
+                </div>
             </form>
         </div>
+    </div>
         <script type="module" src="js/components/changeCapacityProduct.js"></script>';
 } else if ($_GET["view"] == "add-capacity-product" && !empty($_GET["id-product"])) {
     echo '
