@@ -45,10 +45,11 @@ function renderStatus(data){
 }
 
 function onChangeStatus(){
-    let currentElm = this.parentNode.parentNode;
+    loading();
+    let currentElm = this.parentNode.parentNode.parentNode;
     let statusCurrent12 = this.dataset.statuscurrent;
     let orderId12 = this.dataset.orderid;
-    let statusChange12 = this.parentNode.querySelector(".listStatusChange").value;
+    let statusChange12 = this.parentNode.parentNode.parentNode.querySelector(".listStatusChange").value;
     if(statusChange12!=statusCurrent12){
         if(confirm("Bạn có muấn lưu thay đổi trạng thái đơn hàng?")){
             let body = JSON.stringify({"statusChange":statusChange12,"orderId":orderId12});
@@ -66,6 +67,7 @@ function onChangeStatus(){
             })
         }
     }
+    unLoading();
 }
 function renderListStatusChange(statusCurrent){
     let optionHtml ='';
