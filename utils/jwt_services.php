@@ -18,7 +18,7 @@ function signAccessToken($id, $role_id)
         $payload1 = array(
             "user_id" => $id,
             "role_id" => $role_id,
-            "exp" => getDateForToken('PT60M') // Thời hạn 15 phút tính theo múi giờ UTC
+            "exp" => getDateForToken('PT1M') // Thời hạn 15 phút tính theo múi giờ UTC
         );
 
 

@@ -15,7 +15,7 @@ if ($method == "GET" && empty($_GET["id"])) {
     middleware(
         function() {
             getBrands();
-        }
+        }, false
     );
     die();
 }
@@ -23,7 +23,7 @@ if ($method == "GET") {
     middleware(
         function() {
             getBrand();
-        }
+        }, false
     );
     die();
 }
@@ -31,7 +31,7 @@ if ($method == "POST" && !empty($_GET["id"])) {
     middleware(
         function() {
             updateBrands($_GET["id"]);
-        }
+        }, false
     );
     die();
 }

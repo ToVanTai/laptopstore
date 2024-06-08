@@ -20,4 +20,22 @@
     
 5. phpredis
 composer require predis
-6. redis-commander
+
+7. rabbit-mq
+docker pull rabbitmq:3.12.13-management
+b1:	Taỉ image
+docker run -d -p 15672:15672 -p 5672:5672 rabbitmq:3.12.13-management
+15672 là web
+5672 là để kết nối
+b1:	Build container từ imange
+*lưu ý: phải vào trong phpinit bỏ gen đoạn socketextension=sockets
+
+8. redis cache
+docker pull redis
+B1	Taỉ image
+B2	docker run -p 6379:6379 -d redis
+B3	Build container từ imange
+
+8. redis-commander
+chạy lệnh này là có port
+

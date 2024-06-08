@@ -1,0 +1,66 @@
+.main-form-view{
+    display: flex;
+    justify-content: center;
+}
+.form-view-container {
+    width: 100%;
+    max-width: 650px;
+    background: var(--light);
+    padding: 28px;
+    margin: 0 28px;
+    border-radius: 10px;
+    height: 590px;
+    overflow: auto;
+    position: relative;
+    padding-top: 0px;    
+}
+
+.form-view-container::-webkit-scrollbar {
+    width: 0.5rem;
+    height: 0.5rem;
+}
+
+.form-view-container::-webkit-scrollbar-thumb {
+    border-radius: .5rem;
+    background-color: var(--blue);
+    visibility: hidden;
+}
+
+.form-view-container:hover::-webkit-scrollbar-thumb {
+    visibility: visible;
+}
+
+.form-title {
+    padding-top: 28px;
+    font-size: 26px;
+    font-weight: 600;
+    text-align: center;
+    padding-bottom: 6px;
+    color: var(--dark);
+    background-color: var(--light);
+    border-bottom: solid 1px var(--dark);
+    position: sticky;
+    top: 0;
+}
+
+.detail-infor{
+
+}
+.detail-infor li{
+    padding-bottom: 5px;
+    color: var(--dark);
+}
+.detail-infor li img{
+    display: block;
+    width: 50px;
+}
+.detail-infor li span:first-child{
+    font-weight: 600;
+    padding-right: 3px;
+}
+.btn-group{
+    padding-top: 5px;
+}
+.form-view-container .btn{
+    display: inline-flex;
+}

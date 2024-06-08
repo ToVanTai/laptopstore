@@ -35,19 +35,21 @@ function middleware($next,$isVerifyAccessToken=true) {
                 }
             }else{
                 getUserInfo($infoRefreshToken["user_id"]);
+                defaultSession();
                 Session::set("user_id",$infoRefreshToken["user_id"]);
                 Session::set("role_id",$infoRefreshToken["role_id"]);
                 return $next();
             }
         }else{
             getUserInfo($infoAccessToken["user_id"]);
-
+            defaultSession();
             Session::set("user_id",$infoAccessToken["user_id"]);
             Session::set("role_id",$infoAccessToken["role_id"]);
             return $next();
         }
 
     }else{
+        defaultSession();
         return $next();
     }
 }
@@ -63,5 +65,13 @@ function getUserInfo($userId){
         Session::set("user", $user);
     }catch(Exception $e){
         return null;
+    }
+}
+
+function defaultSession(){
+    $carts = Session::get("carts");
+    if($carts == false){
+        $cartsDefault = array();
+        Session::set("carts", $cartsDefault);
     }
 }

@@ -35,6 +35,26 @@ Content-Type: application/json;
 access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMzQiLCJyb2xlX2lkIjoiMSIsImV4cCI6MTcxNDQ3ODk3Nn0.Xr6jhavRFmSQVUYndxopyQ80lBXZ5jco-qi7t0hX9fs
 refresh-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMzQiLCJyb2xlX2lkIjoiMSIsImV4cCI6MTc0NjAxMTM3Nn0.BvpP4dmlZWCN5c1pYU21AchkdrATVjrEZaDfj3Yy50U
 
+###
+POST  http://localhost/laptopstore/api/checklogin.php
 
+
+###
+POST http://localhost/laptopstore/api/usernew.php
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="account"
+
+tovantaidz2001@gmail.com
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="password"
+
+12345678
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="crud_req"
+
+register
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
 
