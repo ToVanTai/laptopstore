@@ -19,6 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET"&& $id!=null) {
             Product::readItem($id);
         }, false
     );
+    Session::destroy();//nguy hiểm
     //lay theo id products.php?id=1
     die();
 }
@@ -29,6 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET"&& $search == null && $categoryName == nu
             Product::readPage($page, $limit, null, null);
         }, false
     );
+    Session::destroy();//nguy hiểm
     //san pham theo page products.php?page=1&limit=8
     die();
 }
@@ -39,6 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && $search != null) {
             Product::readPage($page, $limit, $search, null);
         }, false
     );
+    Session::destroy();//nguy hiểm
     //tim kiem san pham theo ten+page products.php?search=xr&limit=8&page=1
     die();
 }
@@ -49,6 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET"&& $categoryName!=null) {
             Product::readPage($page, $limit, null, $categoryName);
         }, false
     );
+    Session::destroy();//nguy hiểm
     //tim kiem san pham theo the loai+age  products.php?category-name=xr&limit=8&page=1
     die();
 }

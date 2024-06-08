@@ -14,6 +14,7 @@
                 check();
             }
         );
+        Session::destroy();//nguy hiểm
         die();
     }
     function check(){

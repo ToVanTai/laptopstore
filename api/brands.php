@@ -14,6 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             readAll();
         }, false
     );
+    Session::destroy();//nguy hiểm
 }
 function readAll(){
     $query = 'select id, name, image from brands';

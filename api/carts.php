@@ -20,6 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             getCart();
         }
     );
+    Session::destroy();//nguy hiểm
     die();
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST" && empty($_GET['crud_req']) ) {
@@ -36,6 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_GET['crud_req'] == "updateCarts" )
             updateCarts();
         }
     );
+    Session::destroy();//nguy hiểm
     die();
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST" && $_GET['crud_req'] == "deleteCarts" ) {//change delete to post
@@ -44,6 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_GET['crud_req'] == "deleteCarts" )
             deleteCart();
         }
     );
+    Session::destroy();//nguy hiểm
     die();
 }
 function getCart(){

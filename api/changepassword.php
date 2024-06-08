@@ -19,6 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && getGET("id") != null) {
             changepassword();
         },false
     );
+    Session::destroy();//nguy hiểm
     die();
 }
 

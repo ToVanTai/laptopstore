@@ -22,6 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && getGET("refresh-token") != null) {
         },
         false
     );
+    Session::destroy();//nguy hiểm
     die();
 }
 /**
@@ -33,6 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             about();
         }
     );
+    Session::destroy();//nguy hiểm
     die();
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST" && empty($_POST['crud_req'])) {
@@ -41,6 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && empty($_POST['crud_req'])) {
             logout();
         }
     );
+    Session::destroy();//nguy hiểm
     die();
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['crud_req'] == "register") {
@@ -50,6 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['crud_req'] == "register") {
         },
         false
     );
+    Session::destroy();//nguy hiểm
     die();
 }
 
@@ -60,6 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['crud_req'] == "reset_passwor
         },
         false
     );
+    Session::destroy();//nguy hiểm
     die();
 }
 
@@ -70,6 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['crud_req'] == "login") {
         },
         false
     );
+    Session::destroy();//nguy hiểm
     die();
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['crud_req'] == "update") {
@@ -78,6 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['crud_req'] == "update") {
             update1();
         }
     );
+    Session::destroy();//nguy hiểm
     die();
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['crud_req'] == "changePassword") {//change patch to post
@@ -86,6 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['crud_req'] == "changePasswor
             updatev2();
         }
     );
+    Session::destroy();//nguy hiểm
     die();
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST" && empty($_POST['crud_req']) && $_GET["crud_req"] == "logout") {//change delete to post
@@ -94,6 +102,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && empty($_POST['crud_req']) && $_GET["
             logout();
         }
     );
+    Session::destroy();//nguy hiểm
     die();
 }
 /**
