@@ -55,11 +55,24 @@
                 $from = ($page - 1) * $limit;
                 $sql="";
                 if($case==1){
-                    $sql = "select products.id, model, screen, CPU, VGA, OS, RAM, background, discount, product_capacities.price, quantity from products inner join product_capacities on products.id = product_capacities.product_id GROUP by product_capacities.product_id HAVING min(product_capacities.price) limit $from,$limit;";
+                    $sql = "select products.id, model, screen, CPU, VGA, OS, RAM, background, discount, product_capacities.price, quantity 
+                    from products inner join product_capacities on products.id = product_capacities.product_id GROUP by product_capacities.product_id 
+                    HAVING min(product_capacities.price)
+                    order by products.created_at desc
+                    limit $from,$limit;";
                 }elseif($case==2){
-                    $sql = "select products.id, model, screen, CPU, VGA, OS, RAM, background, discount, product_capacities.price, quantity from products inner join product_capacities on products.id = product_capacities.product_id where model like '%".$search."%' GROUP by product_capacities.product_id HAVING min(product_capacities.price) limit $from,$limit;";
+                    $sql = "select products.id, model, screen, CPU, VGA, OS, RAM, background, discount, product_capacities.price, quantity 
+                    from products inner join product_capacities on products.id = product_capacities.product_id where model like '%".$search."%' 
+                    GROUP by product_capacities.product_id 
+                    HAVING min(product_capacities.price)
+                    order by products.created_at desc
+                    limit $from,$limit;";
                 }else{
-                    $sql = "select products.id, model, screen, CPU, VGA, OS, RAM, background, discount, product_capacities.price, quantity from brands inner join products on brands.id=products.brand_id inner join product_capacities on products.id = product_capacities.product_id WHERE brands.name like '%".$categoryName."%' GROUP by product_capacities.product_id HAVING min(product_capacities.price) limit $from,$limit;";
+                    $sql = "select products.id, model, screen, CPU, VGA, OS, RAM, background, discount, product_capacities.price, quantity 
+                    from brands inner join products on brands.id=products.brand_id inner join product_capacities on products.id = product_capacities.product_id
+                     WHERE brands.name like '%".$categoryName."%' GROUP by product_capacities.product_id HAVING min(product_capacities.price) 
+                     order by products.created_at desc
+                    limit $from,$limit;";
                 };
                 $data = executeResult($sql);
                 $dataRes = array("pagination" => array("currentPage" => $page, "limit" => $limit, "totalPage" => $totalPage), "data" => $data);
