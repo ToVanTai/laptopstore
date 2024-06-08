@@ -14,7 +14,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: radial-gradient(circle at center, rgba(0,0,0,0) 40%, rgba(0,0,0,0.35) 50%, rgba(0,0,0,0.35) 90%), url('./user_background.webp');
+  background-image: radial-gradient(circle at center, rgba(0,0,0,0) 40%, rgba(0,0,0,0.35) 50%, rgba(0,0,0,0.35) 90%), url('./user_background.jpg');
 }
 
 .container__registor {

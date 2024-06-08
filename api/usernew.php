@@ -457,6 +457,7 @@ function updatev2()
             http_response_code(201);
         }else{
             echo "Mật khẩu cũ không trùng khớp!";    
+            http_response_code(203);
         }
     } else {
         echo "tài khoản không đúng hoặc mật khẩu cũ không trùng khớp!";
