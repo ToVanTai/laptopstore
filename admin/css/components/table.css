@@ -178,6 +178,8 @@ tbody tr:nth-child(even) {
 
 tbody tr {
     --delay: .1s;
+    background-color: var(--light);
+    color: var(--dark);
     /* transition: .5s ease-in-out var(--delay), background-color 0s; */
 }
 

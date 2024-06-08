@@ -1,5 +1,5 @@
 <div class="container">
-        <h3 style="text-align:center">Thông tin chung</h3>
+        <h3 style="text-align:center; color: var(--light)">Thông tin chung</h3>
         <table border="1">
             <thead>
                 <tr>
@@ -28,7 +28,7 @@
                 </tr>
             </tbody>
         </table>
-        <h3 style="text-align:center; margin: 5px 0px">Thông tin chi tiết sản phẩm</h3>
+        <h3 style="text-align:center; margin: 5px 0px;  color: var(--light)">Thông tin chi tiết sản phẩm</h3>
         <table border="1">
             <thead>
                 <tr>
