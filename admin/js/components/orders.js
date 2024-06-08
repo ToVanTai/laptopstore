@@ -80,64 +80,37 @@ function renderListStatusChange(statusCurrent){
         </option>
         `;
         optionHtml+=`
-            <option value="${ordersIdList[9]["id"]}">
-            ${ordersIdList[9]["name"]}    
+            <option value="${ordersIdList[2]["id"]}">
+            ${ordersIdList[2]["name"]}    
         </option>
         `;
-    }else if(statusCurrent>=2&&statusCurrent<=5){
-        optionHtml+=`<option selected value="${ordersIdList[statusCurrent-1]["id"]}">
-            ${ordersIdList[statusCurrent-1]["name"]}    
+    }else if(statusCurrent == 2){
+        optionHtml+=`<option selected value="${ordersIdList[1]["id"]}">
+            ${ordersIdList[1]["name"]}    
         </option>`;
-        for(let i=(Number(statusCurrent)+1); i<=6; i++){
-            optionHtml+=`
-                <option value="${ordersIdList[i-1]["id"]}">
-                ${ordersIdList[i-1]["name"]}    
-            </option>
-            `;
-        };
-        optionHtml+=`
-                <option value="${ordersIdList[11]["id"]}">
-                ${ordersIdList[11]["name"]}    
-            </option>
-            `;
-    }else if(statusCurrent==6){
-        optionHtml+=`<option selected value="${ordersIdList[statusCurrent-1]["id"]}">
-            ${ordersIdList[statusCurrent-1]["name"]}    
-        </option>`;
-    }else if(statusCurrent==7){
-        optionHtml+=`<option selected value="${ordersIdList[statusCurrent-1]["id"]}">
-            ${ordersIdList[statusCurrent-1]["name"]}    
-        </option>`;
-        optionHtml+=`<option value="${ordersIdList[7]["id"]}">
-            ${ordersIdList[7]["name"]}    
-        </option>`;
-        optionHtml+=`<option value="${ordersIdList[10]["id"]}">
-            ${ordersIdList[10]["name"]}    
-        </option>`;
-    }else if(statusCurrent==8){
-        optionHtml+=`<option selected value="${ordersIdList[statusCurrent-1]["id"]}">
-            ${ordersIdList[statusCurrent-1]["name"]}    
-        </option>`;
-        optionHtml+=`<option value="${ordersIdList[8]["id"]}">
-            ${ordersIdList[8]["name"]}    
-        </option>`;
-        optionHtml+=`<option value="${ordersIdList[10]["id"]}">
-            ${ordersIdList[10]["name"]}    
-        </option>`;
-    }else{
-        optionHtml+=`<option selected value="${ordersIdList[statusCurrent-1]["id"]}">
-            ${ordersIdList[statusCurrent-1]["name"]}    
+    }else if(statusCurrent == 3){
+        optionHtml+=`<option selected value="${ordersIdList[2]["id"]}">
+            ${ordersIdList[1]["name"]}    
         </option>`;
     }
     return optionHtml;
 }
 async function onChangeAction(){
     try{
+        loading()
         changeParamsUrl(this.value);
-        await getOrdersList(`${baseURL}admin/controller/orders.php?status-id=${orderIdActive}`);
-        renderOrders(ordersList);
+        orderIdActive = new URLSearchParams(window.location.search).get("id-status");
+        if(!orderIdActive){
+            orderIdActive=1;
+        }
+        configPagination.allData = await getAllData(`${baseURL}admin/controller/orders.php?status-id=${orderIdActive}`);
+        configPagination.totalPage = Math.ceil(configPagination.allData.length / configPagination.pageSize);
+        getDataCurrent(configPagination);
+        myPagination(configPagination.totalPage, configPagination.currentPage, callBackWhenChangePageIndex);
+        renderTable(configPagination.dataCurrent);
     }catch(err){
     }
+    unLoading();
 }
 
 function renderTable(resData){
