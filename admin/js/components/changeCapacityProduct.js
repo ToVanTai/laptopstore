@@ -23,7 +23,13 @@ fetch(`${baseURL}admin/controller/capacities.php?id=${id}`,{
                     body: formData
                 }).then(res=>{
                     if(res.status===200||res.status===201){
-                        alert("Cập nhật thành công")
+                        alert("Cập nhật dung lượng sản phẩm thành công")
+                        let productid = Object.fromEntries(
+                            new URLSearchParams(window.location.search).entries()
+                        ).productid;
+                        if(Number(productid)){
+                            window.location.href= "http://localhost/laptopstore/admin/index.php?view=product&id="+Number(productid);
+                        }
                     }else {
                         res.text().then(res=>alert(res))
                     }

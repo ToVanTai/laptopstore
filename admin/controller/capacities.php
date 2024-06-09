@@ -129,7 +129,7 @@ function addCapacityProduct()
                     (`product_id`, `capacity_name`, `price`, `quantity`) VALUES 
                     ('" . $idProduct . "', '" . $capacity_name . "', '" . $price . "', '" . $quantity . "');";
                 execute($query);
-                echo "Thêm thành công";
+                echo $idProduct;
             }
         }
     }

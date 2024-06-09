@@ -97,7 +97,7 @@ function addNewProduct()
                     (`product_id`, `capacity_name`, `price`, `quantity`) VALUES 
                     ('" . $idNewProduct . "', '" . $capacity_name . "', '" . $price . "', '" . $quantity . "');";
                     execute($query);
-                    echo "Thêm thành công";
+                    echo $idNewProduct;
                     http_response_code(200);
                 } else {
                     echo "Thêm thất bại";
@@ -150,6 +150,7 @@ function changeProduct()
             `RAM` = '" . $RAM . "', `hardware` = '" . $hardware . "', `OS` = '" . $OS . "', `CPU` = '" . $CPU . "', 
             `VGA` = '" . $VGA . "', `warranty` = '" . $warranty . "', `updated_at` = '" . $updated_at . "'  WHERE `products`.`id` = '" . $id . "'";
                 execute($query);
+                echo($id);
                 http_response_code(200);
             } else {
                 $query = "select background from products where id = " . $id . " ";
@@ -168,6 +169,7 @@ function changeProduct()
                     `RAM` = '" . $RAM . "', `hardware` = '" . $hardware . "', `OS` = '" . $OS . "', `CPU` = '" . $CPU . "', 
                     `VGA` = '" . $VGA . "', `warranty` = '" . $warranty . "', `background` = '" . $nameFile . "', `updated_at` = '" . $updated_at . "'  WHERE `products`.`id` = '" . $id . "'";
                     execute($query);
+                    echo($id);
                     http_response_code(200);
                 }
             }

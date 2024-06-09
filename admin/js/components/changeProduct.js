@@ -129,9 +129,13 @@ function handleChangeProduct(){
             method: "POST",
             credentials: "include",
             body: formData
-        }).then(res=>{
+        }).then(async res=>{
             if(res.status===200||res.status===201){
-                alert("Cập nhật thành công")
+                alert("Cập nhật sản phẩm thành công");
+                let id = await res.text();
+                if(Number(id)){
+                    window.location.href= "http://localhost/laptopstore/admin/index.php?view=product&id="+Number(id)
+                }
             }else{
                 res.text().then(res=>alert(res))
             }

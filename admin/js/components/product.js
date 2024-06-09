@@ -58,8 +58,9 @@ async function main() {
 }
 function renderCapacities() {
     let dataRes = "";
+    //
     capacities.forEach((capacity) => {
-        let capacitiesHref = `index.php?view=change-capacity-product&id=${capacity['id']}`;
+        let capacitiesHref = `index.php?view=change-capacity-product&id=${capacity['id']}&productid=${id}`;
         dataRes+=`
             <tr>
                 <td>${capacity["capacity_name"]}</td>

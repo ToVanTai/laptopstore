@@ -23,11 +23,15 @@ fetch(`${baseURL}admin/controller/brands.php`,{
                     method: "POST",
                     credentials: "include",
                     body: formData
-                }).then(res=>{
+                }).then(async res=>{
                     if(res.status===200||res.status===201){
-                        alert("Thêm thành công")
+                        alert("Thêm sản phẩm thành công");
+                        let id = await res.text();
+                        if(Number(id)){
+                            window.location.href= "http://localhost/laptopstore/admin/index.php?view=product&id="+Number(id)
+                        }
                     }else{
-                        alert("Thêm thất bại")
+                        alert("Thêm sản phẩm thất bại")
                     }
                 }).catch(err=>{
                     alert(err)
