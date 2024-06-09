@@ -92,7 +92,7 @@ function renderListStatusChange(statusCurrent){
         </option>`;
     }else if(statusCurrent == 3){
         optionHtml+=`<option selected value="${ordersIdList[2]["id"]}">
-            ${ordersIdList[1]["name"]}    
+            ${ordersIdList[2]["name"]}    
         </option>`;
     }
     return optionHtml;

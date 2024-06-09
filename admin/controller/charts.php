@@ -66,6 +66,7 @@ function getDataForNewOrder()
         FROM orders  o
         INNER JOIN status s ON o.status_id = s.id
         INNER JOIN users u ON u.id = o.user_id
+        where s.id = 1
         ORDER BY o.created_at DESC
         LIMIT 10;";
     $list1 = executeResult($query1);
