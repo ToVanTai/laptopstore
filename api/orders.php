@@ -11,7 +11,7 @@ Session::init();
 if ($_SERVER["REQUEST_METHOD"] == "POST" && empty($_GET['crud_req'])) {
     middleware(
         function() {
-            addToOrders();
+            addToOrders();//tvtai todo
         }
     );
     die();
@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 if($_SERVER["REQUEST_METHOD"] == "POST" && $_GET['crud_req'] == "updateOrders"){//change patch to post 
     middleware(
         function() {
-            updateOrders();
+            updateOrders();//tvtai todo
         }
     );
 }
