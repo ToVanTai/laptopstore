@@ -1,9 +1,10 @@
 <?php
-include_once "../utils/session.php";
+header('Access-Control-Allow-Origin: *');
+header("Access-Control-Allow-Methods: GET,POST,PATCH,DELETE");
+header('Access-Control-Allow-Headers: Content-Type, access-token, refresh-token');
+header("Access-Control-Allow-Credentials: true");
+include_once __DIR__."/../utils/index.php";
 Session::init();
-include_once "../db/config.php";
-include_once "../utils/dbhelper.php";
-include_once "../utils/validate.php";
 $http_origin = "";
 if (!empty($_SERVER['HTTP_ORIGIN'])) {
     if (in_array($_SERVER['HTTP_ORIGIN'], allowedOrigins)) {
@@ -15,7 +16,9 @@ header("Access-Control-Allow-Origin: " . $http_origin);
 header("Access-Control-Allow-Methods: GET,POST,PATCH,DELETE");
 header("Access-Control-Allow-Credentials: true");
 
-//dữ liệu được gửi toàn bộ từ form\
+/**
+ * lấy dữ liệu thông tin người dùng
+ */
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     about();
     die();
@@ -40,22 +43,19 @@ if ($_SERVER["REQUEST_METHOD"] =="POST" && $_POST['crud_req'] == "changePassword
     updatev2();//change password
     die();
 }
-// if ($_SERVER["REQUEST_METHOD"] == "PATCH") {
-//     update();
-//     die();
-// }
 if ($_SERVER["REQUEST_METHOD"] == "POST" && empty($_POST['crud_req']) && $_GET["crud_req"] == "logout") {//change delete to post
     logout(); //oke
     die();
 }
+/**
+ * lấy dữ liệu thông tin người dùng
+ */
 function about()
 {
-    // $idUser = getGET("id");
-
     $responseData = [];
-    if (!empty(Session::get("user"))) {
-        $idUser = Session::get("user")["id"];
-        $query = 'select * from users where id = ' . $idUser . ' limit 1;';
+    if (!empty(Session::get("user_id"))) {
+        $idUser = Session::get("user_id");
+        $query = 'select id, account, name, phone_number, address , avatar, email  from users where id = ' . $idUser . ' limit 1;';
         $response = executeResult($query, true);
         $responseData = array(
             "id" => $response["id"],
@@ -108,17 +108,31 @@ function login()
 {
     $account = getPOST("account");
     $password = getPOST("password");
-    $query = 'select * from users where account = "' . $account . '" and password = "' . md5($password) . '" limit 1';
+    $query = 'select * from users where account = "' . $account . '"';
     $responseData = executeResult($query);
     $isSuccessfully = count($responseData) >= 1 ? true : false;
     if ($isSuccessfully == true) {
-        http_response_code(200);
-        $user = array("id" => $responseData[0]["id"], "role" => $responseData[0]["role_id"], "name" => $responseData[0]["name"], "avatar" => $responseData[0]["avatar"]);
-        Session::set("user", $user);
-        if (empty(Session::get("carts"))) {
-            Session::set("carts", array());
+        if($responseData[0]["role_id"] == 2){
+            http_response_code(200);
+            $hashPassword = $responseData[0]["password"];
+            if (password_verify($password, $hashPassword)) {
+                $user = array("id" => $responseData[0]["id"], "role" => $responseData[0]["role_id"], "name" => $responseData[0]["name"], "avatar" => $responseData[0]["avatar"]);
+                Session::set("user", $user);
+                Session::set("user_id", $responseData[0]["id"]);
+                Session::set("role_id", $responseData[0]["role_id"]);
+                Session::set("carts", array());
+                // if (empty(Session::get("carts"))) {
+                // }
+                echo $responseData[0]["role_id"];
+            }else{
+                http_response_code(203);
+                echo "Tên tài khoản hoặc mật khẩu không chính xác";
+            }
+            
+        }else{
+            http_response_code(203);
+            echo "Tên tài khoản hoặc mật khẩu không chính xác";
         }
-        echo $responseData[0]["role_id"];
     } else {
         http_response_code(203);
         echo "Tên tài khoản hoặc mật khẩu không chính xác";
@@ -131,8 +145,8 @@ function logout()
 }
 function update1()
 {
-    if (!empty(Session::get("user"))) {
-        $id = Session::get("user")["id"];
+    if (!empty(Session::get("user_id"))) {
+        $id = Session::get("user_id");
         $name = getPOST("name");
         $phoneNumber = getPOST("phone_number") == null ? "" : getPOST("phone_number");
         $address = getPOST("address");
@@ -224,13 +238,13 @@ function update1()
 function updatev2()
 {
     $errMessage = "";
-    if (empty(Session::get("user"))) {
+    if (empty(Session::get("user_id"))) {
         $errMessage = $errMessage . "Bạn chưa đăng nhập!\n";
         echo $errMessage;
         http_response_code(203);
         die();
     };
-    $idUser = Session::get("user")["id"];
+    $idUser = Session::get("user_id");
     $account = getPOST("account");
     $password = getPOST("password");
     $newPassword = getPOST("newPassword");

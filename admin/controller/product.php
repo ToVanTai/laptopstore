@@ -1,32 +1,31 @@
 <?php
-include_once "../../utils/session.php";
+include_once __DIR__."/../../utils/index.php";
 Session::init();
-include_once "../../db/config.php";
-include_once "../../utils/dbhelper.php";
-include_once "../../utils/validate.php";
-$http_origin = "";
-if (!empty($_SERVER['HTTP_ORIGIN'])) {
-    if (in_array($_SERVER['HTTP_ORIGIN'], allowedOrigins)) {
-        $http_origin = $_SERVER['HTTP_ORIGIN'];
-    }
-}
-
-header("Access-Control-Allow-Origin: " . $http_origin);
-header("Access-Control-Allow-Methods: GET,POST");
-header("Access-Control-Allow-Credentials: true");
 
 $method = $_SERVER["REQUEST_METHOD"];
 if ($method == "POST" && !empty($_POST["crud_request"]) && $_POST["crud_request"] == "add-newproduct") {
-    addNewProduct();
+    middleware(
+        function() {
+            addNewProduct();
+        }, false
+    );
     die();
 }
 if ($method == "GET" && !empty($_GET["id"])) {
-    getProduct();
+    middleware(
+        function() {
+            getProduct();
+        }, false
+    );
     die();
 }
 
 if ($method == "POST"  && !empty($_POST["crud_request"]) && $_POST["crud_request"] == "change-product" && !empty($_GET["id"])) {
-    changeProduct();//oke
+    middleware(
+        function() {
+            changeProduct();
+        }, false
+    );
 }
 
 function addNewProduct()
@@ -80,8 +79,8 @@ function addNewProduct()
         $from = $files["tmp_name"];
         $to = "../../store/" . $nameFile;
         $created_at = $updated_at = date("Y-m-d h:i:s");
-        $created_by = Session::get("user")["id"];
-        $role = Session::get("user")["role"];
+        $created_by = Session::get("user_id");
+        $role = Session::get("role_id");
         if ($role == 2) {
             if (move_uploaded_file($from, $to)) {
                 $query =  "INSERT INTO `products` (`brand_id`, `model`, `screen`, `RAM`, `hardware`, `OS`,
@@ -110,7 +109,7 @@ function addNewProduct()
 }
 function changeProduct()
 {
-    $role = Session::get("user")["role"];
+    $role = Session::get("role_id");
     if ($role == 2) {
         $id = getGET("id");
         $isValidate = true;

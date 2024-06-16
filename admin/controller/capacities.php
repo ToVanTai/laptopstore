@@ -1,39 +1,43 @@
 <?php
-include_once "../../utils/session.php";
+include_once __DIR__."/../../utils/index.php";
 Session::init();
-include_once "../../db/config.php";
-include_once "../../utils/dbhelper.php";
-include_once "../../utils/validate.php";
-$http_origin = "";
-if (!empty($_SERVER['HTTP_ORIGIN'])) {
-    if (in_array($_SERVER['HTTP_ORIGIN'], allowedOrigins)) {
-        $http_origin = $_SERVER['HTTP_ORIGIN'];
-    }
-}
-header("Access-Control-Allow-Origin: " . $http_origin);
-header("Access-Control-Allow-Methods: GET,POST");
-header("Access-Control-Allow-Credentials: true");
-if (empty(Session::get("user")["role"])||Session::get("user")["role"]!=2) {
+
+if (empty(Session::get("role_id"))||Session::get("role_id")!=2) {
     http_response_code(203);
     echo "Bạn không là người quản trị.";
     die();
 }
 $method = $_SERVER["REQUEST_METHOD"];
 if ($method == "GET" && !empty($_GET["product_id"])) {
-    getCapacities();
+    middleware(
+        function() {
+            getCapacities();
+        }, false
+    );
     die();
 }
 if ($method == "GET" && !empty($_GET["id"])) {
-    getCapacityProduct();
+    middleware(
+        function() {
+            getCapacityProduct();
+        }, false
+    );
     die();
 }
 if ($method == "POST" && !empty($_GET["id"])) {
-
-    changeCapacityProduct(); //oke
+    middleware(
+        function() {
+            changeCapacityProduct();
+        }, false
+    );
     die();
 }
 if ($method == "POST" && !empty($_GET["id-product"])) {
-    addCapacityProduct(); //oke
+    middleware(
+        function() {
+            addCapacityProduct();
+        }, false
+    );
     die();
 }
 function getCapacities(){
@@ -78,7 +82,7 @@ function changeCapacityProduct()
         echo 'Cập nhât bại do ' . $errMessage;
         http_response_code(203);
     } else {
-        $role = Session::get("user")["role"];
+        $role = Session::get("role_id");
         if ($role == 2) {
             $query = "UPDATE product_capacities SET capacity_name='" . $capacity_name . "',
             price='" . $price . "', quantity='" . $quantity . "'
@@ -119,7 +123,7 @@ function addCapacityProduct()
             echo "Thêm thất bại do " . $errMessage;
             http_response_code(203);
         } else {
-            $role = Session::get("user")["role"];
+            $role = Session::get("role_id");
             if ($role == 2) {
                 $query = "INSERT INTO `product_capacities` 
                     (`product_id`, `capacity_name`, `price`, `quantity`) VALUES 

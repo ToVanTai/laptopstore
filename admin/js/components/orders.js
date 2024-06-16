@@ -1,8 +1,10 @@
 import {$,$$} from "../configs/constants.js";
 import {baseURL} from "../configs/configs.js";
+import {loading, unLoading} from "../utils/utils.js";
+import {myPagination, configPagination, getAllData, getDataCurrent} from "./pagination.js";
 let ordersIdList;
 let orderIdActive;//history
-let ordersList;
+// let ordersList;
 document.title = "Trang quản lý đơn hàng";
 async function getOrdersIdList(url){
     await new Promise((resolve,reject)=>{
@@ -21,23 +23,7 @@ async function getOrdersIdList(url){
         })
     })
 }
-async function getOrdersList(url){
-    await new Promise((resolve,reject)=>{
-        fetch(url,{
-            credentials:"include",
-            method:"GET"
-        }).then(res=>{
-            if(res.status==200){
-                res.text().then(res=>{
-                    ordersList=JSON.parse(res);
-                    resolve();
-                })
-            }else{
-                reject();
-            }
-        })
-    })
-}
+
 function changeParamsUrl(data){
     const url = new URL(window.location);
     url.searchParams.set("id-status", data);
@@ -57,30 +43,7 @@ function renderStatus(data){
     actionsElm.innerHTML=listOptionHtml;
     actionsElm.addEventListener("change",onChangeAction);
 }
-function renderOrders(data){
-    let ordersHtml = '';
-    data.forEach(element=>{
-        ordersHtml+=`<tr>
-        <td>${element["orderId"]}</td>
-        <td>${element["createAt"]}</td>
-        <td>${element["statusName"]}</td>
-        <td style="width: 320px">
-            <select class="listStatusChange" style="padding:5px; display:inline-block" name="status">
-                ${renderListStatusChange(element["statusId"])}
-            </select>
-            <span class="btn btn-change-status" style="display:inline-block" data-statuscurrent=${element["statusId"]} data-orderid=${element["orderId"]}>Lưu trạng thái</span>
-        </td>
-        <td>
-            <a href="${baseURL}admin/index.php?view=cart&id=${element["orderId"]}" class="btn">Xem</a>
-        </td>
-    </tr>
-</tbody>`;
-    });
-    $(".container table tbody").innerHTML=ordersHtml;
-    $$(".btn-change-status").forEach(element=>{
-        element.addEventListener('click',onChangeStatus);
-    })
-}
+
 function onChangeStatus(){
     let currentElm = this.parentNode.parentNode;
     let statusCurrent12 = this.dataset.statuscurrent;
@@ -176,7 +139,50 @@ async function onChangeAction(){
     }catch(err){
     }
 }
-async function mainFn(){
+
+function renderTable(resData){
+    let productList = document.getElementById("product__list");
+    let ordersHtml = '';
+    resData.forEach(element=>{
+        ordersHtml+=`<tr>
+        <td>${element["orderId"]}</td>
+        <td>${element["createAt"]}</td>
+        <td>${element["statusName"]}</td>
+        <td style="width: 320px; max-width: 320px;">
+            <select class="listStatusChange" style="padding:5px; display:inline-block" name="status">
+                ${renderListStatusChange(element["statusId"])}
+            </select>
+        </td>
+        <td>
+            <div class="list-link">
+                <div class="link-item-1 btn-change-status" data-statuscurrent=${element["statusId"]} data-orderid=${element["orderId"]}>Lưu trạng thái</div>
+                <a href="${baseURL}admin/index.php?view=cart&id=${element["orderId"]}" class="link-item-2">Xem</a>
+            </div>
+        </td>
+    </tr>
+</tbody>`;
+    });
+    productList.innerHTML=ordersHtml;
+    $$(".btn-change-status").forEach(element=>{
+        element.addEventListener('click',onChangeStatus);
+    })
+}
+function callBackWhenChangePageIndex(totalPage, currentPage){
+    try {
+        configPagination.totalPage = totalPage;
+        configPagination.currentPage = currentPage;
+        getDataCurrent(configPagination);
+        renderTable(configPagination.dataCurrent);
+    } catch (error) {
+        
+    }
+    unLoading();
+}
+
+(async function () {
+    //B1: get all data
+    //B2: mặc định là 20 bản ghi/1 trang
+    loading()
     try{
         await getOrdersIdList(`${baseURL}admin/controller/status.php`);
         orderIdActive = new URLSearchParams(window.location.search).get("id-status");
@@ -184,9 +190,14 @@ async function mainFn(){
             orderIdActive=1;
         }
         renderStatus(ordersIdList);
-        await getOrdersList(`${baseURL}admin/controller/orders.php?status-id=${orderIdActive}`);
-        renderOrders(ordersList);
-    }catch(err){
-    }
-}
-mainFn();
+
+        configPagination.allData = await getAllData(`${baseURL}admin/controller/orders.php?status-id=${orderIdActive}`);
+        configPagination.totalPage = Math.ceil(configPagination.allData.length / configPagination.pageSize);
+        getDataCurrent(configPagination);
+        myPagination(configPagination.totalPage, configPagination.currentPage, callBackWhenChangePageIndex);
+        renderTable(configPagination.dataCurrent);
+    }catch(ex){
+        console.log(ex)
+    };
+    unLoading();
+})();

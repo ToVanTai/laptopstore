@@ -1,21 +1,19 @@
 <?php
-include_once "../utils/session.php";
-Session::init();
-include_once "../db/config.php";
-include_once "../utils/dbhelper.php";
-include_once "../utils/validate.php";
-$http_origin = "";
-if (!empty($_SERVER['HTTP_ORIGIN'])) {
-    if (in_array($_SERVER['HTTP_ORIGIN'], allowedOrigins)) {
-        $http_origin = $_SERVER['HTTP_ORIGIN'];
-    }
-}
-header("Access-Control-Allow-Origin: " . $http_origin);
-header("Access-Control-Allow-Methods: GET");
+header('Access-Control-Allow-Origin: *');
+header("Access-Control-Allow-Methods: GET,POST,PATCH,DELETE");
+header('Access-Control-Allow-Headers: Content-Type, access-token, refresh-token');
 header("Access-Control-Allow-Credentials: true");
+include_once __DIR__."/../utils/index.php";
+Session::init();
+
+
 // Session::init();
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    readAll();
+    middleware(
+        function() {
+            readAll();
+        }, false
+    );
 }
 function readAll(){
     $query = 'select id, name, image from brands';

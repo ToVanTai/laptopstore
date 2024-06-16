@@ -1,0 +1,87 @@
+.main-form{
+    display: flex;
+    justify-content: center;
+}
+.form-container {
+    width: 100%;
+    max-width: 650px;
+    background: var(--light);
+    padding: 28px;
+    margin: 0 28px;
+    border-radius: 10px;
+    height: 590px;
+    overflow: auto;
+    position: relative;
+    padding-top: 0px;    
+}
+
+.form-container::-webkit-scrollbar {
+    width: 0.5rem;
+    height: 0.5rem;
+}
+
+.form-container::-webkit-scrollbar-thumb {
+    border-radius: .5rem;
+    background-color: var(--blue);
+    visibility: hidden;
+}
+
+.form-container:hover::-webkit-scrollbar-thumb {
+    visibility: visible;
+}
+
+
+
+
+.form-title {
+    padding-top: 28px;
+    font-size: 26px;
+    font-weight: 600;
+    text-align: center;
+    padding-bottom: 6px;
+    color: var(--dark);
+    background-color: var(--light);
+    border-bottom: solid 1px var(--dark);
+    position: sticky;
+    top: 0;
+}
+
+.user-input-box:nth-child(2n) {
+    justify-content: end;
+}
+
+.user-input-box {
+    display: flex;
+    flex-wrap: wrap;
+    width: 50%;
+    padding-bottom: 15px;
+}
+.user-input-box label {
+    width: 95%;
+    color: var(--dark);
+    font-size: 16px;
+    font-weight: 400;
+    margin: 5px 0;
+    height: 18px;
+}
+
+.user-input-box input,
+.user-input-box select,
+.user-input-box textarea {
+    height: 40px;
+    width: 95%;
+    border-radius: 7px;
+    outline: none;
+    border: 1px solid var(--dark);
+    padding: 0 10px;
+}
+.main-user-info {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 20px 0;
+}
+
+.user-input-box img{
+    margin-bottom: 5px;
+}

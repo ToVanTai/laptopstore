@@ -1,7 +1,11 @@
 <?php
 
 use function PHPSTORM_META\type;
-
+    /**
+     * các thông tin được lưu trong session bao gồm
+     * + user: id, role, name, avatar
+     * + carts(giỏ hàng)
+     */
     class Session{
         public static function init(){
             if(session_status()===PHP_SESSION_NONE){

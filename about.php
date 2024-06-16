@@ -1,7 +1,5 @@
 <?php
-
-require_once "./utils/session.php";
-require_once "./db/config.php";
+include_once __DIR__."/utils/index.php";
 Session::init();
 if(empty(Session::get("user"))){
     echo '<script>

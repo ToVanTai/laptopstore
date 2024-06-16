@@ -1,28 +1,39 @@
 <?php
-    include_once "../utils/session.php";
-    Session::init();
-    include_once "../db/config.php";
-    include_once "../utils/dbhelper.php";
-    include_once "../utils/validate.php";
-    $http_origin = "";
-    if (!empty($_SERVER['HTTP_ORIGIN'])) {
-        if (in_array($_SERVER['HTTP_ORIGIN'], allowedOrigins)) {
-            $http_origin = $_SERVER['HTTP_ORIGIN'];
-        }
-    }
-    header("Access-Control-Allow-Origin: " . $http_origin);
+    header('Access-Control-Allow-Origin: *');
     header("Access-Control-Allow-Methods: GET,POST,PATCH,DELETE");
+    header('Access-Control-Allow-Headers: Content-Type, access-token, refresh-token');
     header("Access-Control-Allow-Credentials: true");
+    include_once __DIR__."/../utils/index.php";
+    Session::init();
     
+
     //dữ liệu được gửi toàn bộ từ form\
     if ($_SERVER["REQUEST_METHOD"] == "GET") {
-        check();
+        middleware(
+            function() {
+                check();
+            }
+        );
         die();
     }
     function check(){
         $dataRes = false;
-        if(!empty(Session::get("user"))){
-            $dataRes = array("user"=>Session::get("user"),"carts"=>Session::get("carts"));
+
+        if(!empty(Session::get("user_id"))){
+            
+            if (empty(Session::get("user"))) {
+                Session::set("user", array());
+            };
+            $cartKey = sprintf(strCarts, Session::get("user_id"));
+            $carts=RedisService::getCarts($cartKey);
+            $query = 'select id, account, name, phone_number, address , avatar, email, role_id as role  from users where id = ' . Session::get("user_id") . ' limit 1;';
+            $userAbout = executeResult($query, true);
+            $dataRes = array(
+                "userAbout"=>$userAbout,
+                "carts"=>$carts,
+                "roleId"=>Session::get("role_id"),
+                "user"=>$userAbout
+            );
             echo json_encode($dataRes);
             http_response_code(200);
         }else {

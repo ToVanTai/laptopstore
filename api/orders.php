@@ -1,50 +1,48 @@
 <?php
-include_once "../utils/session.php";
-Session::init(); //Session::set("carts"=>array());
-include_once "../db/config.php";
-include_once "../utils/dbhelper.php";
-include_once "../utils/validate.php";
-$http_origin = "";
-if (!empty($_SERVER['HTTP_ORIGIN'])) {
-    if (in_array($_SERVER['HTTP_ORIGIN'], allowedOrigins)) {
-        $http_origin = $_SERVER['HTTP_ORIGIN'];
-    }
-}
-
-header("Access-Control-Allow-Origin: " . $http_origin);
+header('Access-Control-Allow-Origin: *');
 header("Access-Control-Allow-Methods: GET,POST,PATCH,DELETE");
+header('Access-Control-Allow-Headers: Content-Type, access-token, refresh-token');
 header("Access-Control-Allow-Credentials: true");
-header("Content-Type: application/json");
+include_once __DIR__."/../utils/index.php";
+Session::init(); 
 
-if (empty(Session::get("user"))) {
-    http_response_code(203);
-    echo "Yêu cầu đăng nhập để thực hiện chức năng này.";
-    die();
-}
+
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && empty($_GET['crud_req'])) {
-    //yêu cầu đặt hàng.
-    addToOrders();
+    middleware(
+        function() {
+            addToOrders();
+        }
+    );
     die();
 }
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    //xem thông tin order
-    viewOrders();
+    middleware(
+        function() {
+            viewOrders();
+        }
+    );
     die();
 }
 if($_SERVER["REQUEST_METHOD"] == "POST" && $_GET['crud_req'] == "updateOrders"){//change patch to post 
-    updateOrders();
+    middleware(
+        function() {
+            updateOrders();
+        }
+    );
 }
 function addToOrders()
 {
-    $carts = Session::get("carts");
+    $cartKey = sprintf(strCarts, Session::get("user_id"));
+    $carts=RedisService::getCarts($cartKey);
     if (count($carts) <= 0) {
         http_response_code(203);
         echo "Giỏ hàng trống!";
     } else {
-        $idUser = Session::get("user")["id"];
-        $query = 'select name, phone_number, address, email from users where id = ' . $idUser . ' ;';
+        $idUser = Session::get("user_id");
+        $query = 'select name, phone_number, address, account from users where id = ' . $idUser . ' ;';
         $aboutUser = executeResult($query, true);
-        if (empty($aboutUser["name"]) || empty($aboutUser["phone_number"]) || empty($aboutUser["address"]) || empty($aboutUser["email"])) {
+        if (empty($aboutUser["name"]) || empty($aboutUser["phone_number"]) || empty($aboutUser["address"]) || empty($aboutUser["account"])) {
             http_response_code(203);
             echo "Vui lòng cập nhật thông tin họ tên, số điện thoại, địa chỉ, email.";
         } else {
@@ -68,7 +66,8 @@ function addToOrders()
                 };
                 // echo $query;
                 execute($query, true);
-                Session::set("carts", array());
+                // Session::set("carts", array());
+                RedisService::updateCarts($cartKey, array());
                 echo "Đặt hàng thành công!";
             }
             http_response_code(201);
@@ -76,7 +75,7 @@ function addToOrders()
     }
 }
 function viewOrders(){
-    $idUser = Session::get("user")["id"];
+    $idUser = Session::get("user_id");
     $query = "select orders.id as orderId,status.id as statusId, status.name as statusName, 
     orders.created_at, orders.updated_at from orders inner join status on orders.status_id = status.id 
     inner join users on users.id = orders.user_id where orders.user_id= ".$idUser ." ORDER BY orders.created_at DESC ;";
@@ -109,7 +108,7 @@ function viewOrders(){
 
 }
 function updateOrders(){
-    $idUser = Session::get("user")["id"];
+    $idUser = Session::get("user_id");
     $dataBody = json_decode(file_get_contents("php://input"),true);
     if(empty($dataBody["statusChange"])||empty($dataBody["orderId"])){
         echo "Cập nhật thất bại!";

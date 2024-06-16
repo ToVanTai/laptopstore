@@ -1,34 +1,32 @@
 <?php
-include_once "../../utils/session.php";
+include_once __DIR__."/../../utils/index.php";
 Session::init();
-include_once "../../db/config.php";
-include_once "../../utils/dbhelper.php";
-include_once "../../utils/validate.php";
-$http_origin = "";
-if (!empty($_SERVER['HTTP_ORIGIN'])) {
-    if (in_array($_SERVER['HTTP_ORIGIN'], allowedOrigins)) {
-        $http_origin = $_SERVER['HTTP_ORIGIN'];
-    }
-}
-
-header("Access-Control-Allow-Origin: " . $http_origin);
-header("Access-Control-Allow-Methods: GET,POST,PUT,PATCH,DELETE");
-header("Access-Control-Allow-Credentials: true");
-
-if (empty(Session::get("user")["role"])||Session::get("user")["role"]!=2) {
+if (empty(Session::get("role_id"))||Session::get("role_id")!=2) {
     http_response_code(203);
     echo "Bạn không là người quản trị.";
     die();
 }
 $method = $_SERVER["REQUEST_METHOD"];
 if($method == "GET" && !empty(getGET("id"))){
-    getOrderDetail();
+    middleware(
+        function() {
+            getOrderDetail();
+        }, false
+    );
 }
 if($method == "GET"){
-    getAllOrders();
+    middleware(
+        function() {
+            getAllOrders();
+        }, false
+    );
 }
 if($method == "POST"){//change patch to post
-    updateOrder();
+    middleware(
+        function() {
+            updateOrder();
+        }, false
+    );
 }
 function getOrderDetail(){
     $idOrder = getGET("id");
